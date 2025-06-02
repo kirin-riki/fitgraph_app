@@ -1,0 +1,19 @@
+<header
+  class="fixed top-0 left-0 w-full z-50 bg-violet-500 text-white px-6 py-4 flex items-center justify-between shadow">
+  <!-- ── ロゴ ── -->
+  <nav class="flex items-center gap-4">
+    <%= link_to root_path, class: "text-3xl font-extrabold tracking-tight" do %>
+      Fitgraph
+    <% end %>
+  </nav>
+
+  <!-- ── ハンバーガーメニュー ── -->
+  <button
+    data-controller="mobile-menu"
+    data-action="click->mobile-menu#toggle"
+    class="flex flex-col justify-between w-8 h-5 focus:outline-none">
+    <span class="h-1 w-full bg-white rounded-sm transition"></span>
+    <span class="h-1 w-full bg-white rounded-sm transition"></span>
+    <span class="h-1 w-full bg-white rounded-sm transition"></span>
+  </button>
+</header>
