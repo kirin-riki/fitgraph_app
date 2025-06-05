@@ -61,4 +61,6 @@ gem "tailwindcss-ruby", "3.4.17"
 
 gem 'material_icons'
 
+gem "mini_magick"
 gem "aws-sdk-s3", require: false
+gem 'fog-aws'
