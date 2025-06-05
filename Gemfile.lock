@@ -121,6 +121,24 @@ GEM
     drb (2.2.3)
     erb (5.0.1)
     erubi (1.13.1)
+    excon (1.2.7)
+      logger
+    fog-aws (3.24.0)
+      fog-core (~> 2.1)
+      fog-json (~> 1.1)
+      fog-xml (~> 0.1)
+    fog-core (2.6.0)
+      builder
+      excon (~> 1.0)
+      formatador (>= 0.2, < 2.0)
+      mime-types
+    fog-json (1.2.0)
+      fog-core
+      multi_json (~> 1.10)
+    fog-xml (0.1.5)
+      fog-core
+      nokogiri (>= 1.5.11, < 2.0.0)
+    formatador (1.1.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.7)
@@ -152,9 +170,17 @@ GEM
     material_icons (4.0.0)
       railties (>= 3.2)
     matrix (0.4.2)
+    mime-types (3.7.0)
+      logger
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2025.0603)
+    mini_magick (5.2.0)
+      benchmark
+      logger
     mini_mime (1.1.5)
     minitest (5.25.5)
     msgpack (1.8.0)
+    multi_json (1.15.0)
     net-imap (0.5.8)
       date
       net-protocol
@@ -341,9 +367,11 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  fog-aws
   jbuilder
   jsbundling-rails
   material_icons
+  mini_magick
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.2.1)
