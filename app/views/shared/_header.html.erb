@@ -1,19 +1,30 @@
-<header
-  class="fixed top-0 left-0 w-full z-50 bg-violet-500 text-white px-6 py-4 flex items-center justify-between shadow">
-  <!-- ── ロゴ ── -->
-  <nav class="flex items-center gap-4">
-    <%= link_to root_path, class: "text-3xl font-extrabold tracking-tight" do %>
-      Fitgraph
-    <% end %>
-  </nav>
+<header class="fixed w-full bg-violet-500 text-white px-6 py-3 flex items-center justify-between z-30">
+  <%= link_to "Fitgraph", root_path, class: "text-3xl font-extrabold" %>
 
-  <!-- ── ハンバーガーメニュー ── -->
-  <button
-    data-controller="mobile-menu"
-    data-action="click->mobile-menu#toggle"
-    class="flex flex-col justify-between w-8 h-5 focus:outline-none">
-    <span class="h-1 w-full bg-white rounded-sm transition"></span>
-    <span class="h-1 w-full bg-white rounded-sm transition"></span>
-    <span class="h-1 w-full bg-white rounded-sm transition"></span>
-  </button>
+  <div class="relative" data-controller="dropdown">
+    <!-- トグルボタン -->
+    <button
+      data-action="click->dropdown#toggle"
+      class="flex items-center space-x-1 focus:outline-none">
+      <span>メニュー</span>
+      <i class="material-icons md-24">arrow_drop_down</i>
+    </button>
+
+    <!-- メニュー本体 -->
+    <div
+      data-dropdown-target="menu"
+      class="hidden absolute right-0 mt-2 w-40 text-right bg-white text-gray-800 rounded-lg shadow-lg
+            ring-1 ring-black ring-opacity-5 overflow-hidden">
+      <% if user_signed_in? %>
+        <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete },
+              class: "block px-4 py-2 hover:bg-gray-100" %>
+      <% else %>
+        <%= link_to "ログイン", new_user_session_path,
+              class: "block px-4 py-2 hover:bg-gray-100" %>
+        <%= link_to "新規登録", new_user_registration_path,
+              class: "block px-4 py-2 hover:bg-gray-100" %>
+      <% end %>
+    </div>
+  </div>
 </header>
+

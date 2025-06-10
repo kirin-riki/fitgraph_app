@@ -10,5 +10,6 @@ class CreateUsers < ActiveRecord::Migration[7.2]
 
     add_index :users, :line_user_id, unique: true
     add_index :users, :email,        unique: true
+    validates :email, presence: true
   end
 end
