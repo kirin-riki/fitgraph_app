@@ -1,36 +1,27 @@
-<!-- app/views/pages/home.html.erb -->
-<!-- ★ 背景をここ（div）に付ける → 画面全体が紫グラデ  -->
 <div class="w-full  mx-auto min-h-screen flex items-center justify-center
-            bg-gradient-to-b from-indigo-400 via-violet-500 to-purple-700 px-4">
+           bg-gradient-to-b from-indigo-400 via-violet-500 to-purple-700 px-4">
 
-  <!-- ── 中央カード ── -->
   <section
     class="w-full max-w-md mx-auto
-           flex flex-col items-center justify-center
-           py-12 px-6 sm:px-10
-           bg-white/10 backdrop-blur-sm rounded-xl shadow-xl text-white">
+          flex flex-col items-center justify-center
+          py-12 px-6 sm:px-10
+        bg-white/10 backdrop-blur-sm rounded-xl shadow-xl text-white">
 
-    <%# --- ロゴ画像を後で差し替え --- %>
-    <%#  image_tag 'logo_camera.png', class: 'w-32 h-32 mb-6' %>
-    <i class="fa-solid fa-camera-retro text-[120px] mb-6"></i>
+    <%= image_tag 'logo_camera.png', class: 'w-41 h-32 mb-1' %>
 
-    <h1 class="text-4xl font-extrabold mb-12 tracking-wide">
+    <h1 class="text-4xl font-extrabold mb-6 tracking-wide">
       Fitgraph
     </h1>
 
     <!-- ログイン -->
-    <%= link_to '#', class:
+    <%= link_to 'ログイン', new_user_session_path, class:
         "w-full max-w-xs text-center bg-white text-violet-600 font-semibold
-         rounded-full py-3 mb-4 hover:bg-gray-100 transition" do %>
-      ログイン
-    <% end %>
+        rounded-full py-3 mb-4 hover:bg-gray-100 transition" %>
 
     <!-- 新規登録 -->
-    <%= link_to '#', class:
+    <%= link_to '新規登録', new_user_registration_path, class:
         "w-full max-w-xs text-center border border-white font-semibold
-         rounded-full py-3 mb-10 hover:bg-white/10 transition" do %>
-      新規登録
-    <% end %>
+        rounded-full py-3 mb-10 hover:bg-white/10 transition" %>
 
     <!-- 使い方 -->
     <%= link_to '#',

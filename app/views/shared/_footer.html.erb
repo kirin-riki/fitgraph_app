@@ -2,26 +2,26 @@
   <nav class="grid grid-cols-4 divide-x divide-violet-400/60 text-center select-none">
 
     <!-- ─── 1. 入力 ─── -->
-    <%= link_to '#', class: "flex flex-col items-center justify-center py-2 hover:bg-violet-600 transition" do %>
-      <%= mi.shape(:edit_calendar).md_48.css_class('text-3xl mb-1') %>
+    <%= link_to '#', class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition" do %>
+      <%= mi.shape(:edit_calendar).md_36.css_class('text-3xl') %>
       <span class="text-x1 font-medium">入力</span>
     <% end %>
 
     <!-- ─── 2. 経過 ─── -->
-    <%= link_to '#', class: "flex flex-col items-center justify-center py-2 hover:bg-violet-600 transition" do %>
-      <%= mi.shape(:query_stats).md_48.css_class('text-3xl mb-1') %>
+    <%= link_to '#', class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition" do %>
+      <%= image_tag 'graph_record.png', class: "w-10 h-9" %>
       <span class="text-x1 font-medium">経過</span>
     <% end %>
 
     <!-- ─── 3. 動画 ─── -->
-    <%= link_to '#', class: "flex flex-col items-center justify-center py-2 hover:bg-violet-600 transition" do %>
-      <%= mi.shape(:video_library).md_48.css_class('text-3xl mb-1') %>
+    <%= link_to '#', class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition" do %>
+      <%= mi.shape(:video_library).md_36.css_class('text-3xl') %>
       <span class="text-x1 font-medium">動画</span>
     <% end %>
 
     <!-- ─── 4. マイページ ─── -->
-    <%= link_to '#', class: "flex flex-col items-center justify-center py-2 hover:bg-violet-600 transition" do %>
-      <%= mi.shape(:person).md_48.css_class('text-3xl mb-1') %>
+    <%= link_to '#', class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition" do %>
+      <%= mi.shape(:person).md_36.css_class('text-3xl') %>
       <span class="text-x1 font-medium">マイページ</span>
     <% end %>
 
