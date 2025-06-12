@@ -1,7 +1,7 @@
 class Profile < ApplicationRecord
   belongs_to :user
 
-  enum gender:             { male: 0, female: 1, other: 2 }
+  enum gender:             { man: 0, woman: 1, other: 2 }
   enum training_intensity: { low: 0, medium: 1, high: 2 }
 
   validates :height, numericality: { greater_than: 0 }, allow_nil: true
