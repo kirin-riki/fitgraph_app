@@ -1,0 +1,60 @@
+<%= form_with model: @body_record, class: "space-y-8" do |f| %>
+  <!-- ===== 日付バッジ ===== -->
+  <p class="inline-block bg-violet-600 text-white text-sm font-medium rounded-full px-3 py-1">
+    <%= (@body_record.recorded_at).strftime("%Y年%m月%d日") %>
+  </p>
+  <%= f.hidden_field :recorded_at %>
+
+  <!-- ===== 体重 & 体脂肪率 ===== -->
+  <div class="grid grid-cols-2 gap-4">
+    <%# 体重 %>
+    <div>
+      <%= f.label :weight, "体重",
+            class: "block text-violet-600 text-sm mb-1" %>
+      <div class="flex items-center">
+        <%= f.number_field :weight,
+              step: 0.1, min: 0,
+              class: "w-full border rounded-lg px-3 py-2 text-right" %>
+        <span class="ml-1 text-sm text-violet-600">kg</span>
+      </div>
+    </div>
+
+    <%# 体脂肪率 %>
+    <div>
+      <%= f.label :body_fat, "体脂肪率",
+            class: "block text-violet-600 text-sm mb-1" %>
+      <div class="flex items-center">
+        <%= f.number_field :body_fat,
+              step: 0.1, min: 0,
+              class: "w-full border rounded-lg px-3 py-2 text-right" %>
+        <span class="ml-1 text-sm text-violet-600">%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 写真 ===== -->
+  <div class="space-y-3">
+    <p class="text-sm font-semibold text-violet-600 mb-1">カラダの写真</p>
+    <button type="button"
+            data-action="click->camera#shoot"
+            class="border border-violet-600 text-violet-600 px-4 py-1 rounded hover:bg-violet-50 mb-2">
+      写真を撮る
+    </button>
+
+    <div class="h-56 w-52 border-2 border-dashed border-violet-400 rounded
+               flex items-center justify-center" data-camera-target="previewContainer">
+      <% if @body_record.photo.attached? %>
+        <%= image_tag @body_record.photo.variant(resize_to_limit: [240, 336]),class: "rounded" %>
+      <% else %>
+        <%= image_tag "avatar_placeholder.png",class: "w-16 h-24 opacity-50",
+            data: { camera_target: "placeholder" } %>
+        <canvas data-camera-target="canvas" width="240" height="336" class="hidden rounded"></canvas>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- ===== 送信ボタン ===== -->
+  <%= f.submit @body_record.persisted? ? "更新する" : "登録する",
+        class: "w-full bg-violet-600 hover:bg-violet-700 text-white font-semibold
+                py-3 rounded-full" %>
+<% end %>

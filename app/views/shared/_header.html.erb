@@ -1,5 +1,6 @@
 <header class="fixed w-full bg-violet-500 text-white px-6 py-3 flex items-center justify-between z-30">
-  <%= link_to "Fitgraph", root_path, class: "text-3xl font-extrabold" %>
+  <%= link_to "Fitgraph", (user_signed_in? ? authenticated_root_path : unauthenticated_root_path),
+      class: "text-3xl font-extrabold" %>
 
   <div class="relative" data-controller="dropdown">
     <!-- トグルボタン -->

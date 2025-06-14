@@ -10,8 +10,18 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  # Defines the root path route ("/")
-  root 'static_pages#top'
+  authenticated :user do
+    root 'body_records#top', as: :authenticated_root
+  end
+  unauthenticated do
+    root 'static_pages#top', as: :unauthenticated_root
+  end
   resources :users, only: %i[new create]
   resource :profile, only: %i[show edit update]
+  resources :body_records, only: %i[new create show edit update] do
+    collection do
+      get :top
+    end
+  end
+
 end

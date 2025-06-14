@@ -61,8 +61,11 @@ gem "tailwindcss-ruby", "3.4.17"
 
 gem 'material_icons'
 
+gem "image_processing", "~> 1.12"
 gem "mini_magick"
 gem "aws-sdk-s3", require: false
 gem 'fog-aws'
 
 gem "devise"
+
+gem 'simple_calendar', '~>2.0'
