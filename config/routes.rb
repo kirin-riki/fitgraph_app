@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "graphs/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -9,6 +10,8 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+
+  get "progress", to: "progress#index"
 
   authenticated :user do
     root 'body_records#top', as: :authenticated_root
@@ -22,6 +25,7 @@ Rails.application.routes.draw do
     collection do
       get :top
     end
+
   end
 
 end
