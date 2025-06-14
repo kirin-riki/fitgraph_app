@@ -130,6 +130,14 @@ GEM
     erubi (1.13.1)
     excon (1.2.7)
       logger
+    ffi (1.17.2-aarch64-linux-gnu)
+    ffi (1.17.2-aarch64-linux-musl)
+    ffi (1.17.2-arm-linux-gnu)
+    ffi (1.17.2-arm-linux-musl)
+    ffi (1.17.2-arm64-darwin)
+    ffi (1.17.2-x86_64-darwin)
+    ffi (1.17.2-x86_64-linux-gnu)
+    ffi (1.17.2-x86_64-linux-musl)
     fog-aws (3.24.0)
       fog-core (~> 2.1)
       fog-json (~> 1.1)
@@ -150,6 +158,9 @@ GEM
       activesupport (>= 6.1)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
+    image_processing (1.14.0)
+      mini_magick (>= 4.9.5, < 6)
+      ruby-vips (>= 2.0.17, < 3)
     io-console (0.8.0)
     irb (1.15.2)
       pp (>= 0.6.0)
@@ -309,6 +320,9 @@ GEM
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
+    ruby-vips (2.2.4)
+      ffi (~> 1.12)
+      logger
     rubyzip (2.4.1)
     securerandom (0.4.1)
     selenium-webdriver (4.33.0)
@@ -317,6 +331,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    simple_calendar (2.4.3)
+      rails (>= 3.0)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -382,6 +398,7 @@ DEPENDENCIES
   debug
   devise
   fog-aws
+  image_processing (~> 1.12)
   jbuilder
   jsbundling-rails
   material_icons
@@ -391,6 +408,7 @@ DEPENDENCIES
   rails (~> 7.2.1)
   rubocop-rails-omakase
   selenium-webdriver
+  simple_calendar (~> 2.0)
   sprockets-rails
   stimulus-rails
   tailwindcss-rails

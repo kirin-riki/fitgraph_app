@@ -1,16 +1,16 @@
-<main class="w-full mx-auto min-h-screen flex items-center justify-center bg-gray-50">
-  <section class="w-full max-w-xl bg-white rounded-xl shadow-lg px-6 sm:px-10 py-10 sm:py-12 mx-4">
+<main class="w-full mx-auto min-h-screen flex items-center justify-center bg-gray-50 my-5">
+  <section class="w-full max-w-xl bg-white rounded-xl shadow-lg px-10 py-12 mx-4">
     <h2 class="text-2xl font-bold text-center mb-10 text-violet-600">
       マイページ
     </h2>
 
     <!-- 編集ボタン（左寄せ・幅50%） -->
     <%= link_to "編集", edit_profile_path,
-        class: "block w-1/6 mb-5 bg-violet-600 hover:bg-violet-700
+        class: "block w-1/6 mb-3 bg-violet-600 hover:bg-violet-700
                 text-white font-semibold text-center py-1 rounded-full" %>
 
     <!-- ラベル1行 + 値1行 (下線のみ) -->
-    <div class="space-y-6">
+    <div class="space-y-3">
       <% fields = [
         ["氏 名",             @user.name.presence || "—"],
         ["メールアドレス",     @user.email],
