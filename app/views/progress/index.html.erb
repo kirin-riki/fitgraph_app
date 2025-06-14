@@ -1,0 +1,143 @@
+<div class="w-full mx-auto min-h-screen flex items-center justify-center
+            bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+
+  <!-- グラフ / 写真タブ -->
+  <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-6">
+    <button id="tab-graph" class="w-full bg-purple-500 text-white py-2 text-base">グラフ</button>
+    <button id="tab-photo" class="w-full bg-purple-100 text-purple-500 py-2 text-base">写真</button>
+  </div>
+
+  <!-- グラフビュー -->
+  <div id="graph-view">
+    <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-6">
+      <button class="w-full period-tab bg-purple-500 text-white py-1 rounded" data-period="3m">3ヶ月</button>
+      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded" data-period="1m">1ヶ月</button>
+      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded" data-period="3w">3週間</button>
+      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded" data-period="1w">1週間</button>
+    </div>
+    <canvas id="weightChart" width="800" height="400"></canvas>
+  </div>
+
+  <!-- 写真ビュー -->
+  <div id="photo-view" class="hidden">
+    <p class="text-center text-lg mt-10 text-gray-600">sample</p>
+  </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+/* -------- Rails から渡された配列 -------- */
+const allLabels   = <%= raw @dates.to_json        %>; // ["yyyy-mm-dd", ...]
+const allWeights  = <%= raw @weight_values.to_json %>;
+const allFatRates = <%= raw @fat_values.to_json    %>;
+
+/* ============ 共通ユーティリティ ============ */
+function generateDateRange(start, end){
+  const arr=[], cur=new Date(start);
+  while(cur<=end){
+    const y=cur.getFullYear(), m=String(cur.getMonth()+1).padStart(2,"0"),
+          d=String(cur.getDate()).padStart(2,"0");
+    arr.push(`${y}-${m}-${d}`);
+    cur.setDate(cur.getDate()+1);
+  }
+  return arr;
+}
+/* ============ ページ初期化関数 ============== */
+function initGraphPage(){
+
+  /* ---- タブ切替（グラフ/写真） ---------------- */
+  const graphView=document.getElementById("graph-view");
+  const photoView=document.getElementById("photo-view");
+  const tabGraph  =document.getElementById("tab-graph");
+  const tabPhoto  =document.getElementById("tab-photo");
+
+  function setMainTab(active){
+    const on  ="w-full bg-purple-500 text-white py-2 text-base";
+    const off ="w-full bg-purple-100 text-purple-500 py-2 text-base";
+    tabGraph.className = active==="graph"?on:off;
+    tabPhoto.className = active==="photo"?on:off;
+  }
+  tabGraph.onclick = ()=>{graphView.classList.remove("hidden"); photoView.classList.add("hidden"); setMainTab("graph");};
+  tabPhoto.onclick = ()=>{graphView.classList.add("hidden");   photoView.classList.remove("hidden"); setMainTab("photo");};
+
+  /* ---- グラフ描画 ------------------------------ */
+  const ctx = document.getElementById("weightChart").getContext("2d");
+  window.chart = null;
+
+  function buildData(period){
+    const now=new Date();
+    let start=new Date(now);
+    switch(period){
+      case"1w":start=new Date(now.getTime()-7 *86400000);break;
+      case"3w":start=new Date(now.getTime()-21*86400000);break;
+      case"1m":start.setMonth(now.getMonth()-1);break;
+      case"3m":default:start.setMonth(now.getMonth()-3);break;
+    }
+    const range = generateDateRange(start, now);
+    const map={};
+    allLabels.forEach((d,i)=>{map[d]={w:+allWeights[i], f:+allFatRates[i]};});
+    return range.map(d=>({label:d, weight:map[d]?.w??null, fat:map[d]?.f??null}));
+  }
+
+  function renderChart(period="3m"){
+    const rows = buildData(period);
+
+    const labels = rows.map(r=>{
+      const t=new Date(r.label);
+      return `${t.getMonth()+1}/${t.getDate()}`;
+    });
+    const weights = rows.map(r=>r.weight);
+    const fats    = rows.map(r=>r.fat);
+
+    const vw=weights.filter(v=>v!==null), vf=fats.filter(v=>v!==null);
+    const wMin = vw.length?Math.floor(Math.min(...vw))-5:undefined;
+    const wMax = vw.length?Math.ceil (Math.max(...vw))+5:undefined;
+    const fMin = vf.length?Math.floor(Math.min(...vf))-5:undefined;
+    const fMax = vf.length?Math.ceil (Math.max(...vf))+5:undefined;
+
+    if(window.chart) window.chart.destroy();
+    window.chart = new Chart(ctx,{
+      type:"line",
+      data:{
+        labels,
+        datasets:[
+          {label:"体重(kg)", data:weights, borderColor:"rgba(255,99,132,0.9)", backgroundColor:"rgba(255,99,132,0.2)", spanGaps:true, yAxisID:"y1"},
+          {label:"体脂肪率(%)", data:fats, borderColor:"rgba(75,192,192,0.7)",  backgroundColor:"rgba(75,192,192,0.2)",  spanGaps:true, yAxisID:"y2"}
+        ]
+      },
+      options:{
+        responsive:true,
+        scales:{
+          y1:{type:"linear",position:"left", min:wMin,max:wMax, title:{display:true,text:"体重"}},
+          y2:{type:"linear",position:"right",min:fMin,max:fMax, title:{display:true,text:"体脂肪率"}, grid:{drawOnChartArea:false}}
+        }
+      }
+    });
+  }
+
+  /* ---- 期間ボタン ------------------------------ */
+  document.querySelectorAll(".period-tab").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      document.querySelectorAll(".period-tab").forEach(b=>{
+        b.classList.remove("bg-purple-500","text-white");
+        b.classList.add   ("bg-purple-100","text-purple-600");
+      });
+      btn.classList.remove("bg-purple-100","text-purple-600");
+      btn.classList.add   ("bg-purple-500","text-white");
+      renderChart(btn.dataset.period);
+    });
+  });
+
+  renderChart("3m"); // 初期表示
+}
+
+/* --------- イベント登録 (Turbo対応) ---------- */
+document.addEventListener("DOMContentLoaded",  initGraphPage);
+document.addEventListener("turbo:load",        initGraphPage);
+/* Turboキャッシュ前にチャート破棄 */
+document.addEventListener("turbo:before-cache", () => {
+  if(window.chart){ window.chart.destroy(); window.chart=null; }
+});
+</script>
