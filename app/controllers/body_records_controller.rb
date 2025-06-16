@@ -19,12 +19,36 @@ class BodyRecordsController < ApplicationController
   end
 
   def new
-    @body_record = current_user.body_records.new(recorded_at: Date.parse(params[:recorded_at]))
+    # recorded_at をパースし、失敗時は今日の日付を採用
+    parsed_date = begin
+                    Date.parse(params[:recorded_at]) if params[:recorded_at].present?
+                  rescue ArgumentError, TypeError
+                    nil
+                  end
+
+    @body_record = current_user.body_records.new(
+      recorded_at: parsed_date || Date.today
+    )
   end
 
-
   def create
-    @body_record = current_user.body_records.new(body_record_params)
+    @body_record = current_user.body_records.new(body_record_params.except(:photo))
+
+    if params[:body_record][:photo].present?
+      # 画像を圧縮してから添付
+      processed = ImageProcessing::MiniMagick
+                    .source(params[:body_record][:photo].tempfile)
+                    .resize_to_limit(800, 800)
+                    .quality(80)
+                    .call
+
+      @body_record.photo.attach(
+        io: processed,
+        filename: params[:body_record][:photo].original_filename,
+        content_type: params[:body_record][:photo].content_type
+      )
+    end
+
     if @body_record.save
       redirect_to top_body_records_path(selected_date: @body_record.recorded_at),
                   notice: "身体情報を登録しました"
@@ -33,10 +57,26 @@ class BodyRecordsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    # @body_record は set_record で取得済み
+  end
 
   def update
-    if @body_record.update(body_record_params)
+    if @body_record.update(body_record_params.except(:photo))
+      if params[:body_record][:photo].present?
+        processed = ImageProcessing::MiniMagick
+                      .source(params[:body_record][:photo].tempfile)
+                      .resize_to_limit(800, 800)
+                      .quality(80)
+                      .call
+
+        @body_record.photo.attach(
+          io: processed,
+          filename: params[:body_record][:photo].original_filename,
+          content_type: params[:body_record][:photo].content_type
+        )
+      end
+
       redirect_to top_body_records_path(selected_date: @body_record.recorded_at),
                   notice: "身体情報を更新しました"
     else
@@ -68,7 +108,10 @@ class BodyRecordsController < ApplicationController
     @body_record = current_user.body_records.find(params[:id])
   end
 
+  # ストロングパラメータ
   def body_record_params
-    params.require(:body_record).permit(:recorded_at, :weight, :body_fat, :fat_mass, :photo)
+    params.require(:body_record).permit(
+      :recorded_at, :weight, :body_fat, :fat_mass, :photo
+    )
   end
 end

@@ -1,21 +1,23 @@
 <div class="w-full mx-auto min-h-screen flex items-center justify-center
-            bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+            bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-4">
 
   <!-- グラフ / 写真タブ -->
-  <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-6">
-    <button id="tab-graph" class="w-full bg-purple-500 text-white py-2 text-base">グラフ</button>
-    <button id="tab-photo" class="w-full bg-purple-100 text-purple-500 py-2 text-base">写真</button>
+  <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-4 sm:mb-6">
+    <button id="tab-graph" class="w-full bg-purple-500 text-white py-2 text-sm sm:text-base">グラフ</button>
+    <button id="tab-photo" class="w-full bg-purple-100 text-purple-500 py-2 text-sm sm:text-base">写真</button>
   </div>
 
   <!-- グラフビュー -->
-  <div id="graph-view">
-    <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-6">
-      <button class="w-full period-tab bg-purple-500 text-white py-1 rounded" data-period="3m">3ヶ月</button>
-      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded" data-period="1m">1ヶ月</button>
-      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded" data-period="3w">3週間</button>
-      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded" data-period="1w">1週間</button>
+  <div id="graph-view" class="w-full max-w-screen-md mx-auto">
+    <div class="w-full flex border rounded overflow-hidden mb-4 sm:mb-6">
+      <button class="w-full period-tab bg-purple-500 text-white py-1 rounded text-xs sm:text-sm" data-period="3m">3ヶ月</button>
+      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded text-xs sm:text-sm" data-period="1m">1ヶ月</button>
+      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded text-xs sm:text-sm" data-period="3w">3週間</button>
+      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded text-xs sm:text-sm" data-period="1w">1週間</button>
     </div>
-    <canvas id="weightChart" width="800" height="400"></canvas>
+    <div class="relative w-full" style="height: 60vh; max-height: 400px; min-height: 300px;">
+      <canvas id="weightChart" class="w-full h-full"></canvas>
+    </div>
   </div>
 
   <!-- 写真ビュー -->
@@ -24,120 +26,354 @@
   </div>
 </div>
 
-<!-- Chart.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
 /* -------- Rails から渡された配列 -------- */
-const allLabels   = <%= raw @dates.to_json        %>; // ["yyyy-mm-dd", ...]
-const allWeights  = <%= raw @weight_values.to_json %>;
-const allFatRates = <%= raw @fat_values.to_json    %>;
+// 変数が既に存在する場合は再宣言しない
+if (typeof allLabels === 'undefined') {
+  const allLabels   = <%= raw @dates.to_json        %>; // ["yyyy-mm-dd", ...]
+  const allWeights  = <%= raw @weight_values.to_json %>;
+  const allFatRates = <%= raw @fat_values.to_json    %>;
+  
+  // グローバル変数として設定
+  window.allLabels = allLabels;
+  window.allWeights = allWeights;
+  window.allFatRates = allFatRates;
+} else {
+  // 既に存在する場合は値を更新
+  window.allLabels = <%= raw @dates.to_json        %>;
+  window.allWeights = <%= raw @weight_values.to_json %>;
+  window.allFatRates = <%= raw @fat_values.to_json    %>;
+}
 
 /* ============ 共通ユーティリティ ============ */
 function generateDateRange(start, end){
-  const arr=[], cur=new Date(start);
-  while(cur<=end){
-    const y=cur.getFullYear(), m=String(cur.getMonth()+1).padStart(2,"0"),
-          d=String(cur.getDate()).padStart(2,"0");
+  const arr = [], cur = new Date(start);
+  while (cur <= end) {
+    const y = cur.getFullYear(),
+          m = String(cur.getMonth() + 1).padStart(2, "0"),
+          d = String(cur.getDate()).padStart(2, "0");
     arr.push(`${y}-${m}-${d}`);
-    cur.setDate(cur.getDate()+1);
+    cur.setDate(cur.getDate() + 1);
   }
   return arr;
 }
+
+/* ============ 横軸範囲制御関数 ============== */
+function setChartLabel(dataLength, chartInstance, period) {
+  // データ数に応じて横軸の表示範囲を制御
+  let maxDisplay, minDisplay;
+  
+  switch (period) {
+    case "1w":
+      // 1週間の場合は最大7日分表示
+      maxDisplay = Math.min(dataLength, 7);
+      minDisplay = Math.max(0, dataLength - 7);
+      break;
+    case "3w":
+      // 3週間の場合は最大21日分表示
+      maxDisplay = Math.min(dataLength, 21);
+      minDisplay = Math.max(0, dataLength - 21);
+      break;
+    case "1m":
+      // 1ヶ月の場合は最大30日分表示
+      maxDisplay = Math.min(dataLength, 30);
+      minDisplay = Math.max(0, dataLength - 30);
+      break;
+    case "3m":
+    default:
+      // 3ヶ月の場合は最大90日分表示
+      maxDisplay = Math.min(dataLength, 90);
+      minDisplay = Math.max(0, dataLength - 90);
+      break;
+  }
+  
+  // データが少ない場合は全表示
+  if (dataLength <= maxDisplay) {
+    chartInstance.options.scales.x.ticks = {
+      min: 0,
+      max: dataLength - 1
+    };
+  } else {
+    // データが多い場合は最新の範囲を表示
+    chartInstance.options.scales.x.ticks = {
+      min: minDisplay,
+      max: maxDisplay - 1
+    };
+  }
+  
+  // チャートを更新
+  chartInstance.update();
+}
+
 /* ============ ページ初期化関数 ============== */
-function initGraphPage(){
+function initGraphPage() {
+  // 必要な要素が存在するかチェック
+  const graphView = document.getElementById("graph-view");
+  const photoView = document.getElementById("photo-view");
+  const tabGraph = document.getElementById("tab-graph");
+  const tabPhoto = document.getElementById("tab-photo");
+  const weightChart = document.getElementById("weightChart");
+  
+  // 必要な要素が存在しない場合は早期終了
+  if (!graphView || !photoView || !tabGraph || !tabPhoto || !weightChart) {
+    return;
+  }
+
+  // 既存のChart.jsインスタンスをクリア
+  if (typeof Chart !== 'undefined' && Chart.helpers) {
+    Chart.helpers.each(Chart.instances, function(instance) {
+      instance.destroy();
+    });
+  }
+  
+  if (window.chart) {
+    window.chart.destroy();
+    window.chart = null;
+  }
 
   /* ---- タブ切替（グラフ/写真） ---------------- */
-  const graphView=document.getElementById("graph-view");
-  const photoView=document.getElementById("photo-view");
-  const tabGraph  =document.getElementById("tab-graph");
-  const tabPhoto  =document.getElementById("tab-photo");
-
-  function setMainTab(active){
-    const on  ="w-full bg-purple-500 text-white py-2 text-base";
-    const off ="w-full bg-purple-100 text-purple-500 py-2 text-base";
-    tabGraph.className = active==="graph"?on:off;
-    tabPhoto.className = active==="photo"?on:off;
+  function setMainTab(active) {
+    const on  = "w-full bg-purple-500 text-white py-2 text-sm sm:text-base";
+    const off = "w-full bg-purple-100 text-purple-500 py-2 text-sm sm:text-base";
+    tabGraph.className = active === "graph" ? on : off;
+    tabPhoto.className = active === "photo" ? on : off;
   }
-  tabGraph.onclick = ()=>{graphView.classList.remove("hidden"); photoView.classList.add("hidden"); setMainTab("graph");};
-  tabPhoto.onclick = ()=>{graphView.classList.add("hidden");   photoView.classList.remove("hidden"); setMainTab("photo");};
+
+  tabGraph.onclick = () => {
+    graphView.classList.remove("hidden");
+    photoView.classList.add("hidden");
+    setMainTab("graph");
+  };
+  tabPhoto.onclick = () => {
+    graphView.classList.add("hidden");
+    photoView.classList.remove("hidden");
+    setMainTab("photo");
+  };
 
   /* ---- グラフ描画 ------------------------------ */
   const ctx = document.getElementById("weightChart").getContext("2d");
   window.chart = null;
 
-  function buildData(period){
-    const now=new Date();
-    let start=new Date(now);
-    switch(period){
-      case"1w":start=new Date(now.getTime()-7 *86400000);break;
-      case"3w":start=new Date(now.getTime()-21*86400000);break;
-      case"1m":start.setMonth(now.getMonth()-1);break;
-      case"3m":default:start.setMonth(now.getMonth()-3);break;
+  function buildData(period) {
+    const now = new Date();
+    let start = new Date(now);
+    switch (period) {
+      case "1w":
+        start = new Date(now.getTime() - 7 * 86400000);
+        break;
+      case "3w":
+        start = new Date(now.getTime() - 21 * 86400000);
+        break;
+      case "1m":
+        start.setMonth(now.getMonth() - 1);
+        break;
+      case "3m":
+      default:
+        start.setMonth(now.getMonth() - 3);
+        break;
     }
     const range = generateDateRange(start, now);
-    const map={};
-    allLabels.forEach((d,i)=>{map[d]={w:+allWeights[i], f:+allFatRates[i]};});
-    return range.map(d=>({label:d, weight:map[d]?.w??null, fat:map[d]?.f??null}));
+    const map = {};
+    window.allLabels.forEach((d, i) => {
+      map[d] = { w: +window.allWeights[i], f: +window.allFatRates[i] };
+    });
+    return range.map(d => ({
+      label: d,
+      weight: map[d]?.w ?? null,
+      fat: map[d]?.f ?? null
+    }));
   }
 
-  function renderChart(period="3m"){
+  function renderChart(period = "3m") {
+    // 既存チャートがあれば破棄
+    if (window.chart) {
+      window.chart.destroy();
+      window.chart = null;
+    }
+    
+    // すべてのChart.jsインスタンスを破棄
+    if (typeof Chart !== 'undefined' && Chart.helpers) {
+      Chart.helpers.each(Chart.instances, function(instance) {
+        instance.destroy();
+      });
+    }
+    
+    // canvas要素をリセット
+    const canvas = document.getElementById("weightChart");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
     const rows = buildData(period);
-
-    const labels = rows.map(r=>{
-      const t=new Date(r.label);
-      return `${t.getMonth()+1}/${t.getDate()}`;
+    const labels = rows.map(r => {
+      const t = new Date(r.label);
+      // スマホでは日付を短縮表示
+      const isMobile = window.innerWidth < 768;
+      return isMobile ? `${t.getMonth() + 1}/${t.getDate()}` : `${t.getMonth() + 1}/${t.getDate()}`;
     });
-    const weights = rows.map(r=>r.weight);
-    const fats    = rows.map(r=>r.fat);
+    const weights = rows.map(r => r.weight);
+    const fats    = rows.map(r => r.fat);
 
-    const vw=weights.filter(v=>v!==null), vf=fats.filter(v=>v!==null);
-    const wMin = vw.length?Math.floor(Math.min(...vw))-5:undefined;
-    const wMax = vw.length?Math.ceil (Math.max(...vw))+5:undefined;
-    const fMin = vf.length?Math.floor(Math.min(...vf))-5:undefined;
-    const fMax = vf.length?Math.ceil (Math.max(...vf))+5:undefined;
+    const vw = weights.filter(v => v !== null);
+    const vf = fats.filter(v => v !== null);
+    const wMin = vw.length ? Math.floor(Math.min(...vw)) - 5 : undefined;
+    const wMax = vw.length ? Math.ceil (Math.max(...vw)) + 5 : undefined;
+    const fMin = vf.length ? Math.floor(Math.min(...vf)) - 5 : undefined;
+    const fMax = vf.length ? Math.ceil (Math.max(...vf)) + 5 : undefined;
 
-    if(window.chart) window.chart.destroy();
-    window.chart = new Chart(ctx,{
-      type:"line",
-      data:{
+    // スマホ判定
+    const isMobile = window.innerWidth < 768;
+
+    // 新チャートを生成
+    window.chart = new Chart(ctx, {
+      type: "line",
+      data: {
         labels,
-        datasets:[
-          {label:"体重(kg)", data:weights, borderColor:"rgba(255,99,132,0.9)", backgroundColor:"rgba(255,99,132,0.2)", spanGaps:true, yAxisID:"y1"},
-          {label:"体脂肪率(%)", data:fats, borderColor:"rgba(75,192,192,0.7)",  backgroundColor:"rgba(75,192,192,0.2)",  spanGaps:true, yAxisID:"y2"}
+        datasets: [
+          {
+            label: "体重(kg)",
+            data: weights,
+            borderColor: "rgba(255,99,132,0.9)",
+            backgroundColor: "rgba(255,99,132,0.2)",
+            spanGaps: true,
+            yAxisID: "y1",
+            borderWidth: isMobile ? 2 : 3,
+            pointRadius: isMobile ? 3 : 4,
+            pointHoverRadius: isMobile ? 5 : 6
+          },
+          {
+            label: "体脂肪率(%)",
+            data: fats,
+            borderColor: "rgba(75,192,192,0.7)",
+            backgroundColor: "rgba(75,192,192,0.2)",
+            spanGaps: true,
+            yAxisID: "y2",
+            borderWidth: isMobile ? 2 : 3,
+            pointRadius: isMobile ? 3 : 4,
+            pointHoverRadius: isMobile ? 5 : 6
+          }
         ]
       },
-      options:{
-        responsive:true,
-        scales:{
-          y1:{type:"linear",position:"left", min:wMin,max:wMax, title:{display:true,text:"体重"}},
-          y2:{type:"linear",position:"right",min:fMin,max:fMax, title:{display:true,text:"体脂肪率"}, grid:{drawOnChartArea:false}}
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            labels: {
+              font: {
+                size: isMobile ? 12 : 14
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            display: true,
+            title: {
+              display: true,
+              text: "日付",
+              font: {
+                size: isMobile ? 12 : 14
+              }
+            },
+            ticks: {
+              font: {
+                size: isMobile ? 10 : 12
+              },
+              maxTicksLimit: isMobile ? 7 : 10
+            }
+          },
+          y1: {
+            type: "linear",
+            position: "left",
+            min:  wMin,
+            max:  wMax,
+            title: { 
+              display: true, 
+              text: "体重",
+              font: {
+                size: isMobile ? 12 : 14
+              }
+            },
+            ticks: {
+              font: {
+                size: isMobile ? 10 : 12
+              }
+            }
+          },
+          y2: {
+            type: "linear",
+            position: "right",
+            min:  fMin,
+            max:  fMax,
+            title: { 
+              display: true, 
+              text: "体脂肪率",
+              font: {
+                size: isMobile ? 12 : 14
+              }
+            },
+            grid: { drawOnChartArea: false },
+            ticks: {
+              font: {
+                size: isMobile ? 10 : 12
+              }
+            }
+          }
         }
       }
     });
+
+    // 横軸範囲制御
+    setChartLabel(labels.length, window.chart, period);
   }
 
   /* ---- 期間ボタン ------------------------------ */
-  document.querySelectorAll(".period-tab").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      document.querySelectorAll(".period-tab").forEach(b=>{
-        b.classList.remove("bg-purple-500","text-white");
-        b.classList.add   ("bg-purple-100","text-purple-600");
+  document.querySelectorAll(".period-tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".period-tab").forEach(b => {
+        b.classList.remove("bg-purple-500", "text-white");
+        b.classList.add("bg-purple-100", "text-purple-600");
       });
-      btn.classList.remove("bg-purple-100","text-purple-600");
-      btn.classList.add   ("bg-purple-500","text-white");
+      btn.classList.remove("bg-purple-100", "text-purple-600");
+      btn.classList.add("bg-purple-500", "text-white");
       renderChart(btn.dataset.period);
     });
   });
 
-  renderChart("3m"); // 初期表示
+  // 初期表示
+  renderChart("3m");
+
+  // リサイズ時の対応
+  window.addEventListener('resize', () => {
+    if (window.chart) {
+      renderChart(document.querySelector('.period-tab.bg-purple-500')?.dataset.period || '3m');
+    }
+  });
 }
 
 /* --------- イベント登録 (Turbo対応) ---------- */
-document.addEventListener("DOMContentLoaded",  initGraphPage);
-document.addEventListener("turbo:load",        initGraphPage);
-/* Turboキャッシュ前にチャート破棄 */
+document.addEventListener("DOMContentLoaded", initGraphPage);
+document.addEventListener("turbo:load",       initGraphPage);
+
+// Turboキャッシュ前にチャート破棄
 document.addEventListener("turbo:before-cache", () => {
-  if(window.chart){ window.chart.destroy(); window.chart=null; }
+  if (window.chart) {
+    window.chart.destroy();
+    window.chart = null;
+  }
+  
+  // すべてのChart.jsインスタンスを破棄
+  if (typeof Chart !== 'undefined' && Chart.helpers) {
+    Chart.helpers.each(Chart.instances, function(instance) {
+      instance.destroy();
+    });
+  }
+  
+  // canvas要素をリセット（要素が存在する場合のみ）
+  const canvas = document.getElementById("weightChart");
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
 });
 </script>
