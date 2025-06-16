@@ -31,21 +31,20 @@
 
     <!-- カメラ操作ボタン -->
     <div class="flex gap-2 mb-2">
-      <!-- カメラ起動ボタン -->
+      <!-- ネイティブカメラ起動ボタン -->
       <button type="button"
-              data-camera-target="shootButton"
-              data-action="click->camera#startCamera"
-              class=" border border-violet-600 text-violet-600 w-1/2 py-2 rounded hover:bg-violet-50 transition-colors">
+              data-camera-target="nativeCameraButton"
+              data-action="click->camera#openNativeCamera"
+              class="border border-violet-600 text-violet-600 w-1/2 py-2 rounded hover:bg-violet-50 transition-colors">
         カメラ起動
       </button>
       
-      <!-- 撮影ボタン（初期状態では非表示） -->
-      <button type="button"
-              data-camera-target="captureButton"
-              data-action="click->camera#capture"
-              class="w-1/2 border border-red-600 text-red-600 py-2 rounded hover:bg-red-50 transition-colors hidden">
-        撮影
-      </button>
+      <!-- 隠しファイル入力（ネイティブカメラ用） -->
+      <%= f.file_field :photo,
+            data: { camera_target: "nativeCameraInput" },
+            accept: "image/*",
+            capture: "environment",
+            class: "hidden" %>
     </div>
 
     <!-- ファイルアップロード（カスタムボタン） -->
