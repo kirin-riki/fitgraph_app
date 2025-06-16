@@ -40917,3 +40917,57 @@ Processing by BodyRecordsController#edit as HTML
 Completed 200 OK in 63ms (Views: 27.6ms | ActiveRecord: 2.2ms (4 queries, 0 cached) | GC: 29.8ms)
 
 
+Started GET "/body_records/17/edit" for 172.25.0.1 at 2025-06-17 07:46:15 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by BodyRecordsController#edit as HTML
+  Parameters: {"id"=>"17"}
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mBodyRecord Load (1.3ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."id" = $2 LIMIT $3[0m  [["user_id", 2], ["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:108:in `set_record'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/edit.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (2.1ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 17], ["record_type", "BodyRecord"], ["name", "photo"], ["LIMIT", 1]]
+  ↳ app/views/body_records/_form.html.erb:71
+  [1m[36mActiveStorage::Blob Load (0.6ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/views/body_records/_form.html.erb:72
+  Rendered body_records/_form.html.erb (Duration: 61.0ms | GC: 0.0ms)
+  Rendered body_records/edit.html.erb within layouts/application (Duration: 62.5ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 0.6ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 2.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 110.7ms | GC: 6.8ms)
+Completed 200 OK in 252ms (Views: 113.4ms | ActiveRecord: 26.0ms (4 queries, 0 cached) | GC: 6.8ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-06-17 07:46:15 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Started GET "/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsiZGF0YSI6NSwicHVyIjoiYmxvYl9pZCJ9fQ==--079a7f407dba8102c6389302d65c6849217e497a/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJqcGciLCJyZXNpemVfdG9fbGltaXQiOls0MDAsNjAwXX0sInB1ciI6InZhcmlhdGlvbiJ9fQ==--a402136c47b6b46c48dea41c8563f7c028a17aff/photo_2025-06-16T18-44-13.jpg" for 172.25.0.1 at 2025-06-17 07:46:15 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Processing by ActiveStorage::Representations::RedirectController#show as JPEG
+  Parameters: {"signed_blob_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6NSwicHVyIjoiYmxvYl9pZCJ9fQ==--079a7f407dba8102c6389302d65c6849217e497a", "variation_key"=>"[FILTERED]", "filename"=>"photo_2025-06-16T18-44-13"}
+  [1m[36mActiveStorage::Blob Load (1.8ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mActiveStorage::VariantRecord Load (1.0ms)[0m  [1m[34mSELECT "active_storage_variant_records".* FROM "active_storage_variant_records" WHERE "active_storage_variant_records"."blob_id" = $1 AND "active_storage_variant_records"."variation_digest" = $2 LIMIT $3[0m  [["blob_id", 5], ["variation_digest", "rsQ16KJcb+zIATOAhE6GJYtxAqQ="], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.6ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 3], ["record_type", "ActiveStorage::VariantRecord"], ["name", "image"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Blob Load (2.1ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+[36m  Disk Storage (3.0ms) [0m[34mGenerated URL for file at key: 4jn0shtn2pebfjvpf2wwy5vi6hxi (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI0am4wc2h0bjJwZWJmanZwZjJ3d3k1dmk2aHhpIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwicGhvdG9fMjAyNS0wNi0xNlQxOC00NC0xMy5qcGdcIjsgZmlsZW5hbWUqPVVURi04JydwaG90b18yMDI1LTA2LTE2VDE4LTQ0LTEzLmpwZyIsImNvbnRlbnRfdHlwZSI6ImltYWdlL2pwZWciLCJzZXJ2aWNlX25hbWUiOiJsb2NhbCJ9LCJleHAiOiIyMDI1LTA2LTE2VDIyOjUxOjE2LjA5NloiLCJwdXIiOiJibG9iX2tleSJ9fQ==--2ad9bd7faa3872a16989dd9f69ea10b02286c030/photo_2025-06-16T18-44-13.jpg)[0m
+Redirected to http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI0am4wc2h0bjJwZWJmanZwZjJ3d3k1dmk2aHhpIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwicGhvdG9fMjAyNS0wNi0xNlQxOC00NC0xMy5qcGdcIjsgZmlsZW5hbWUqPVVURi04JydwaG90b18yMDI1LTA2LTE2VDE4LTQ0LTEzLmpwZyIsImNvbnRlbnRfdHlwZSI6ImltYWdlL2pwZWciLCJzZXJ2aWNlX25hbWUiOiJsb2NhbCJ9LCJleHAiOiIyMDI1LTA2LTE2VDIyOjUxOjE2LjA5NloiLCJwdXIiOiJibG9iX2tleSJ9fQ==--2ad9bd7faa3872a16989dd9f69ea10b02286c030/photo_2025-06-16T18-44-13.jpg
+Completed 302 Found in 49ms (ActiveRecord: 5.7ms (4 queries, 0 cached) | GC: 8.6ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiI0am4wc2h0bjJwZWJmanZwZjJ3d3k1dmk2aHhpIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwicGhvdG9fMjAyNS0wNi0xNlQxOC00NC0xMy5qcGdcIjsgZmlsZW5hbWUqPVVURi04JydwaG90b18yMDI1LTA2LTE2VDE4LTQ0LTEzLmpwZyIsImNvbnRlbnRfdHlwZSI6ImltYWdlL2pwZWciLCJzZXJ2aWNlX25hbWUiOiJsb2NhbCJ9LCJleHAiOiIyMDI1LTA2LTE2VDIyOjUxOjE2LjA5NloiLCJwdXIiOiJibG9iX2tleSJ9fQ==--2ad9bd7faa3872a16989dd9f69ea10b02286c030/photo_2025-06-16T18-44-13.jpg" for 172.25.0.1 at 2025-06-17 07:46:16 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ActiveStorage::DiskController#show as JPEG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"photo_2025-06-16T18-44-13"}
+Completed 200 OK in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-17 07:46:16 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.2ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
