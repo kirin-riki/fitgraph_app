@@ -6,12 +6,11 @@ class ProfilesController < ApplicationController
   def edit; end
 
   def update
-    if @user.update(user_params) && @profile.update(profile_params) 
+    if @user.update(user_params) && @profile.update(profile_params)
       redirect_to profile_path, notice: "プロフィール情報を更新しました"
     else
       render "edit"
     end
-
   end
 
   private

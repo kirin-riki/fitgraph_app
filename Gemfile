@@ -59,13 +59,13 @@ end
 gem "tailwindcss-rails"
 gem "tailwindcss-ruby", "3.4.17"
 
-gem 'material_icons'
+gem "material_icons"
 
 gem "image_processing", "~> 1.12"
 gem "mini_magick"
 gem "aws-sdk-s3", require: false
-gem 'fog-aws'
+gem "fog-aws"
 
 gem "devise"
 
-gem 'simple_calendar', '~>2.0'
+gem "simple_calendar", "~>2.0"
