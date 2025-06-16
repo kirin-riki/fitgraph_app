@@ -1,31 +1,24 @@
-<%= form_with model: @body_record, class: "space-y-8" do |f| %>
+<%= form_with model: @body_record, class: "space-y-8", multipart: true do |f| %>
   <!-- ===== 日付バッジ ===== -->
   <p class="inline-block bg-violet-600 text-white text-sm font-medium rounded-full px-3 py-1">
-    <%= (@body_record.recorded_at).strftime("%Y年%m月%d日") %>
+    <%= @body_record.recorded_at.strftime("%Y年%m月%d日") %>
   </p>
   <%= f.hidden_field :recorded_at %>
 
   <!-- ===== 体重 & 体脂肪率 ===== -->
   <div class="grid grid-cols-2 gap-4">
-    <%# 体重 %>
     <div>
-      <%= f.label :weight, "体重",
-            class: "block text-violet-600 text-sm mb-1" %>
+      <%= f.label :weight, "体重", class: "block text-violet-600 text-sm mb-1" %>
       <div class="flex items-center">
-        <%= f.number_field :weight,
-              step: 0.1, min: 0,
+        <%= f.number_field :weight, step: 0.1, min: 0,
               class: "w-full border rounded-lg px-3 py-2 text-right" %>
         <span class="ml-1 text-sm text-violet-600">kg</span>
       </div>
     </div>
-
-    <%# 体脂肪率 %>
     <div>
-      <%= f.label :body_fat, "体脂肪率",
-            class: "block text-violet-600 text-sm mb-1" %>
+      <%= f.label :body_fat, "体脂肪率", class: "block text-violet-600 text-sm mb-1" %>
       <div class="flex items-center">
-        <%= f.number_field :body_fat,
-              step: 0.1, min: 0,
+        <%= f.number_field :body_fat, step: 0.1, min: 0,
               class: "w-full border rounded-lg px-3 py-2 text-right" %>
         <span class="ml-1 text-sm text-violet-600">%</span>
       </div>
@@ -33,23 +26,52 @@
   </div>
 
   <!-- ===== 写真 ===== -->
-  <div class="space-y-3">
+  <div data-controller="camera" class="space-y-3">
     <p class="text-sm font-semibold text-violet-600 mb-1">カラダの写真</p>
+
+    <!-- スマホでカメラ起動用ボタン -->
     <button type="button"
+            data-camera-target="shootButton"
             data-action="click->camera#shoot"
             class="border border-violet-600 text-violet-600 px-4 py-1 rounded hover:bg-violet-50 mb-2">
-      写真を撮る
+      カメラ起動
     </button>
 
+    <!-- ファイルアップロード（カスタムボタン） -->
+    <div class="mb-2">
+      <label class="relative inline-block text-center
+                    border border-violet-600 text-violet-600
+                    px-4 py-1 rounded hover:bg-violet-50
+                    cursor-pointer mb-2">
+        ファイルを選択
+        <%= f.file_field :photo,
+              data: { camera_target: "fileInput" },
+              accept: "image/*",
+              class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer" %>
+      </label>
+
+      <!-- 選択済みファイル名表示 -->
+      <span data-camera-target="fileName" class="ml-2 text-sm text-gray-600"></span>
+    </div>
+
+
+
+    <!-- プレビューエリア -->
     <div class="h-56 w-52 border-2 border-dashed border-violet-400 rounded
-               flex items-center justify-center" data-camera-target="previewContainer">
+                flex items-center justify-center overflow-hidden"
+         data-camera-target="previewContainer">
       <% if @body_record.photo.attached? %>
-        <%= image_tag @body_record.photo.variant(resize_to_limit: [240, 336]),class: "rounded" %>
+        <%= image_tag @body_record.photo.variant(resize_to_limit: [240, 336]),
+                      data: { camera_target: "placeholder" },
+                      class: "rounded" %>
       <% else %>
-        <%= image_tag "avatar_placeholder.png",class: "w-16 h-24 opacity-50",
-            data: { camera_target: "placeholder" } %>
-        <canvas data-camera-target="canvas" width="240" height="336" class="hidden rounded"></canvas>
+        <img data-camera-target="placeholder"
+             src="<%= asset_path 'avatar_placeholder.png' %>"
+             class="w-16 h-24 opacity-50" />
       <% end %>
+      <canvas data-camera-target="canvas"
+              width="240" height="336"
+              class="hidden rounded"></canvas>
     </div>
   </div>
 

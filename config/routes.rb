@@ -10,11 +10,13 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
+  get "progress", to: "progress#index"
+
   authenticated :user do
-    root 'body_records#top', as: :authenticated_root
+    root "body_records#top", as: :authenticated_root
   end
   unauthenticated do
-    root 'static_pages#top', as: :unauthenticated_root
+    root "static_pages#top", as: :unauthenticated_root
   end
   resources :users, only: %i[new create]
   resource :profile, only: %i[show edit update]
@@ -23,5 +25,4 @@ Rails.application.routes.draw do
       get :top
     end
   end
-
 end
