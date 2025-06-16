@@ -29,20 +29,31 @@
   <div data-controller="camera" class="space-y-3">
     <p class="text-sm font-semibold text-violet-600 mb-1">カラダの写真</p>
 
-    <!-- スマホでカメラ起動用ボタン -->
-    <button type="button"
-            data-camera-target="shootButton"
-            data-action="click->camera#shoot"
-            class="border border-violet-600 text-violet-600 px-4 py-1 rounded hover:bg-violet-50 mb-2">
-      カメラ起動
-    </button>
+    <!-- カメラ操作ボタン -->
+    <div class="flex gap-2 mb-2">
+      <!-- カメラ起動ボタン -->
+      <button type="button"
+              data-camera-target="shootButton"
+              data-action="click->camera#startCamera"
+              class=" border border-violet-600 text-violet-600 w-1/2 py-2 rounded hover:bg-violet-50 transition-colors">
+        カメラ起動
+      </button>
+      
+      <!-- 撮影ボタン（初期状態では非表示） -->
+      <button type="button"
+              data-camera-target="captureButton"
+              data-action="click->camera#capture"
+              class="w-1/2 border border-red-600 text-red-600 py-2 rounded hover:bg-red-50 transition-colors hidden">
+        撮影
+      </button>
+    </div>
 
     <!-- ファイルアップロード（カスタムボタン） -->
     <div class="mb-2">
       <label class="relative inline-block text-center
                     border border-violet-600 text-violet-600
-                    px-4 py-1 rounded hover:bg-violet-50
-                    cursor-pointer mb-2">
+                    w-1/2 py-2 rounded hover:bg-violet-50
+                    cursor-pointer mb-2 transition-colors">
         ファイルを選択
         <%= f.file_field :photo,
               data: { camera_target: "fileInput" },
@@ -54,29 +65,27 @@
       <span data-camera-target="fileName" class="ml-2 text-sm text-gray-600"></span>
     </div>
 
-
-
     <!-- プレビューエリア -->
-    <div class="h-56 w-52 border-2 border-dashed border-violet-400 rounded
-                flex items-center justify-center overflow-hidden"
+    <div class="relative w-full h-80 border-2 border-dashed border-violet-400 rounded
+                flex items-center justify-center overflow-hidden bg-gray-50"
          data-camera-target="previewContainer">
       <% if @body_record.photo.attached? %>
-        <%= image_tag @body_record.photo.variant(resize_to_limit: [240, 336]),
+        <%= image_tag @body_record.photo.variant(resize_to_limit: [400, 600]),
                       data: { camera_target: "placeholder" },
-                      class: "rounded" %>
+                      class: "w-full h-full object-cover rounded" %>
       <% else %>
-        <img data-camera-target="placeholder"
-             src="<%= asset_path 'avatar_placeholder.png' %>"
-             class="w-16 h-24 opacity-50" />
+        <div class="text-center text-gray-400">
+          <img data-camera-target="placeholder"
+               src="<%= asset_path 'avatar_placeholder.png' %>"
+               class="w-16 h-24 opacity-50 mx-auto mb-2" />
+          <p class="text-sm">カメラで撮影するか、ファイルを選択してください</p>
+        </div>
       <% end %>
-      <canvas data-camera-target="canvas"
-              width="240" height="336"
-              class="hidden rounded"></canvas>
     </div>
   </div>
 
   <!-- ===== 送信ボタン ===== -->
   <%= f.submit @body_record.persisted? ? "更新する" : "登録する",
         class: "w-full bg-violet-600 hover:bg-violet-700 text-white font-semibold
-                py-3 rounded-full" %>
+                py-3 rounded-full transition-colors" %>
 <% end %>
