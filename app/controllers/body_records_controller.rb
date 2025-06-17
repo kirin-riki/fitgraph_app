@@ -36,7 +36,7 @@ class BodyRecordsController < ApplicationController
     @body_record = current_user.body_records.find_or_initialize_by(
       recorded_at: body_record_params[:recorded_at]
     )
-    
+
     # 既存のデータを更新
     @body_record.assign_attributes(body_record_params.except(:photo))
 
