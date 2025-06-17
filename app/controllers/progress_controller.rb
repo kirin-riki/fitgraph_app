@@ -1,6 +1,8 @@
 class ProgressController < ApplicationController
+  before_action :authenticate_user!
+
   def index
-    @records = BodyRecord.order(:recorded_at)
+    @records = current_user.body_records.order(:recorded_at)
 
     @dates = @records.map { |r| r.recorded_at.strftime("%Y-%m-%d") }
     @weight_values = @records.map(&:weight)
