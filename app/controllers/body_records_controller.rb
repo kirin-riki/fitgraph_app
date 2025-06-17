@@ -32,26 +32,21 @@ class BodyRecordsController < ApplicationController
   end
 
   def create
-    @body_record = current_user.body_records.new(body_record_params.except(:photo))
+    # 既存のレコードを探すか、新しいレコードを作成
+    @body_record = current_user.body_records.find_or_initialize_by(
+      recorded_at: body_record_params[:recorded_at]
+    )
+    
+    # 既存のデータを更新
+    @body_record.assign_attributes(body_record_params.except(:photo))
 
     if params[:body_record][:photo].present?
-      # 画像を圧縮してから添付
-      processed = ImageProcessing::MiniMagick
-                    .source(params[:body_record][:photo].tempfile)
-                    .resize_to_limit(800, 800)
-                    .quality(80)
-                    .call
-
-      @body_record.photo.attach(
-        io: processed,
-        filename: params[:body_record][:photo].original_filename,
-        content_type: params[:body_record][:photo].content_type
-      )
+      attach_processed_photo(params[:body_record][:photo])
     end
 
     if @body_record.save
       redirect_to top_body_records_path(selected_date: @body_record.recorded_at),
-                  notice: "身体情報を登録しました"
+                  notice: @body_record.previously_new_record? ? "身体情報を登録しました" : "身体情報を更新しました"
     else
       render :new, status: :unprocessable_entity
     end
@@ -64,17 +59,7 @@ class BodyRecordsController < ApplicationController
   def update
     if @body_record.update(body_record_params.except(:photo))
       if params[:body_record][:photo].present?
-        processed = ImageProcessing::MiniMagick
-                      .source(params[:body_record][:photo].tempfile)
-                      .resize_to_limit(800, 800)
-                      .quality(80)
-                      .call
-
-        @body_record.photo.attach(
-          io: processed,
-          filename: params[:body_record][:photo].original_filename,
-          content_type: params[:body_record][:photo].content_type
-        )
+        attach_processed_photo(params[:body_record][:photo])
       end
 
       redirect_to top_body_records_path(selected_date: @body_record.recorded_at),
@@ -85,6 +70,27 @@ class BodyRecordsController < ApplicationController
   end
 
   private
+
+  def attach_processed_photo(photo_param)
+    begin
+      # 画像を圧縮してから添付
+      processed = ImageProcessing::MiniMagick
+                    .source(photo_param.tempfile)
+                    .resize_to_limit(800, 800)
+                    .quality(80)
+                    .call
+
+      @body_record.photo.attach(
+        io: processed,
+        filename: photo_param.original_filename,
+        content_type: photo_param.content_type
+      )
+    rescue => e
+      Rails.logger.error "Image processing failed: #{e.message}"
+      # 画像処理に失敗した場合は、元の画像をそのまま添付
+      @body_record.photo.attach(photo_param)
+    end
+  end
 
   # ① パラメータ or 今日の日付を Date オブジェクトで保持
   def set_selected_date
