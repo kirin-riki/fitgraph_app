@@ -28,6 +28,24 @@ export default class extends Controller {
 
     console.log("Native camera controller connected");
     console.log("Preview container exists:", this.hasPreviewContainerTarget);
+    
+    // 既存の画像がある場合の処理
+    this._initializeExistingImage();
+  }
+
+  _initializeExistingImage() {
+    // プレビューコンテナ内の既存画像を確認
+    const existingImage = this.previewContainerTarget.querySelector('img[data-camera-target="placeholder"]');
+    
+    if (existingImage && existingImage.src && !existingImage.src.includes('avatar_placeholder.png')) {
+      // 既存の画像がある場合、それを管理対象にする
+      console.log("Existing image found:", existingImage.src);
+      
+      // 既存画像にcamera-targetを追加（まだない場合）
+      if (!existingImage.hasAttribute('data-camera-target')) {
+        existingImage.setAttribute('data-camera-target', 'placeholder');
+      }
+    }
   }
 
   openNativeCamera() {
@@ -90,6 +108,7 @@ export default class extends Controller {
     const img = document.createElement('img');
     img.src = url;
     img.className = 'w-full h-full object-cover rounded';
+    img.setAttribute('data-camera-target', 'placeholder');
     this.previewContainerTarget.appendChild(img);
     
     // ファイルフィールドにセット（ネイティブカメラとファイル選択の両方に対応）
