@@ -70,9 +70,6 @@
          data-camera-target="previewContainer">
       <% if @body_record.photo.attached? %>
         <%= image_tag @body_record.photo.variant(resize_to_limit: [400, 600]),
-                      data: { camera_target: "placeholder" },
-                      class: "w-full h-full object-cover rounded",
-                      alt: "身体写真",
                       id: "existing-photo" %>
         
         <!-- 画像削除ボタン -->
