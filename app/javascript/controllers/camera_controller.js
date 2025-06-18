@@ -45,6 +45,13 @@ export default class extends Controller {
       if (!existingImage.hasAttribute('data-camera-target')) {
         existingImage.setAttribute('data-camera-target', 'placeholder');
       }
+      
+      // 既存画像のIDを確認
+      if (existingImage.id === 'existing-photo') {
+        console.log("Existing photo detected, preserving it");
+      }
+    } else {
+      console.log("No existing image found, showing placeholder");
     }
   }
 
@@ -109,6 +116,7 @@ export default class extends Controller {
     img.src = url;
     img.className = 'w-full h-full object-cover rounded';
     img.setAttribute('data-camera-target', 'placeholder');
+    img.alt = '身体写真';
     this.previewContainerTarget.appendChild(img);
     
     // ファイルフィールドにセット（ネイティブカメラとファイル選択の両方に対応）
@@ -118,6 +126,8 @@ export default class extends Controller {
     // 両方のファイルフィールドにセット
     this.nativeCameraInputTarget.files = dt.files;
     this.fileInputTarget.files = dt.files;
+    
+    console.log("New image displayed:", file.name);
   }
 
   _showError(message) {
@@ -130,6 +140,55 @@ export default class extends Controller {
     // 成功メッセージを表示
     console.log(message);
     // 必要に応じてトースト通知などを実装
+  }
+
+  removeExistingImage() {
+    if (confirm('この画像を削除しますか？')) {
+      // プレビューエリアをクリア
+      this.previewContainerTarget.innerHTML = "";
+      
+      // プレースホルダーを表示
+      const placeholderDiv = document.createElement('div');
+      placeholderDiv.className = 'text-center text-gray-400';
+      placeholderDiv.setAttribute('data-camera-target', 'placeholder');
+      placeholderDiv.innerHTML = `
+        <img src="/assets/avatar_placeholder.png"
+             class="w-16 h-24 opacity-50 mx-auto mb-2"
+             alt="プレースホルダー" />
+        <p class="text-sm">カメラで撮影するか、ファイルを選択してください</p>
+      `;
+      
+      this.previewContainerTarget.appendChild(placeholderDiv);
+      
+      // ファイルフィールドをクリア
+      this.nativeCameraInputTarget.value = '';
+      this.fileInputTarget.value = '';
+      
+      // 隠しフィールドで削除フラグを送信
+      this._addRemoveFlag();
+      
+      console.log("Existing image removed");
+    }
+  }
+
+  _addRemoveFlag() {
+    // 既存の削除フラグを削除
+    const existingFlag = document.querySelector('input[name="remove_photo"]');
+    if (existingFlag) {
+      existingFlag.remove();
+    }
+    
+    // 新しい削除フラグを追加
+    const removeFlag = document.createElement('input');
+    removeFlag.type = 'hidden';
+    removeFlag.name = 'remove_photo';
+    removeFlag.value = '1';
+    
+    // フォームに追加
+    const form = this.element.closest('form');
+    if (form) {
+      form.appendChild(removeFlag);
+    }
   }
 
   disconnect() {

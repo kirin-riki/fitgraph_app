@@ -72,11 +72,20 @@
         <%= image_tag @body_record.photo.variant(resize_to_limit: [400, 600]),
                       data: { camera_target: "placeholder" },
                       class: "w-full h-full object-cover rounded",
-                      alt: "身体写真" %>
+                      alt: "身体写真",
+                      id: "existing-photo" %>
+        
+        <!-- 画像削除ボタン -->
+        <button type="button"
+                data-action="click->camera#removeExistingImage"
+                class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white 
+                       rounded-full w-8 h-8 flex items-center justify-center text-sm
+                       transition-colors">
+          ×
+        </button>
       <% else %>
-        <div class="text-center text-gray-400">
-        <img data-camera-target="placeholder"
-             src="<%= asset_path 'avatar_placeholder.png' %>"
+        <div class="text-center text-gray-400" data-camera-target="placeholder">
+          <img src="<%= asset_path 'avatar_placeholder.png' %>"
                class="w-16 h-24 opacity-50 mx-auto mb-2"
                alt="プレースホルダー" />
           <p class="text-sm">カメラで撮影するか、ファイルを選択してください</p>
