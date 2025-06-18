@@ -59,12 +59,11 @@ class BodyRecordsController < ApplicationController
   def update
     if @body_record.update(body_record_params.except(:photo))
       # 画像削除フラグの処理
-      if params[:remove_photo] == '1'
+      if params[:remove_photo] == "1"
         @body_record.photo.purge if @body_record.photo.attached?
       elsif params[:body_record][:photo].present?
         attach_processed_photo(params[:body_record][:photo])
       end
-
       redirect_to top_body_records_path(selected_date: @body_record.recorded_at),
                   notice: "身体情報を更新しました"
     else
