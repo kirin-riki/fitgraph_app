@@ -32,12 +32,12 @@
     <!-- カメラ操作ボタン -->
     <div class="flex gap-2 mb-2">
       <!-- ネイティブカメラ起動ボタン -->
-      <button type="button"
+    <button type="button"
               data-camera-target="nativeCameraButton"
               data-action="click->camera#openNativeCamera"
               class="border border-violet-600 text-violet-600 w-1/2 py-2 rounded hover:bg-violet-50 transition-colors">
-        カメラ起動
-      </button>
+      カメラ起動
+    </button>
       
       <!-- 隠しファイル入力（ネイティブカメラ用） -->
       <%= f.file_field :photo,
@@ -75,8 +75,8 @@
                       alt: "身体写真" %>
       <% else %>
         <div class="text-center text-gray-400">
-          <img data-camera-target="placeholder"
-               src="<%= asset_path 'avatar_placeholder.png' %>"
+        <img data-camera-target="placeholder"
+             src="<%= asset_path 'avatar_placeholder.png' %>"
                class="w-16 h-24 opacity-50 mx-auto mb-2"
                alt="プレースホルダー" />
           <p class="text-sm">カメラで撮影するか、ファイルを選択してください</p>
