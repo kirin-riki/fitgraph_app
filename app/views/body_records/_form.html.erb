@@ -71,7 +71,7 @@
       <% if @body_record.photo.attached? %>
         <%= image_tag @body_record.photo.variant(resize_to_limit: [400, 600]),
                       id: "existing-photo" %>
-        
+        <%= @body_record.photo.attached? %>
         <!-- 画像削除ボタン -->
         <button type="button"
                 data-action="click->camera#removeExistingImage"
