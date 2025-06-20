@@ -12,3 +12,6 @@ application.register("dropdown", DropdownController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import PhotoSwitcherController from "./photo_switcher_controller"
+application.register("photo-switcher", PhotoSwitcherController)

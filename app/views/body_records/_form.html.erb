@@ -69,11 +69,19 @@
                 flex items-center justify-center overflow-hidden bg-gray-50"
          data-camera-target="previewContainer">
       <% if @body_record.photo.attached? %>
-        <%= image_tag @body_record.photo.variant(resize_to_limit: [400, 600]),
-                      data: { camera_target: "placeholder" },
-                      class: "w-full h-full object-cover rounded",
-                      alt: "身体写真",
-                      id: "existing-photo" %>
+        <% if @body_record.photo.variable? %>
+          <%= image_tag @body_record.photo.variant(resize_to_limit: [400, 600]),
+                        data: { camera_target: "placeholder" },
+                        class: "w-full h-full object-cover rounded",
+                        alt: "身体写真",
+                        id: "existing-photo" %>
+        <% else %>
+          <%= image_tag @body_record.photo,
+                        data: { camera_target: "placeholder" },
+                        class: "w-full h-full object-cover rounded",
+                        alt: "身体写真",
+                        id: "existing-photo" %>
+        <% end %>
         
         <!-- 画像削除ボタン -->
         <button type="button"

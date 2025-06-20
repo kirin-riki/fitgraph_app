@@ -1,28 +1,59 @@
 <div class="w-full mx-auto min-h-screen flex items-center justify-center
             bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-4">
-
-  <!-- グラフ / 写真タブ -->
-  <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-4 sm:mb-6">
-    <button id="tab-graph" class="w-full bg-purple-500 text-white py-2 text-sm sm:text-base">グラフ</button>
-    <button id="tab-photo" class="w-full bg-purple-100 text-purple-500 py-2 text-sm sm:text-base">写真</button>
-  </div>
-
-  <!-- グラフビュー -->
-  <div id="graph-view" class="w-full max-w-screen-md mx-auto">
-    <div class="w-full flex border rounded overflow-hidden mb-4 sm:mb-6">
-      <button class="w-full period-tab bg-purple-500 text-white py-1 rounded text-xs sm:text-sm" data-period="3m">3ヶ月</button>
-      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded text-xs sm:text-sm" data-period="1m">1ヶ月</button>
-      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded text-xs sm:text-sm" data-period="3w">3週間</button>
-      <button class="w-full period-tab bg-purple-100 text-purple-600 py-1 rounded text-xs sm:text-sm" data-period="1w">1週間</button>
+  <div class="w-full max-w-screen-md min-h-[600px]">
+    <!-- グラフ / 写真タブ -->
+    <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-4 sm:mb-6">
+      <button id="tab-graph" class="w-full bg-violet-500 text-white py-2 text-sm sm:text-base">グラフ</button>
+      <button id="tab-photo" class="w-full bg-violet-100 text-violet-500 py-2 text-sm sm:text-base">写真</button>
     </div>
-    <div class="relative w-full" style="height: 60vh; max-height: 400px; min-height: 300px;">
-      <canvas id="weightChart" class="w-full h-full"></canvas>
-    </div>
-  </div>
 
-  <!-- 写真ビュー -->
-  <div id="photo-view" class="hidden">
-    <p class="text-center text-lg mt-10 text-gray-600">sample</p>
+    <!-- グラフビュー -->
+    <div id="graph-view" class="w-full max-w-screen-md mx-auto">
+      <div class="w-full flex border rounded overflow-hidden mb-4 sm:mb-6">
+        <button class="w-full period-tab bg-violet-500 text-white py-1 rounded text-xs sm:text-sm" data-period="3m">3ヶ月</button>
+        <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1m">1ヶ月</button>
+        <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="3w">3週間</button>
+        <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1w">1週間</button>
+      </div>
+      <div class="relative w-full" style="height: 60vh; max-height: 400px; min-height: 300px;">
+        <canvas id="weightChart" class="w-full h-full"></canvas>
+      </div>
+    </div>
+
+    <!-- 写真ビュー -->
+    <div id="photo-view" class="w-full max-w-screen-md mx-auto">
+      <div class="w-full flex border rounded overflow-hidden mb-4 sm:mb-6">
+        <button class="w-full period-tab bg-violet-500 text-white py-1 rounded text-xs sm:text-sm" data-period="3m">3ヶ月</button>
+        <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1m">1ヶ月</button>
+        <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="3w">3週間</button>
+        <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1w">1週間</button>
+      </div>
+      <div data-controller="photo-switcher"
+           data-photos='<%= @all_photos.map { |r| { url: (r.photo.variable? ? url_for(r.photo.variant(resize_to_limit: [400, 600])) : url_for(r.photo)), date: r.recorded_at.strftime("%Y-%m-%d") } }.to_json %>'>
+        <div class="relative mx-auto my-4 bg-gray-100 rounded overflow-hidden border border-gray-300"
+             style="width:260px; height:350px;">
+          <% if @photos.present? %>
+            <% photo = @photos.first %>
+            <% if photo.variable? %>
+              <%= image_tag photo.variant(resize_to_limit: [400, 600]), id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
+            <% else %>
+              <%= image_tag photo, id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
+            <% end %>
+          <% else %>
+            <img src="<%= asset_path('avatar_placeholder.png') %>" class="w-full h-full object-contain rounded" alt="サンプル画像">
+          <% end %>
+        </div>
+        <% if @photos.size > 1 %>
+          <div class="w-[260px] mx-auto mb-4">
+            <input type="range" min="1" max="<%= @photos.size %>" value="1"
+              data-action="input->photo-switcher#slide"
+              class="w-full h-36 slider-large"
+              style="accent-color: #8b5cf6; height: 3.5rem;"
+              data-photo-switcher-target="slider">
+          </div>
+        <% end %>
+      </div>
+    </div> 
   </div>
 </div>
 
@@ -119,6 +150,40 @@ function initGraphPage() {
     return;
   }
 
+  // どちらのタブを初期表示するか判定
+  const initialTab = (window.activeTab === "photo") ? "photo" : "graph";
+  if (initialTab === "photo") {
+    graphView.classList.add("hidden");
+    photoView.classList.remove("hidden");
+    setMainTab("photo");
+  } else {
+    graphView.classList.remove("hidden");
+    photoView.classList.add("hidden");
+    setMainTab("graph");
+  }
+
+  // グラブビューの期間タブを初期化
+  document.querySelectorAll("#graph-view .period-tab").forEach(btn => {
+    if (btn.dataset.period === "3m") {
+      btn.classList.add("bg-violet-500", "text-white")
+      btn.classList.remove("bg-violet-100", "text-violet-600")
+    } else {
+      btn.classList.remove("bg-violet-500", "text-white")
+      btn.classList.add("bg-violet-100", "text-violet-600")
+    }
+  });
+
+  // 写真ビューの期間タブも初期化
+  document.querySelectorAll("#photo-view .period-tab").forEach(btn => {
+    btn.classList.remove("bg-violet-500", "text-white");
+    btn.classList.add("bg-violet-100", "text-violet-600");
+  });
+  const photo3m = document.querySelector('#photo-view .period-tab[data-period="3m"]');
+  if (photo3m) {
+    photo3m.classList.remove("bg-violet-100", "text-violet-600");
+    photo3m.classList.add("bg-violet-500", "text-white");
+  }
+
   // 既存のChart.jsインスタンスをクリア
   if (typeof Chart !== 'undefined' && Chart.helpers) {
     Chart.helpers.each(Chart.instances, function(instance) {
@@ -133,8 +198,8 @@ function initGraphPage() {
 
   /* ---- タブ切替（グラフ/写真） ---------------- */
   function setMainTab(active) {
-    const on  = "w-full bg-purple-500 text-white py-2 text-sm sm:text-base";
-    const off = "w-full bg-purple-100 text-purple-500 py-2 text-sm sm:text-base";
+    const on  = "w-full bg-violet-500 text-white py-2 text-sm sm:text-base";
+    const off = "w-full bg-violet-100 text-violet-500 py-2 text-sm sm:text-base";
     tabGraph.className = active === "graph" ? on : off;
     tabPhoto.className = active === "photo" ? on : off;
   }
@@ -143,11 +208,43 @@ function initGraphPage() {
     graphView.classList.remove("hidden");
     photoView.classList.add("hidden");
     setMainTab("graph");
+    // 期間ボタンを3ヶ月にリセット
+    document.querySelectorAll("#graph-view .period-tab").forEach(btn => {
+      if (btn.dataset.period === "3m") {
+        btn.classList.add("bg-violet-500", "text-white")
+        btn.classList.remove("bg-violet-100", "text-violet-600")
+      } else {
+        btn.classList.remove("bg-violet-500", "text-white")
+        btn.classList.add("bg-violet-100", "text-violet-600")
+      }
+    });
+    renderChart("3m");
   };
   tabPhoto.onclick = () => {
     graphView.classList.add("hidden");
     photoView.classList.remove("hidden");
     setMainTab("photo");
+    // 期間ボタンを3ヶ月にリセット
+    document.querySelectorAll("#photo-view .period-tab").forEach(btn => {
+      if (btn.dataset.period === "3m") {
+        btn.classList.add("bg-violet-500", "text-white")
+        btn.classList.remove("bg-violet-100", "text-violet-600")
+      } else {
+        btn.classList.remove("bg-violet-500", "text-white")
+        btn.classList.add("bg-violet-100", "text-violet-600")
+      }
+    });
+    // Stimulusコントローラーで3mにリセット
+    const photoSwitcher = document.querySelector('[data-controller="photo-switcher"]')?.controller;
+    if (photoSwitcher && typeof photoSwitcher.setPeriod === 'function') {
+      photoSwitcher.setPeriod("3m");
+    } else if (window.application && window.application.getControllerForElementAndIdentifier) {
+      // Stimulus v3以降の取得方法
+      const controller = window.application.getControllerForElementAndIdentifier(photoSwitcher, "photo-switcher");
+      if (controller && typeof controller.setPeriod === 'function') {
+        controller.setPeriod("3m");
+      }
+    }
   };
 
   /* ---- グラフ描画 ------------------------------ */
@@ -331,11 +428,11 @@ function initGraphPage() {
   document.querySelectorAll(".period-tab").forEach(btn => {
     btn.addEventListener("click", () => {
       document.querySelectorAll(".period-tab").forEach(b => {
-        b.classList.remove("bg-purple-500", "text-white");
-        b.classList.add("bg-purple-100", "text-purple-600");
+        b.classList.remove("bg-violet-500", "text-white");
+        b.classList.add("bg-violet-100", "text-violet-600");
       });
-      btn.classList.remove("bg-purple-100", "text-purple-600");
-      btn.classList.add("bg-purple-500", "text-white");
+      btn.classList.remove("bg-violet-100", "text-violet-600");
+      btn.classList.add("bg-violet-500", "text-white");
       renderChart(btn.dataset.period);
     });
   });
@@ -346,34 +443,70 @@ function initGraphPage() {
   // リサイズ時の対応
   window.addEventListener('resize', () => {
     if (window.chart) {
-      renderChart(document.querySelector('.period-tab.bg-purple-500')?.dataset.period || '3m');
+      renderChart(document.querySelector('.period-tab.bg-violet-500')?.dataset.period || '3m');
     }
   });
 }
 
 /* --------- イベント登録 (Turbo対応) ---------- */
 document.addEventListener("DOMContentLoaded", initGraphPage);
-document.addEventListener("turbo:load",       initGraphPage);
+document.addEventListener("turbo:load", initGraphPage);
 
 // Turboキャッシュ前にチャート破棄
-document.addEventListener("turbo:before-cache", () => {
-  if (window.chart) {
-    window.chart.destroy();
-    window.chart = null;
-  }
-  
-  // すべてのChart.jsインスタンスを破棄
-  if (typeof Chart !== 'undefined' && Chart.helpers) {
-    Chart.helpers.each(Chart.instances, function(instance) {
-      instance.destroy();
-    });
-  }
-  
-  // canvas要素をリセット（要素が存在する場合のみ）
-  const canvas = document.getElementById("weightChart");
-  if (canvas) {
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-});
+// document.addEventListener("turbo:before-cache", () => {
+//   if (window.chart) {
+//     window.chart.destroy();
+//     window.chart = null;
+//   }
+//   
+//   // すべてのChart.jsインスタンスを破棄
+//   if (typeof Chart !== 'undefined' && Chart.helpers) {
+//     Chart.helpers.each(Chart.instances, function(instance) {
+//       instance.destroy();
+//     });
+//   }
+//   
+//   // canvas要素をリセット（要素が存在する場合のみ）
+//   const canvas = document.getElementById("weightChart");
+//   if (canvas) {
+//     const ctx = canvas.getContext("2d");
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+//   }
+// });
+
+window.activeTab = "<%= params[:tab] || 'graph' %>";
 </script>
+
+<style>
+/* 大きなスライダー用カスタムCSS */
+input[type=range].slider-large {
+  height: 3.5rem;
+}
+input[type=range].slider-large::-webkit-slider-thumb {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgb(139, 92, 246); /* Tailwind bg-violet-500 */
+  border: 3px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+input[type=range].slider-large::-moz-range-thumb {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgb(139, 92, 246);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+input[type=range].slider-large::-ms-thumb {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgb(139, 92, 246);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  cursor: pointer;
+}
+</style>

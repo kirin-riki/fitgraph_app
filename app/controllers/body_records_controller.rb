@@ -1,21 +1,18 @@
 # app/controllers/body_records_controller.rb
 class BodyRecordsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_selected_date             # ① URL から日付を読み取る
-  before_action :set_body_record,  only: :top  # ② 該当レコードを 1 行取得
+  before_action :set_selected_date, except: [:top]
+  before_action :set_body_record,  only: [] # `top`アクションへの適用を解除
   before_action :set_record,       only: %i[edit update]
 
   def top
-    @selected_date = Date.parse(params[:selected_date]) rescue Date.today
-
+    @selected_date = (params[:start_date] || Date.today).to_date
+    @body_record = current_user.body_records.find_or_initialize_by(recorded_at: @selected_date)
     @date_range = (@selected_date.beginning_of_month.beginning_of_week(:sunday)..
                    @selected_date.end_of_month.end_of_week(:sunday))
-
-    @days_with_records =
-      current_user.body_records
-                  .where(recorded_at: @date_range)
-                  .pluck(:recorded_at)
-                  .map(&:to_date)
+    @body_records = current_user.body_records.where(recorded_at: @date_range)
+    @days_with_records = @body_records.pluck(:recorded_at).map(&:to_date)
+    # Turbo Frame の処理は不要。top.html.erb が自動的にレンダリングされる
   end
 
   def new

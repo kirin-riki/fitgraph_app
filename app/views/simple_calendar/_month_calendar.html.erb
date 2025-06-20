@@ -50,7 +50,7 @@
 
             <td class="text-center py-2">
               <%= link_to day.day,
-                  top_body_records_path(selected_date: day),
+                  top_body_records_path(start_date: day),
                   class: classes %>
             </td>
           <% end %>
@@ -67,6 +67,7 @@
         (@body_record.persisted? ?
            edit_body_record_path(@body_record) :
            new_body_record_path(recorded_at: @selected_date)),
+        data: { turbo_frame: "_top" },
         class: "block w-full my-5 bg-violet-600 hover:bg-violet-700
                 text-white font-semibold text-center py-3 rounded-full" %>
   </div>
