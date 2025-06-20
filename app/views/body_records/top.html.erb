@@ -4,10 +4,8 @@
       入力する日を選択
     </h2>
 
-    <div class="simple_calendar_test">
-      <%= month_calendar do |date| %>
-        <%= date.day %>
-      <% end %>
-    </div>
+    <%= turbo_frame_tag "calendar" do %>
+      <%= render "calendar" %>
+    <% end %>
   </section>
 </main>
