@@ -93,7 +93,7 @@ GEM
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.12.0)
       aws-eventstream (~> 1, >= 1.0.2)
-    base64 (0.3.0)
+    base64 (0.2.0)
     bcrypt (3.1.20)
     benchmark (0.4.1)
     bigdecimal (3.2.1)
@@ -149,8 +149,9 @@ GEM
     ffi (1.17.2-x86_64-darwin)
     ffi (1.17.2-x86_64-linux-gnu)
     ffi (1.17.2-x86_64-linux-musl)
-    fog-aws (3.24.0)
-      fog-core (~> 2.1)
+    fog-aws (3.32.0)
+      base64 (~> 0.2.0)
+      fog-core (~> 2.6)
       fog-json (~> 1.1)
       fog-xml (~> 0.1)
     fog-core (2.6.0)
@@ -228,7 +229,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2025.0603)
+    mime-types-data (3.2025.0617)
     mini_magick (5.2.0)
       benchmark
       logger
