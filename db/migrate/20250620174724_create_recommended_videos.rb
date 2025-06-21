@@ -16,6 +16,6 @@ class CreateRecommendedVideos < ActiveRecord::Migration[7.2]
     # API 取得日時と動画IDで検索しやすく、かつ同じ動画の重複登録を防止
     add_index :recommended_videos, :fetched_at
     add_index :recommended_videos, :video_id
-    add_index :recommended_videos, [:user_id, :video_id], unique: true
+    add_index :recommended_videos, [ :user_id, :video_id ], unique: true
   end
 end

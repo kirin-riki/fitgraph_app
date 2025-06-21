@@ -1,7 +1,7 @@
 # app/controllers/body_records_controller.rb
 class BodyRecordsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_selected_date, except: [:top]
+  before_action :set_selected_date, except: [ :top ]
   before_action :set_body_record,  only: [] # `top`アクションへの適用を解除
   before_action :set_record,       only: %i[edit update]
 
