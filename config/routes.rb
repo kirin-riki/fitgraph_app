@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :recommended_videos, only: [ :index ] do
     collection do
       post :refresh
+      get :test_api
     end
   end
 end
