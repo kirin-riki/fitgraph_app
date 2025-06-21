@@ -5,7 +5,6 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
-  user: one
   video_id: "test_video_1"
   title: "Test Video 1"
   thumbnail_url: "https://example.com/thumb1.jpg"
@@ -15,7 +14,6 @@ one:
   fetched_at: <%= Time.current %>
 
 two:
-  user: two
   video_id: "test_video_2"
   title: "Test Video 2"
   thumbnail_url: "https://example.com/thumb2.jpg"
