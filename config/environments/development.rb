@@ -64,6 +64,15 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  # Enable asset debugging
+  config.assets.debug = true
+  
+  # Compress assets
+  config.assets.compress = false
+  
+  # Add precompiled assets
+  config.assets.precompile += %w( *.png *.jpg *.jpeg *.gif *.svg )
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
