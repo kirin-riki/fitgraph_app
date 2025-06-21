@@ -2,19 +2,25 @@
 <html>
   <head>
     <title><%= content_for(:title) || "FitGraph" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="FitGraph">
+    <meta name="theme-color" content="#8B5CF6">
+    <meta name="msapplication-TileColor" content="#8B5CF6">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
     <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="<%= asset_path('icon_logo_camera.png') %>" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="<%= asset_path('icon_logo_camera.png') %>">
+    
+    <!-- ファビコン（ブラウザタブ用） -->
+    <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('icon_logo_camera.png') %>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path('icon_logo_camera.png') %>">
+    <link rel="shortcut icon" href="<%= asset_path('icon_logo_camera.png') %>">
+    
+    <!-- Apple Touch Icon（iOS用） -->
     <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_path('icon_logo_camera.png') %>">
     <link rel="apple-touch-icon" sizes="152x152" href="<%= asset_path('icon_logo_camera.png') %>">
     <link rel="apple-touch-icon" sizes="144x144" href="<%= asset_path('icon_logo_camera.png') %>">
@@ -25,16 +31,21 @@
     <link rel="apple-touch-icon" sizes="60x60" href="<%= asset_path('icon_logo_camera.png') %>">
     <link rel="apple-touch-icon" sizes="57x57" href="<%= asset_path('icon_logo_camera.png') %>">
     
+    <!-- Windows Tile Icon -->
+    <meta name="msapplication-TileImage" content="<%= asset_path('icon_logo_camera.png') %>">
+
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload", media: "all" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module", defer: true %>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
   </head>
 
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-gray-50">
     <%= render "shared/header" %>
 
-    <%= yield %>
+    <main class="flex-1 pt-16 pb-20">
+      <%= yield %>
+    </main>
 
     <% if user_signed_in? %>
       <%= render "shared/footer" %>
