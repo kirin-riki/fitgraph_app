@@ -3,11 +3,13 @@
   <head>
     <title><%= content_for(:title) || "FitGraph" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-capable" content="standalone">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="FitGraph">
     <meta name="theme-color" content="#8B5CF6">
     <meta name="msapplication-TileColor" content="#8B5CF6">
+    <meta name="mobile-web-app-capable" content="standalone">
+    <meta name="application-name" content="FitGraph">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -19,8 +21,10 @@
     <link rel="icon" type="image/png" sizes="32x32" href="<%= asset_path('icon_logo_camera.png') %>">
     <link rel="icon" type="image/png" sizes="16x16" href="<%= asset_path('icon_logo_camera.png') %>">
     <link rel="shortcut icon" href="<%= asset_path('icon_logo_camera.png') %>">
+    <link rel="icon" href="<%= asset_path('icon_logo_camera.png') %>" type="image/png">
     
     <!-- Apple Touch Icon（iOS用） -->
+    <link rel="apple-touch-icon" href="<%= asset_path('icon_logo_camera.png') %>">
     <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_path('icon_logo_camera.png') %>">
     <link rel="apple-touch-icon" sizes="152x152" href="<%= asset_path('icon_logo_camera.png') %>">
     <link rel="apple-touch-icon" sizes="144x144" href="<%= asset_path('icon_logo_camera.png') %>">
@@ -33,6 +37,10 @@
     
     <!-- Windows Tile Icon -->
     <meta name="msapplication-TileImage" content="<%= asset_path('icon_logo_camera.png') %>">
+    
+    <!-- PWA用の追加設定 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="FitGraph">
 
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload", media: "all" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
