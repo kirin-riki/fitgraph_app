@@ -77,42 +77,64 @@ class RecommendedVideosController < ApplicationController
   end
 
   def refresh
+    Rails.logger.info "RecommendedVideosController#refresh: Starting refresh for user #{current_user.id}"
+    
     unless current_user.profile
+      Rails.logger.warn "RecommendedVideosController#refresh: No profile found for user #{current_user.id}"
       redirect_to recommended_videos_path, alert: "プロフィール設定が必要です。"
       return
     end
 
+    Rails.logger.info "RecommendedVideosController#refresh: Profile found, gender: #{current_user.profile.gender}, training_intensity: #{current_user.profile.training_intensity}"
+    
+    condition_key = current_user.profile.condition_key
+    Rails.logger.info "RecommendedVideosController#refresh: Condition key: #{condition_key}"
+
     # 既存のキャッシュを削除
-    RecommendedVideo.where(condition_key: current_user.profile.condition_key).destroy_all
+    old_count = RecommendedVideo.where(condition_key: condition_key).count
+    Rails.logger.info "RecommendedVideosController#refresh: Deleting #{old_count} old videos for condition_key: #{condition_key}"
+    RecommendedVideo.where(condition_key: condition_key).destroy_all
 
     # 新しい動画を取得
+    Rails.logger.info "RecommendedVideosController#refresh: Fetching new videos from YouTube API"
     service = YoutubeService.new
     videos_data = service.fetch_videos(
       gender: current_user.profile.gender,
       intensity: current_user.profile.training_intensity,
       target_count: 15
     )
+    
+    Rails.logger.info "RecommendedVideosController#refresh: Fetched #{videos_data.size} videos from API"
 
     # データベースに保存
+    saved_count = 0
     videos_data.each do |video_data|
       video_id = video_data.dig("id", "videoId")
       next unless video_id
 
-      RecommendedVideo.create!(
-        video_id: video_id,
-        title: video_data.dig("snippet", "title"),
-        thumbnail_url: video_data.dig("snippet", "thumbnails", "medium", "url"),
-        channel_title: video_data.dig("snippet", "channelTitle"),
-        view_count: video_data.dig("statistics", "viewCount")&.to_i || 0,
-        condition_key: current_user.profile.condition_key,
-        fetched_at: Time.current
-      )
-    rescue => e
-      # エラーが発生しても処理を続行
-      next
+      Rails.logger.info "RecommendedVideosController#refresh: Saving video #{video_id}"
+      
+      begin
+        RecommendedVideo.create!(
+          video_id: video_id,
+          title: video_data.dig("snippet", "title"),
+          thumbnail_url: video_data.dig("snippet", "thumbnails", "medium", "url"),
+          channel_title: video_data.dig("snippet", "channelTitle"),
+          view_count: video_data.dig("statistics", "viewCount")&.to_i || 0,
+          condition_key: condition_key,
+          fetched_at: Time.current
+        )
+        saved_count += 1
+        Rails.logger.info "RecommendedVideosController#refresh: Successfully saved video #{video_id}"
+      rescue => e
+        Rails.logger.error "RecommendedVideosController#refresh: Failed to save video #{video_id}: #{e.message}"
+        # エラーが発生しても処理を続行
+        next
+      end
     end
 
-    redirect_to recommended_videos_path, notice: "動画を更新しました"
+    Rails.logger.info "RecommendedVideosController#refresh: Saved #{saved_count} videos out of #{videos_data.size} fetched"
+    redirect_to recommended_videos_path, notice: "動画を更新しました（#{saved_count}件保存）"
   end
 
   private
