@@ -30630,3 +30630,72 @@ Processing by Rails::PwaController#manifest as JSON
 Completed 200 OK in 10ms (Views: 8.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/progress" for 172.25.0.1 at 2025-06-22 03:01:25 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ProgressController#index as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mBodyRecord Load (1.1ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND (recorded_at >= $2) ORDER BY "body_records"."recorded_at" ASC[0m  [["user_id", 1], [nil, "2025-03-21 18:01:25.997216"]]
+  ↳ app/controllers/progress_controller.rb:18:in `index'
+  [1m[36mActiveStorage::Attachment Load (1.7ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_type" = $1 AND "active_storage_attachments"."name" = $2 AND "active_storage_attachments"."record_id" IN ($3, $4, $5, $6, $7, $8, $9, $10, $11)[0m  [["record_type", "BodyRecord"], ["name", "photo"], ["record_id", 6], ["record_id", 5], ["record_id", 8], ["record_id", 9], ["record_id", 10], ["record_id", 4], ["record_id", 2], ["record_id", 1], ["record_id", 3]]
+  ↳ app/controllers/progress_controller.rb:18:in `index'
+  [1m[36mActiveStorage::Blob Load (1.9ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" IN ($1, $2, $3, $4, $5, $6, $7, $8, $9)[0m  [["id", 10], ["id", 12], ["id", 6], ["id", 14], ["id", 16], ["id", 17], ["id", 21], ["id", 23], ["id", 24]]
+  ↳ app/controllers/progress_controller.rb:18:in `index'
+  [1m[36mActiveStorage::VariantRecord Load (0.8ms)[0m  [1m[34mSELECT "active_storage_variant_records".* FROM "active_storage_variant_records" WHERE "active_storage_variant_records"."blob_id" IN ($1, $2, $3, $4, $5, $6, $7, $8, $9)[0m  [["blob_id", 21], ["blob_id", 6], ["blob_id", 23], ["blob_id", 10], ["blob_id", 12], ["blob_id", 14], ["blob_id", 16], ["blob_id", 17], ["blob_id", 24]]
+  ↳ app/controllers/progress_controller.rb:18:in `index'
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_type" = $1 AND "active_storage_attachments"."name" = $2 AND "active_storage_attachments"."record_id" IN ($3, $4, $5, $6, $7, $8, $9, $10, $11)[0m  [["record_type", "ActiveStorage::Blob"], ["name", "preview_image"], ["record_id", 21], ["record_id", 6], ["record_id", 23], ["record_id", 10], ["record_id", 12], ["record_id", 14], ["record_id", 16], ["record_id", 17], ["record_id", 24]]
+  ↳ app/controllers/progress_controller.rb:18:in `index'
+  [1m[36mActiveStorage::Attachment Load (0.6ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_type" = $1 AND "active_storage_attachments"."name" = $2 AND "active_storage_attachments"."record_id" IN ($3, $4, $5, $6, $7, $8, $9, $10, $11)[0m  [["record_type", "ActiveStorage::VariantRecord"], ["name", "image"], ["record_id", 4], ["record_id", 5], ["record_id", 6], ["record_id", 7], ["record_id", 8], ["record_id", 9], ["record_id", 10], ["record_id", 11], ["record_id", 12]]
+  ↳ app/controllers/progress_controller.rb:18:in `index'
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" IN ($1, $2, $3, $4, $5, $6, $7, $8, $9)[0m  [["id", 9], ["id", 11], ["id", 13], ["id", 15], ["id", 19], ["id", 20], ["id", 22], ["id", 25], ["id", 26]]
+  ↳ app/controllers/progress_controller.rb:18:in `index'
+  [1m[36mBodyRecord Load (0.5ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 ORDER BY "body_records"."recorded_at" ASC[0m  [["user_id", 1]]
+  ↳ app/controllers/progress_controller.rb:26:in `index'
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_type" = $1 AND "active_storage_attachments"."name" = $2 AND "active_storage_attachments"."record_id" IN ($3, $4, $5, $6, $7, $8, $9, $10, $11, $12)[0m  [["record_type", "BodyRecord"], ["name", "photo"], ["record_id", 7], ["record_id", 6], ["record_id", 5], ["record_id", 8], ["record_id", 9], ["record_id", 10], ["record_id", 4], ["record_id", 2], ["record_id", 1], ["record_id", 3]]
+  ↳ app/controllers/progress_controller.rb:26:in `index'
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" IN ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)[0m  [["id", 10], ["id", 12], ["id", 6], ["id", 14], ["id", 16], ["id", 17], ["id", 18], ["id", 21], ["id", 23], ["id", 24]]
+  ↳ app/controllers/progress_controller.rb:26:in `index'
+  [1m[36mActiveStorage::VariantRecord Load (0.6ms)[0m  [1m[34mSELECT "active_storage_variant_records".* FROM "active_storage_variant_records" WHERE "active_storage_variant_records"."blob_id" IN ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)[0m  [["blob_id", 21], ["blob_id", 6], ["blob_id", 23], ["blob_id", 10], ["blob_id", 12], ["blob_id", 14], ["blob_id", 16], ["blob_id", 17], ["blob_id", 18], ["blob_id", 24]]
+  ↳ app/controllers/progress_controller.rb:26:in `index'
+  [1m[36mActiveStorage::Attachment Load (0.5ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_type" = $1 AND "active_storage_attachments"."name" = $2 AND "active_storage_attachments"."record_id" IN ($3, $4, $5, $6, $7, $8, $9, $10, $11, $12)[0m  [["record_type", "ActiveStorage::Blob"], ["name", "preview_image"], ["record_id", 21], ["record_id", 6], ["record_id", 23], ["record_id", 10], ["record_id", 12], ["record_id", 14], ["record_id", 16], ["record_id", 17], ["record_id", 18], ["record_id", 24]]
+  ↳ app/controllers/progress_controller.rb:26:in `index'
+  [1m[36mCACHE ActiveStorage::Attachment Load (0.0ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_type" = $1 AND "active_storage_attachments"."name" = $2 AND "active_storage_attachments"."record_id" IN ($3, $4, $5, $6, $7, $8, $9, $10, $11)[0m  [["record_type", "ActiveStorage::VariantRecord"], ["name", "image"], ["record_id", 4], ["record_id", 5], ["record_id", 6], ["record_id", 7], ["record_id", 8], ["record_id", 9], ["record_id", 10], ["record_id", 11], ["record_id", 12]]
+  ↳ app/controllers/progress_controller.rb:26:in `index'
+  [1m[36mCACHE ActiveStorage::Blob Load (0.0ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" IN ($1, $2, $3, $4, $5, $6, $7, $8, $9)[0m  [["id", 9], ["id", 11], ["id", 13], ["id", 15], ["id", 19], ["id", 20], ["id", 22], ["id", 25], ["id", 26]]
+  ↳ app/controllers/progress_controller.rb:26:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering progress/index.html.erb within layouts/application
+  Rendered progress/index.html.erb within layouts/application (Duration: 16.3ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 1.1ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 1.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 37.9ms | GC: 0.0ms)
+Completed 200 OK in 168ms (Views: 38.7ms | ActiveRecord: 18.5ms (15 queries, 2 cached) | GC: 0.0ms)
+
+
+Started GET "/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsiZGF0YSI6MTcsInB1ciI6ImJsb2JfaWQifX0=--46f9fa5227e32ea137d7bc8f24550d8ccdcc935e/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJwbmciLCJyZXNpemVfdG9fbGltaXQiOls0MDAsNjAwXX0sInB1ciI6InZhcmlhdGlvbiJ9fQ==--93bd506d31ce8b937027bfad16250655bcc9738a/avatar_placeholder.png" for 172.25.0.1 at 2025-06-22 03:01:26 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ActiveStorage::Representations::RedirectController#show as PNG
+  Parameters: {"signed_blob_id"=>"eyJfcmFpbHMiOnsiZGF0YSI6MTcsInB1ciI6ImJsb2JfaWQifX0=--46f9fa5227e32ea137d7bc8f24550d8ccdcc935e", "variation_key"=>"[FILTERED]", "filename"=>"avatar_placeholder"}
+  [1m[36mActiveStorage::Blob Load (0.4ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mActiveStorage::VariantRecord Load (0.4ms)[0m  [1m[34mSELECT "active_storage_variant_records".* FROM "active_storage_variant_records" WHERE "active_storage_variant_records"."blob_id" = $1 AND "active_storage_variant_records"."variation_digest" = $2 LIMIT $3[0m  [["blob_id", 17], ["variation_digest", "P7L9bWbOlBzMSOy1zTRq+sL+KJw="], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Attachment Load (0.6ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 8], ["record_type", "ActiveStorage::VariantRecord"], ["name", "image"], ["LIMIT", 1]]
+  [1m[36mActiveStorage::Blob Load (0.5ms)[0m  [1m[34mSELECT "active_storage_blobs".* FROM "active_storage_blobs" WHERE "active_storage_blobs"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+[36m  Disk Storage (2.7ms) [0m[34mGenerated URL for file at key: mh3f6be5rrlb9zk3daelr20uk4tk (http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJtaDNmNmJlNXJybGI5emszZGFlbHIyMHVrNHRrIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiYXZhdGFyX3BsYWNlaG9sZGVyLnBuZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2F2YXRhcl9wbGFjZWhvbGRlci5wbmciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9wbmciLCJzZXJ2aWNlX25hbWUiOiJsb2NhbCJ9LCJleHAiOiIyMDI1LTA2LTIxVDE4OjA2OjI2LjM3M1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--74a9b2606dfb2590f838332e5cfdbfa0c9b404ab/avatar_placeholder.png)[0m
+Redirected to http://localhost:3000/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJtaDNmNmJlNXJybGI5emszZGFlbHIyMHVrNHRrIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiYXZhdGFyX3BsYWNlaG9sZGVyLnBuZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2F2YXRhcl9wbGFjZWhvbGRlci5wbmciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9wbmciLCJzZXJ2aWNlX25hbWUiOiJsb2NhbCJ9LCJleHAiOiIyMDI1LTA2LTIxVDE4OjA2OjI2LjM3M1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--74a9b2606dfb2590f838332e5cfdbfa0c9b404ab/avatar_placeholder.png
+Completed 302 Found in 99ms (ActiveRecord: 1.9ms (4 queries, 0 cached) | GC: 53.0ms)
+
+
+Started GET "/rails/active_storage/disk/eyJfcmFpbHMiOnsiZGF0YSI6eyJrZXkiOiJtaDNmNmJlNXJybGI5emszZGFlbHIyMHVrNHRrIiwiZGlzcG9zaXRpb24iOiJpbmxpbmU7IGZpbGVuYW1lPVwiYXZhdGFyX3BsYWNlaG9sZGVyLnBuZ1wiOyBmaWxlbmFtZSo9VVRGLTgnJ2F2YXRhcl9wbGFjZWhvbGRlci5wbmciLCJjb250ZW50X3R5cGUiOiJpbWFnZS9wbmciLCJzZXJ2aWNlX25hbWUiOiJsb2NhbCJ9LCJleHAiOiIyMDI1LTA2LTIxVDE4OjA2OjI2LjM3M1oiLCJwdXIiOiJibG9iX2tleSJ9fQ==--74a9b2606dfb2590f838332e5cfdbfa0c9b404ab/avatar_placeholder.png" for 172.25.0.1 at 2025-06-22 03:01:26 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ActiveStorage::DiskController#show as PNG
+  Parameters: {"encoded_key"=>"[FILTERED]", "filename"=>"avatar_placeholder"}
+Completed 200 OK in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 03:01:26 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 5.3ms | GC: 2.3ms)
+Completed 200 OK in 7ms (Views: 6.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 2.3ms)
+
+
