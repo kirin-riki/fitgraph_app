@@ -8,8 +8,9 @@ one:
   user: one
   video_id: "test_video_1"
   title: "Test Video 1"
-  description: "Test description 1"
   thumbnail_url: "https://example.com/thumb1.jpg"
+  channel_title: "Test Channel 1"
+  view_count: 1000
   condition_key: "man_low"
   fetched_at: <%= Time.current %>
 
@@ -17,7 +18,8 @@ two:
   user: two
   video_id: "test_video_2"
   title: "Test Video 2"
-  description: "Test description 2"
   thumbnail_url: "https://example.com/thumb2.jpg"
+  channel_title: "Test Channel 2"
+  view_count: 2000
   condition_key: "woman_high"
   fetched_at: <%= Time.current %>
