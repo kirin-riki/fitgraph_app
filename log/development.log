@@ -28440,3 +28440,55 @@ Processing by StaticPagesController#top as HTML
 Completed 200 OK in 23ms (Views: 22.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/" for 172.25.0.1 at 2025-06-21 23:13:50 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by StaticPagesController#top as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/top.html.erb within layouts/application
+  Rendered static_pages/top.html.erb within layouts/application (Duration: 3.0ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 1.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 70.6ms | GC: 49.8ms)
+Completed 200 OK in 78ms (Views: 72.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 49.8ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-21 23:13:51 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.4ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.0ms)
+
+
+Started GET "/users/sign_up" for 172.25.0.1 at 2025-06-21 23:13:52 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 3.4ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 0.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 22.0ms | GC: 3.2ms)
+Completed 200 OK in 72ms (Views: 25.8ms | ActiveRecord: 9.6ms (0 queries, 0 cached) | GC: 7.7ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-06-21 23:13:58 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by StaticPagesController#top as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/top.html.erb within layouts/application
+  Rendered static_pages/top.html.erb within layouts/application (Duration: 1.7ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 18.0ms | GC: 1.6ms)
+Completed 200 OK in 19ms (Views: 19.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.6ms)
+
+
+Started GET "/users/sign_up" for 172.25.0.1 at 2025-06-21 23:13:59 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 3.7ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 16.9ms | GC: 1.1ms)
+Completed 200 OK in 24ms (Views: 17.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.1ms)
+
+
