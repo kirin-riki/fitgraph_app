@@ -28,16 +28,21 @@
       </div>
     <% end %>
     
-    <!-- デバッグ情報（開発環境のみ） -->
-    <% if Rails.env.development? %>
-      <% if @videos.nil? %>
-        <p class="text-red-500">@videos が nil です</p>
-      <% elsif @videos.empty? %>
-        <p class="text-gray-500">動画が見つかりませんでした</p>
-      <% else %>
-        <p class="text-green-500 mb-4">動画数: <%= @videos.size %></p>
+    <!-- デバッグ情報 -->
+    <div class="bg-gray-100 border border-gray-300 text-gray-700 px-4 py-3 rounded mb-4 text-sm">
+      <p><strong>デバッグ情報:</strong></p>
+      <p>ユーザーID: <%= current_user.id %></p>
+      <p>プロフィール存在: <%= current_user.profile.present? %></p>
+      <% if current_user.profile %>
+        <p>性別: <%= current_user.profile.gender %></p>
+        <p>トレーニング強度: <%= current_user.profile.training_intensity %></p>
+        <p>条件キー: <%= current_user.profile.condition_key %></p>
       <% end %>
-    <% end %>
+      <p>動画数: <%= @videos&.size || 0 %></p>
+      <% if @videos.present? %>
+        <p>動画ID一覧: <%= @videos.map(&:video_id).join(", ") %></p>
+      <% end %>
+    </div>
 
     <!-- プロフィール設定案内 -->
     <% unless current_user.profile&.gender.present? && current_user.profile&.training_intensity.present? %>
@@ -45,6 +50,16 @@
         <p class="mb-2">動画の表示にはプロフィール設定が必要です。</p>
         <%= link_to "プロフィール設定へ", profile_path, 
             class: "text-blue-800 underline hover:text-blue-600" %>
+      </div>
+    <% end %>
+    
+    <!-- 動画取得ボタン -->
+    <% if current_user.profile&.gender.present? && current_user.profile&.training_intensity.present? %>
+      <div class="mb-4">
+        <%= link_to "動画を更新", refresh_recommended_videos_path, 
+            method: :post,
+            class: "bg-violet-600 hover:bg-violet-700 text-white font-semibold py-2 px-4 rounded",
+            data: { confirm: "動画を更新しますか？" } %>
       </div>
     <% end %>
     
