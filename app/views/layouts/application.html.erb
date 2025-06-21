@@ -24,7 +24,9 @@
 
     <%= yield %>
 
-    <%= render "shared/footer" %>
+    <% if user_signed_in? %>
+      <%= render "shared/footer" %>
+    <% end %>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {

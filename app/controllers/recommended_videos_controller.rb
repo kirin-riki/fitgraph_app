@@ -5,40 +5,39 @@ class RecommendedVideosController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    begin
-      # Profileが存在しない場合のフォールバック
-      profile = current_user.profile
-      unless profile
-        @videos = []
-        flash.now[:warning] = "プロフィール設定が必要です。"
-        return
-      end
+    @videos = RecommendedVideo.where(condition_key: current_user.profile.condition_key)
+  end
 
-      # 既存データの移行処理（condition_keyがnilのデータを削除）
-      migrate_old_data(profile.gender, profile.training_intensity)
-
-      # 条件別キャッシュ確認（3ヶ月以内）
-      cache = current_user.recommended_videos
-                          .for_conditions(profile.gender, profile.training_intensity)
-                          .recent(3)
-                          .order(fetched_at: :desc)
-                          .limit(5)
-
-      Rails.logger.info "キャッシュ件数: #{cache.size} (条件: #{profile.gender}_#{profile.training_intensity})"
-      cache.each_with_index { |v, i| Rails.logger.info "キャッシュ#{i+1}: #{v.video_id}, #{v.fetched_at}" }
-
-      if cache.size >= 5
-        Rails.logger.info "Using cached videos for user #{current_user.id} with conditions: #{profile.gender}_#{profile.training_intensity}"
-        @videos = cache
-      else
-        Rails.logger.info "Fetching new videos for user #{current_user.id} with conditions: #{profile.gender}_#{profile.training_intensity}"
-        fetch_and_cache_videos(profile.gender, profile.training_intensity)
-      end
+  def refresh
+    # 既存のキャッシュを削除
+    RecommendedVideo.where(condition_key: current_user.profile.condition_key).destroy_all
+    
+    # 新しい動画を取得
+    service = YoutubeService.new
+    videos_data = service.fetch_videos(
+      gender: current_user.profile.gender,
+      intensity: current_user.profile.intensity,
+      target_count: 15
+    )
+    
+    # データベースに保存
+    videos_data.each do |video_data|
+      video_id = video_data.dig("id", "videoId")
+      next unless video_id
+      
+      RecommendedVideo.create!(
+        video_id: video_id,
+        title: video_data.dig("snippet", "title"),
+        description: video_data.dig("snippet", "description"),
+        thumbnail_url: video_data.dig("snippet", "thumbnails", "medium", "url"),
+        condition_key: current_user.profile.condition_key
+      )
     rescue => e
-      Rails.logger.error "Error in RecommendedVideosController#index: #{e.message}"
-      @videos = []
-      flash.now[:error] = "動画の取得に失敗しました。しばらく時間をおいて再度お試しください。"
+      # エラーが発生しても処理を続行
+      next
     end
+    
+    redirect_to recommended_videos_path, notice: "動画を更新しました"
   end
 
   private

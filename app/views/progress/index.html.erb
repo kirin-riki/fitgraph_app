@@ -3,8 +3,8 @@
   <div class="w-full max-w-screen-md min-h-[600px]">
   <!-- グラフ / 写真タブ -->
   <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-4 sm:mb-6">
-      <button id="tab-graph" class="w-full bg-violet-500 text-white py-2 text-sm sm:text-base">グラフ</button>
-      <button id="tab-photo" class="w-full bg-violet-100 text-violet-500 py-2 text-sm sm:text-base">写真</button>
+      <button id="tab-graph" class="w-full bg-violet-500 text-white py-1 rounded text-xs sm:text-sm">グラフ</button>
+      <button id="tab-photo" class="w-full bg-violet-100 text-violet-500 py-1 rounded text-xs sm:text-sm">写真</button>
   </div>
 
   <!-- グラフビュー -->
@@ -15,7 +15,7 @@
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="3w">3週間</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1w">1週間</button>
     </div>
-    <div class="relative w-full" style="height: 60vh; max-height: 400px; min-height: 300px;">
+    <div class="relative w-full" style="height: 70vh; max-height: 500px; min-height: 400px;">
       <canvas id="weightChart" class="w-full h-full"></canvas>
     </div>
   </div>
@@ -28,30 +28,33 @@
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="3w">3週間</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1w">1週間</button>
       </div>
-      <div data-controller="photo-switcher"
-           data-photos='<%= @all_photos.map { |r| { url: (r.photo.variable? ? url_for(r.photo.variant(resize_to_limit: [400, 600])) : url_for(r.photo)), date: r.recorded_at.strftime("%Y-%m-%d") } }.to_json %>'>
-        <div class="relative mx-auto my-4 bg-gray-100 rounded overflow-hidden border border-gray-300"
-             style="width:260px; height:350px;">
-          <% if @photos.present? %>
-            <% photo = @photos.first %>
-            <% if photo.variable? %>
-              <%= image_tag photo.variant(resize_to_limit: [400, 600]), id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
+      <div class="relative w-full" style="height: 70vh; max-height: 500px; min-height: 400px;">
+        <div data-controller="photo-switcher"
+             data-photos='<%= @all_photos.map { |r| { url: (r.photo.variable? ? url_for(r.photo.variant(resize_to_limit: [400, 600])) : url_for(r.photo)), date: r.recorded_at.strftime("%Y-%m-%d") } }.to_json %>'
+             class="h-full flex flex-col items-center justify-center">
+          <div class="relative mx-auto bg-gray-100 rounded overflow-hidden border border-gray-300"
+               style="width:280px; height:720px;">
+            <% if @photos.present? %>
+              <% photo = @photos.first %>
+              <% if photo.variable? %>
+                <%= image_tag photo.variant(resize_to_limit: [400, 600]), id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
+              <% else %>
+                <%= image_tag photo, id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
+              <% end %>
             <% else %>
-              <%= image_tag photo, id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
+              <img src="<%= asset_path('avatar_placeholder.png') %>" class="w-full h-full object-contain rounded" alt="サンプル画像">
             <% end %>
-          <% else %>
-            <img src="<%= asset_path('avatar_placeholder.png') %>" class="w-full h-full object-contain rounded" alt="サンプル画像">
+          </div>
+          <% if @photos.size > 1 %>
+            <div class="w-[260px] mx-auto mt-1">
+              <input type="range" min="1" max="<%= @photos.size %>" value="1"
+                data-action="input->photo-switcher#slide"
+                class="w-full h-3 slider-large"
+                style="accent-color: #8b5cf6;"
+                data-photo-switcher-target="slider">
+            </div>
           <% end %>
         </div>
-        <% if @photos.size > 1 %>
-          <div class="w-[260px] mx-auto mb-4">
-            <input type="range" min="1" max="<%= @photos.size %>" value="1"
-              data-action="input->photo-switcher#slide"
-              class="w-full h-36 slider-large"
-              style="accent-color: #8b5cf6; height: 3.5rem;"
-              data-photo-switcher-target="slider">
-          </div>
-        <% end %>
       </div>
     </div> 
   </div>
@@ -198,8 +201,8 @@ function initGraphPage() {
 
   /* ---- タブ切替（グラフ/写真） ---------------- */
   function setMainTab(active) {
-    const on  = "w-full bg-violet-500 text-white py-2 text-sm sm:text-base";
-    const off = "w-full bg-violet-100 text-violet-500 py-2 text-sm sm:text-base";
+    const on  = "w-full bg-violet-500 text-white py-1 rounded text-xs sm:text-sm";
+    const off = "w-full bg-violet-100 text-violet-500 py-1 rounded text-xs sm:text-sm";
     tabGraph.className = active === "graph" ? on : off;
     tabPhoto.className = active === "photo" ? on : off;
   }

@@ -15,8 +15,6 @@ class YoutubeService
     max_attempts = 5  # 最大5回まで試行
     
     max_attempts.times do |attempt|
-      Rails.logger.info "[YouTube API] Attempt #{attempt + 1}/#{max_attempts}"
-      
       # APIリクエスト
       items, next_page_token = fetch_videos_page(gender, intensity, max_results, page_token)
       
@@ -26,24 +24,19 @@ class YoutubeService
       # 重複を除去（videoIdで）
       unique_items = all_items.uniq { |item| item.dig("id", "videoId") }
       
-      Rails.logger.info "[YouTube API] Total unique items so far: #{unique_items.size}"
-      
       # 目標件数に達したら終了
       if unique_items.size >= target_count
-        Rails.logger.info "[YouTube API] Target count reached: #{unique_items.size}"
         return unique_items.first(target_count)
       end
       
       # 次のページがない場合は終了
       if next_page_token.nil?
-        Rails.logger.info "[YouTube API] No more pages available"
         break
       end
       
       page_token = next_page_token
     end
     
-    Rails.logger.info "[YouTube API] Final result: #{all_items.uniq { |item| item.dig("id", "videoId") }.size} items"
     all_items.uniq { |item| item.dig("id", "videoId") }.first(target_count)
   end
 
@@ -65,32 +58,18 @@ class YoutubeService
     
     uri.query = params.to_query
 
-    Rails.logger.info "[YouTube API] Request URL: #{uri}"
     raw = Net::HTTP.get(uri)
-    Rails.logger.info "[YouTube API] Raw response body: #{raw}"
 
     json = JSON.parse(raw)
     if json["error"]
-      Rails.logger.error "[YouTube API] Error: #{json["error"]["message"]}"
       return [], nil
     end
 
     items = json["items"] || []
     next_page_token = json["nextPageToken"]
-    
-    Rails.logger.info "[YouTube API] Items in this page: #{items.size}"
-    Rails.logger.info "[YouTube API] Next page token: #{next_page_token}"
-
-    # 各アイテムのvideoIdを詳細にログ出力
-    items.each_with_index do |item, index|
-      video_id = item.dig("id", "videoId")
-      title = item.dig("snippet", "title")
-      Rails.logger.info "[YouTube API] Item #{index + 1}: videoId=#{video_id}, title=#{title&.truncate(50)}"
-    end
 
     # medium 以外も混じっていないかチェック
     valid = items.select { |i| i.dig("id","videoId").present? }
-    Rails.logger.info "[YouTube API] Valid video items in this page: #{valid.size}"
 
     [valid, next_page_token]
   end
