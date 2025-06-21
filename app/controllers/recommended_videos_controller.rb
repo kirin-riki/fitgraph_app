@@ -28,9 +28,11 @@ class RecommendedVideosController < ApplicationController
       RecommendedVideo.create!(
         video_id: video_id,
         title: video_data.dig("snippet", "title"),
-        description: video_data.dig("snippet", "description"),
         thumbnail_url: video_data.dig("snippet", "thumbnails", "medium", "url"),
-        condition_key: current_user.profile.condition_key
+        channel_title: video_data.dig("snippet", "channelTitle"),
+        view_count: video_data.dig("statistics", "viewCount")&.to_i || 0,
+        condition_key: current_user.profile.condition_key,
+        fetched_at: Time.current
       )
     rescue => e
       # エラーが発生しても処理を続行
@@ -110,7 +112,7 @@ class RecommendedVideosController < ApplicationController
   def create_or_update_video(item, gender, intensity)
     vid  = item["id"]["videoId"]
     snip = item["snippet"]
-    condition_key = RecommendedVideo.condition_key(gender, intensity)
+    condition_key = "#{gender}_#{intensity}"
 
     rec = current_user.recommended_videos
                       .find_or_initialize_by(
