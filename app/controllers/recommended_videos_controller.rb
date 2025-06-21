@@ -1,5 +1,5 @@
 # app/controllers/recommendations_controller.rb
-require_relative '../services/youtube_service'
+require_relative "../services/youtube_service"
 
 class RecommendedVideosController < ApplicationController
   before_action :authenticate_user!
@@ -11,7 +11,7 @@ class RecommendedVideosController < ApplicationController
   def refresh
     # 既存のキャッシュを削除
     RecommendedVideo.where(condition_key: current_user.profile.condition_key).destroy_all
-    
+
     # 新しい動画を取得
     service = YoutubeService.new
     videos_data = service.fetch_videos(
@@ -19,12 +19,12 @@ class RecommendedVideosController < ApplicationController
       intensity: current_user.profile.intensity,
       target_count: 15
     )
-    
+
     # データベースに保存
     videos_data.each do |video_data|
       video_id = video_data.dig("id", "videoId")
       next unless video_id
-      
+
       RecommendedVideo.create!(
         video_id: video_id,
         title: video_data.dig("snippet", "title"),
@@ -36,7 +36,7 @@ class RecommendedVideosController < ApplicationController
       # エラーが発生しても処理を続行
       next
     end
-    
+
     redirect_to recommended_videos_path, notice: "動画を更新しました"
   end
 
@@ -55,10 +55,10 @@ class RecommendedVideosController < ApplicationController
     target_success_count = 5
     max_api_attempts = 10  # 最大10回のAPIリクエスト
     all_saved_videos = []
-    
+
     max_api_attempts.times do |api_attempt|
       Rails.logger.info "[Video Save] API試行 #{api_attempt + 1}/#{max_api_attempts}"
-      
+
       # YouTube APIから動画取得
       items = YoutubeService.new.fetch_videos(
         gender: gender,
@@ -81,7 +81,7 @@ class RecommendedVideosController < ApplicationController
         if video
           all_saved_videos << video
           Rails.logger.info "[Video Save] 保存成功: #{video.video_id} (累計: #{all_saved_videos.size})"
-          
+
           # 目標件数に達したら終了
           if all_saved_videos.size >= target_success_count
             Rails.logger.info "[Video Save] 目標件数達成: #{all_saved_videos.size}件"
@@ -92,14 +92,14 @@ class RecommendedVideosController < ApplicationController
           Rails.logger.error "[Video Save] 保存失敗: #{item.dig('id', 'videoId')}"
         end
       end
-      
+
       Rails.logger.info "[Video Save] この試行での保存件数: #{all_saved_videos.size}"
     end
-    
+
     # 最大試行回数に達した場合
     Rails.logger.info "[Video Save] 最大試行回数に達しました。最終保存件数: #{all_saved_videos.size}"
     @videos = all_saved_videos.first(target_success_count)
-    
+
     if all_saved_videos.empty?
       flash.now[:warning] = "条件に合う動画が見つかりませんでした。"
     elsif all_saved_videos.size < target_success_count
@@ -117,13 +117,13 @@ class RecommendedVideosController < ApplicationController
                         video_id: vid,
                         condition_key: condition_key
                       )
-    
+
     rec.title         = snip["title"]
     rec.thumbnail_url = snip["thumbnails"]["medium"]["url"]
     rec.channel_title = snip["channelTitle"]
     rec.view_count    = snip.dig("statistics", "viewCount")&.to_i || 0
     rec.fetched_at    = Time.current
-    
+
     if rec.save
       rec
     else

@@ -4,15 +4,15 @@ class ProgressController < ApplicationController
   def index
     @period = params[:period] || "3m"
     @body_records = case @period
-                    when "1w"
-                      current_user.body_records.where('recorded_at >= ?', 1.week.ago)
-                    when "3w"
-                      current_user.body_records.where('recorded_at >= ?', 3.weeks.ago)
-                    when "1m"
-                      current_user.body_records.where('recorded_at >= ?', 1.month.ago)
-                    else # "3m"
-                      current_user.body_records.where('recorded_at >= ?', 3.months.ago)
-                    end
+    when "1w"
+                      current_user.body_records.where("recorded_at >= ?", 1.week.ago)
+    when "3w"
+                      current_user.body_records.where("recorded_at >= ?", 3.weeks.ago)
+    when "1m"
+                      current_user.body_records.where("recorded_at >= ?", 1.month.ago)
+    else # "3m"
+                      current_user.body_records.where("recorded_at >= ?", 3.months.ago)
+    end
                     .with_attached_photo
                     .order(:recorded_at)
                     .select { |r| r.photo.attached? }
