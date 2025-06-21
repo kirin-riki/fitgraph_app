@@ -30056,3 +30056,95 @@ Processing by Rails::PwaController#manifest as JSON
 Completed 200 OK in 7ms (Views: 6.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/recommended_videos" for 172.25.0.1 at 2025-06-22 01:01:33 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by RecommendedVideosController#index as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+RecommendedVideosController#index: User ID: 1
+RecommendedVideosController#index: YOUTUBE_API_KEY present: true
+RecommendedVideosController#index: YOUTUBE_API_KEY length: 39
+  [1m[36mProfile Load (0.9ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles" WHERE "profiles"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:16:in `index'
+RecommendedVideosController#index: Profile found, gender: man, training_intensity: medium
+RecommendedVideosController#index: Condition key: man_medium
+  [1m[36mRecommendedVideo Count (3.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1[0m  [["condition_key", "[FILTERED]"]]
+  ↳ app/controllers/recommended_videos_controller.rb:36:in `index'
+RecommendedVideosController#index: Found 5 videos
+  Rendering layout layouts/application.html.erb
+  Rendering recommended_videos/index.html.erb within layouts/application
+  [1m[36mCACHE RecommendedVideo Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1[0m  [["condition_key", "[FILTERED]"]]
+  ↳ app/views/recommended_videos/index.html.erb:41
+  [1m[36mRecommendedVideo Load (16.6ms)[0m  [1m[34mSELECT "recommended_videos".* FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1[0m  [["condition_key", "[FILTERED]"]]
+  ↳ app/views/recommended_videos/index.html.erb:42
+  Rendered recommended_videos/index.html.erb within layouts/application (Duration: 235.1ms | GC: 216.7ms)
+  Rendered shared/_header.html.erb (Duration: 1.0ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 20.3ms | GC: 17.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 515.3ms | GC: 469.0ms)
+Completed 200 OK in 909ms (Views: 530.9ms | ActiveRecord: 32.2ms (5 queries, 1 cached) | GC: 741.2ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 01:01:36 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 12.0ms | GC: 9.8ms)
+Completed 200 OK in 19ms (Views: 14.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 14.4ms)
+
+
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7864839756650184315)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+Migrating to RemoveUserIdFromRecommendedVideos (20250621161033)
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(7864839756650184315)[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7864839756650184315)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+Migrating to RemoveUserIdFromRecommendedVideos (20250621161033)
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(7864839756650184315)[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7864839756650184315)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+Migrating to RemoveUserIdFromRecommendedVideos (20250621161033)
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (33.0ms)[0m  [1m[35mALTER TABLE "recommended_videos" DROP COLUMN "user_id"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250621161033') RETURNING "version"[0m
+  [1m[36mTRANSACTION (19.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT pg_advisory_unlock(7864839756650184315)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (3.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1235955690063948105)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (3.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+Migrating to AddConditionFieldsToRecommendedVideos (20250621000000)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.5ms)[0m  [1m[35mALTER TABLE "recommended_videos" ADD "condition_key" character varying[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE INDEX "index_recommended_videos_on_user_id_and_condition_key" ON "recommended_videos" ("user_id", "condition_key")[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE INDEX "idx_on_user_id_condition_key_fetched_at_ace59846a4" ON "recommended_videos" ("user_id", "condition_key", "fetched_at")[0m
+  [1m[35m (2.6ms)[0m  [1m[33mUPDATE recommended_videos SET condition_key = 'man_low' WHERE condition_key IS NULL[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250621000000') RETURNING "version"[0m
+  [1m[36mTRANSACTION (9.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1235955690063948105)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1235955690063948105)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "environment"]]
+Migrating to RemoveUserIdFromRecommendedVideos (20250621161033)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.9ms)[0m  [1m[35mALTER TABLE "recommended_videos" DROP COLUMN "user_id"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250621161033') RETURNING "version"[0m
+  [1m[36mTRANSACTION (10.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT pg_advisory_unlock(1235955690063948105)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Loaded [33m.env[0m
