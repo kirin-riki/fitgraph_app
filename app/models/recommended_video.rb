@@ -1,7 +1,7 @@
 class RecommendedVideo < ApplicationRecord
-  belongs_to :user
+  # belongs_to :user を削除 - 条件ベースのキャッシュにする
 
-  validates :video_id, presence: true, uniqueness: { scope: [ :user_id, :condition_key ] }
+  validates :video_id, presence: true, uniqueness: { scope: :condition_key }
   validates :condition_key, presence: true
 
   # 条件別のスコープ
