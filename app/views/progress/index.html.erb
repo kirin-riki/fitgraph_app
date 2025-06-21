@@ -30,14 +30,14 @@
       </div>
       <div class="relative w-full" style="height: 50vh; max-height: 450px; min-height: 300px;">
         <div data-controller="photo-switcher"
-             data-photos='<%= @all_photos.map { |r| { url: (r.photo.variable? ? url_for(r.photo.variant(resize_to_limit: [400, 600])) : url_for(r.photo)), date: r.recorded_at.strftime("%Y-%m-%d") } }.to_json %>'
+             data-photos='<%= @all_photos.map { |r| { url: (r.photo.variable? ? url_for(r.photo.variant(resize_to_limit: [400, 600], quality: 70, format: :jpeg).processed) : url_for(r.photo)), date: r.recorded_at.strftime("%Y-%m-%d") } }.to_json %>'
              class="h-full flex flex-col items-center justify-center">
           <div class="relative mx-auto bg-gray-100 rounded overflow-hidden border border-gray-300"
                style="width:240px; height:400px;">
             <% if @photos.present? %>
               <% photo = @photos.first %>
               <% if photo.variable? %>
-                <%= image_tag photo.variant(resize_to_limit: [400, 600]), id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
+                <%= image_tag photo.variant(resize_to_limit: [400, 600], quality: 70, format: :jpeg).processed, id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
               <% else %>
                 <%= image_tag photo, id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
               <% end %>
