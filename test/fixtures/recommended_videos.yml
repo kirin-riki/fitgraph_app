@@ -4,8 +4,20 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one:
+  user: one
+  video_id: "test_video_1"
+  title: "Test Video 1"
+  description: "Test description 1"
+  thumbnail_url: "https://example.com/thumb1.jpg"
+  condition_key: "man_low"
+  fetched_at: <%= Time.current %>
+
+two:
+  user: two
+  video_id: "test_video_2"
+  title: "Test Video 2"
+  description: "Test description 2"
+  thumbnail_url: "https://example.com/thumb2.jpg"
+  condition_key: "woman_high"
+  fetched_at: <%= Time.current %>
