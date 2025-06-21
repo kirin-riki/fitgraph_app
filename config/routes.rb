@@ -25,5 +25,9 @@ Rails.application.routes.draw do
       get :top
     end
   end
-  resources :recommended_videos, only: [ :index ]
+  resources :recommended_videos, only: [ :index ] do
+    collection do
+      post :refresh
+    end
+  end
 end

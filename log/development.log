@@ -29984,3 +29984,75 @@ Completed 200 OK in 26ms (Views: 19.4ms | ActiveRecord: 1.0ms (3 queries, 0 cach
 
 [dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
 [dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
+Started GET "/recommended_videos" for 172.25.0.1 at 2025-06-22 00:26:38 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by RecommendedVideosController#index as HTML
+  [1m[36mUser Load (2.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+RecommendedVideosController#index: User ID: 1
+  [1m[36mProfile Load (0.9ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles" WHERE "profiles"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:11:in `index'
+RecommendedVideosController#index: Profile found, gender: man, training_intensity: medium
+RecommendedVideosController#index: Condition key: man_medium
+  [1m[36mRecommendedVideo Count (5.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1[0m  [["condition_key", "[FILTERED]"]]
+  ↳ app/controllers/recommended_videos_controller.rb:31:in `index'
+RecommendedVideosController#index: Found 5 videos
+  Rendering layout layouts/application.html.erb
+  Rendering recommended_videos/index.html.erb within layouts/application
+  [1m[36mCACHE RecommendedVideo Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1[0m  [["condition_key", "[FILTERED]"]]
+  ↳ app/views/recommended_videos/index.html.erb:41
+  [1m[36mRecommendedVideo Load (1.4ms)[0m  [1m[34mSELECT "recommended_videos".* FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1[0m  [["condition_key", "[FILTERED]"]]
+  ↳ app/views/recommended_videos/index.html.erb:42
+  Rendered recommended_videos/index.html.erb within layouts/application (Duration: 34.7ms | GC: 2.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 35.5ms | GC: 2.4ms)
+Completed 500 Internal Server Error in 248ms (ActiveRecord: 42.6ms (5 queries, 1 cached) | GC: 13.2ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `refresh_recommended_videos_path' for an instance of #<Class:0x000074884da46740>):
+
+Causes:
+NameError (undefined local variable or method `refresh_recommended_videos_path' for an instance of #<Class:0x000074884da46740>)
+    56:     <!-- 動画取得ボタン -->
+    57:     <% if current_user.profile&.gender.present? && current_user.profile&.training_intensity.present? %>
+    58:       <div class="mb-4">
+    59:         <%= link_to "動画を更新", refresh_recommended_videos_path, 
+    60:             method: :post,
+    61:             class: "bg-violet-600 hover:bg-violet-700 text-white font-semibold py-2 px-4 rounded",
+    62:             data: { confirm: "動画を更新しますか？" } %>
+  
+app/views/recommended_videos/index.html.erb:59
+Started GET "/recommended_videos" for 172.25.0.1 at 2025-06-22 00:27:52 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by RecommendedVideosController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+RecommendedVideosController#index: User ID: 1
+  [1m[36mProfile Load (0.4ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles" WHERE "profiles"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:11:in `index'
+RecommendedVideosController#index: Profile found, gender: man, training_intensity: medium
+RecommendedVideosController#index: Condition key: man_medium
+  [1m[36mRecommendedVideo Count (1.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1[0m  [["condition_key", "[FILTERED]"]]
+  ↳ app/controllers/recommended_videos_controller.rb:31:in `index'
+RecommendedVideosController#index: Found 5 videos
+  Rendering layout layouts/application.html.erb
+  Rendering recommended_videos/index.html.erb within layouts/application
+  [1m[36mCACHE RecommendedVideo Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1[0m  [["condition_key", "[FILTERED]"]]
+  ↳ app/views/recommended_videos/index.html.erb:41
+  [1m[36mRecommendedVideo Load (0.7ms)[0m  [1m[34mSELECT "recommended_videos".* FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1[0m  [["condition_key", "[FILTERED]"]]
+  ↳ app/views/recommended_videos/index.html.erb:42
+  Rendered recommended_videos/index.html.erb within layouts/application (Duration: 25.9ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 1.2ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 2.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 155.8ms | GC: 42.9ms)
+Completed 200 OK in 251ms (Views: 153.1ms | ActiveRecord: 41.7ms (5 queries, 1 cached) | GC: 42.9ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 00:27:54 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 3.9ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 6.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
