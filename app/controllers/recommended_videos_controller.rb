@@ -30,6 +30,12 @@ class RecommendedVideosController < ApplicationController
       @videos = RecommendedVideo.where(condition_key: condition_key)
       Rails.logger.info "RecommendedVideosController#index: Found #{@videos.count} videos"
       
+      # 動画が存在しない場合、自動でAPIから取得
+      if @videos.empty?
+        Rails.logger.info "RecommendedVideosController#index: No videos found, fetching from API"
+        fetch_and_cache_videos(current_user.profile.gender, current_user.profile.training_intensity)
+      end
+      
     rescue => e
       Rails.logger.error "RecommendedVideosController#index: Error: #{e.message}"
       Rails.logger.error "RecommendedVideosController#index: Backtrace: #{e.backtrace.first(5).join("\n")}"
