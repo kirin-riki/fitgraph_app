@@ -9,6 +9,7 @@ class Profile < ApplicationRecord
   validates :target_weight, numericality: { greater_than: 0 }, allow_nil: true
 
   def condition_key
+    return nil if gender.nil? || training_intensity.nil?
     "#{gender}_#{training_intensity}"
   end
 end
