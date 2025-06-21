@@ -25,4 +25,5 @@ Rails.application.routes.draw do
       get :top
     end
   end
+  resources :recommended_videos, only: [:index]
 end
