@@ -18,16 +18,18 @@
     <link rel="manifest" href="/manifest.json">
     
     <!-- ファビコン（ブラウザタブ用） -->
-    <link rel="icon" href="<%= asset_path('icon_logo512.png') %>?v=2" type="image/png">
+    <link rel="icon" href="/icon.png?v=3" type="image/png">
     
     <!-- Apple Touch Icon（iOS用） -->
-    <link rel="apple-touch-icon" href="<%= asset_path('icon_logo512.png') %>?v=2">
+    <link rel="apple-touch-icon" href="/icon.png?v=3">
     
     <!-- Windows Tile Icon -->
-    <meta name="msapplication-TileImage" content="<%= asset_path('icon_logo512.png') %>?v=2">
+    <meta name="msapplication-TileImage" content="/icon.png?v=3">
     
     <!-- デバッグ情報 -->
-    <!-- Icon Path: <%= asset_path('icon_logo512.png') %> -->
+    <!-- Icon Path: /icon.png?v=3 -->
+    <!-- Current Time: <%= Time.current %> -->
+    <!-- Icon File Size: <%= File.size('public/icon.png') rescue 'N/A' %> bytes -->
 
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload", media: "all" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
