@@ -29,7 +29,6 @@ Rails.application.routes.draw do
     collection do
       post :refresh
       get :refresh
-      get :test_api
     end
   end
 end
