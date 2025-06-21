@@ -8,6 +8,11 @@ class RecommendedVideosController < ApplicationController
     begin
       Rails.logger.info "RecommendedVideosController#index: User ID: #{current_user.id}"
       
+      # YouTube API環境変数の確認
+      api_key = ENV["YOUTUBE_API_KEY"]
+      Rails.logger.info "RecommendedVideosController#index: YOUTUBE_API_KEY present: #{api_key.present?}"
+      Rails.logger.info "RecommendedVideosController#index: YOUTUBE_API_KEY length: #{api_key&.length}"
+      
       unless current_user.profile
         Rails.logger.warn "RecommendedVideosController#index: No profile found for user #{current_user.id}"
         @videos = []
@@ -35,6 +40,39 @@ class RecommendedVideosController < ApplicationController
       Rails.logger.error "RecommendedVideosController#index: Backtrace: #{e.backtrace.first(5).join("\n")}"
       @videos = []
       flash.now[:error] = "動画の取得に失敗しました。"
+    end
+  end
+
+  def test_api
+    begin
+      # YouTube API環境変数の確認
+      api_key = ENV["YOUTUBE_API_KEY"]
+      if api_key.blank?
+        render json: { error: "YOUTUBE_API_KEY environment variable is not set" }, status: :internal_server_error
+        return
+      end
+
+      # YouTube API接続テスト
+      service = YoutubeService.new
+      test_videos = service.fetch_videos(
+        gender: "man",
+        intensity: "low",
+        target_count: 1
+      )
+
+      render json: {
+        api_key_set: true,
+        api_key_length: api_key.length,
+        test_successful: test_videos.present?,
+        test_video_count: test_videos.size,
+        sample_video: test_videos.first&.dig("id", "videoId")
+      }
+    rescue => e
+      render json: {
+        api_key_set: ENV["YOUTUBE_API_KEY"].present?,
+        error: e.message,
+        backtrace: e.backtrace.first(3)
+      }, status: :internal_server_error
     end
   end
 
