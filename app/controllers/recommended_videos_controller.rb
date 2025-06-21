@@ -5,10 +5,45 @@ class RecommendedVideosController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @videos = RecommendedVideo.where(condition_key: current_user.profile.condition_key)
+    begin
+      Rails.logger.info "RecommendedVideosController#index: User ID: #{current_user.id}"
+      
+      unless current_user.profile
+        Rails.logger.warn "RecommendedVideosController#index: No profile found for user #{current_user.id}"
+        @videos = []
+        flash.now[:warning] = "プロフィール設定が必要です。"
+        return
+      end
+      
+      Rails.logger.info "RecommendedVideosController#index: Profile found, gender: #{current_user.profile.gender}, training_intensity: #{current_user.profile.training_intensity}"
+      
+      condition_key = current_user.profile.condition_key
+      Rails.logger.info "RecommendedVideosController#index: Condition key: #{condition_key}"
+      
+      if condition_key.nil?
+        Rails.logger.warn "RecommendedVideosController#index: Condition key is nil for user #{current_user.id}"
+        @videos = []
+        flash.now[:warning] = "プロフィールの性別またはトレーニング強度が設定されていません。"
+        return
+      end
+      
+      @videos = RecommendedVideo.where(condition_key: condition_key)
+      Rails.logger.info "RecommendedVideosController#index: Found #{@videos.count} videos"
+      
+    rescue => e
+      Rails.logger.error "RecommendedVideosController#index: Error: #{e.message}"
+      Rails.logger.error "RecommendedVideosController#index: Backtrace: #{e.backtrace.first(5).join("\n")}"
+      @videos = []
+      flash.now[:error] = "動画の取得に失敗しました。"
+    end
   end
 
   def refresh
+    unless current_user.profile
+      redirect_to recommended_videos_path, alert: "プロフィール設定が必要です。"
+      return
+    end
+
     # 既存のキャッシュを削除
     RecommendedVideo.where(condition_key: current_user.profile.condition_key).destroy_all
 
@@ -16,7 +51,7 @@ class RecommendedVideosController < ApplicationController
     service = YoutubeService.new
     videos_data = service.fetch_videos(
       gender: current_user.profile.gender,
-      intensity: current_user.profile.intensity,
+      intensity: current_user.profile.training_intensity,
       target_count: 15
     )
 

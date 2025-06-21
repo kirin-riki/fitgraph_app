@@ -29982,3 +29982,5 @@ Processing by BodyRecordsController#top as HTML
 Completed 200 OK in 26ms (Views: 19.4ms | ActiveRecord: 1.0ms (3 queries, 0 cached) | GC: 0.0ms)
 
 
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
