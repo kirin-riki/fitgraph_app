@@ -7,7 +7,7 @@ class ProfilesController < ApplicationController
 
   def update
     if @user.update(user_params) && @profile.update(profile_params)
-      redirect_to profile_path, notice: "プロフィール情報を更新しました"
+      redirect_to profile_path
     else
       render "edit"
     end
