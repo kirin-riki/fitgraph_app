@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_21_000000) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_21_161033) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,7 +67,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_21_000000) do
   end
 
   create_table "recommended_videos", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.string "video_id", null: false
     t.string "title", null: false
     t.string "thumbnail_url"
@@ -78,10 +77,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_21_000000) do
     t.datetime "updated_at", null: false
     t.string "condition_key"
     t.index ["fetched_at"], name: "index_recommended_videos_on_fetched_at"
-    t.index ["user_id", "condition_key", "fetched_at"], name: "idx_on_user_id_condition_key_fetched_at_ace59846a4"
-    t.index ["user_id", "condition_key"], name: "index_recommended_videos_on_user_id_and_condition_key"
-    t.index ["user_id", "video_id"], name: "index_recommended_videos_on_user_id_and_video_id", unique: true
-    t.index ["user_id"], name: "index_recommended_videos_on_user_id"
     t.index ["video_id"], name: "index_recommended_videos_on_video_id"
   end
 
@@ -104,5 +99,4 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_21_000000) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "body_records", "users"
   add_foreign_key "profiles", "users"
-  add_foreign_key "recommended_videos", "users"
 end
