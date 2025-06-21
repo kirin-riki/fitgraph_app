@@ -37,6 +37,16 @@
       </div>
     <% end %>
     
+    <!-- 動画取得ボタン（一時的に復活） -->
+    <% if current_user.profile&.gender.present? && current_user.profile&.training_intensity.present? %>
+      <div class="mb-4">
+        <%= link_to "動画を5件に更新", refresh_recommended_videos_path, 
+            method: :post,
+            class: "bg-violet-600 hover:bg-violet-700 text-white font-semibold py-2 px-4 rounded",
+            data: { confirm: "既存の動画を削除して5件に更新しますか？" } %>
+      </div>
+    <% end %>
+    
     <div class="grid grid-cols-1 gap-6">
       <% if @videos.present? %>
         <% @videos.each do |rec| %>
