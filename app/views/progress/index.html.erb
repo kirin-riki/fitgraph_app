@@ -1,39 +1,39 @@
 <div class="w-full mx-auto min-h-screen flex items-center justify-center
-            bg-gray-50 flex flex-col justify-center py-4 sm:py-12 sm:px-6 lg:px-8 px-4">
-  <div class="w-full max-w-screen-md min-h-[500px] sm:min-h-[600px]">
+            bg-gray-50 flex flex-col justify-center py-4 sm:py-8 lg:py-10 sm:px-6 lg:px-8 px-4 pt-16 pb-20">
+  <div class="w-full max-w-screen-md min-h-[400px] sm:min-h-[500px] lg:min-h-[550px]">
   <!-- グラフ / 写真タブ -->
-  <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-2 sm:mb-4">
+  <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-2 sm:mb-3 lg:mb-4">
       <button id="tab-graph" class="w-full bg-violet-500 text-white py-1 rounded text-xs sm:text-sm">グラフ</button>
       <button id="tab-photo" class="w-full bg-violet-100 text-violet-500 py-1 rounded text-xs sm:text-sm">写真</button>
   </div>
 
   <!-- グラフビュー -->
   <div id="graph-view" class="w-full max-w-screen-md mx-auto">
-    <div class="w-full flex border rounded overflow-hidden mb-2 sm:mb-4 pb-6">
+    <div class="w-full flex border rounded overflow-hidden mb-2 sm:mb-3 lg:mb-4">
         <button class="w-full period-tab bg-violet-500 text-white py-1 rounded text-xs sm:text-sm" data-period="3m">3ヶ月</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1m">1ヶ月</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="3w">3週間</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1w">1週間</button>
     </div>
-    <div class="relative w-full" style="height: 50vh; max-height: 350px; min-height: 250px;">
+    <div class="relative w-full" style="height: 40vh; max-height: 300px; min-height: 200px;">
       <canvas id="weightChart" class="w-full h-full"></canvas>
     </div>
   </div>
 
   <!-- 写真ビュー -->
-    <div id="photo-view" class="w-full max-w-screen-md mx-auto">
-      <div class="w-full flex border rounded overflow-hidden mb-2 sm:mb-4 pb-6">
+    <div id="photo-view" class="w-full max-w-screen-md mx-auto hidden">
+      <div class="w-full flex border rounded overflow-hidden mb-2 sm:mb-3 lg:mb-4">
         <button class="w-full period-tab bg-violet-500 text-white py-1 rounded text-xs sm:text-sm" data-period="3m">3ヶ月</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1m">1ヶ月</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="3w">3週間</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1w">1週間</button>
       </div>
-      <div class="relative w-full" style="height: 50vh; max-height: 350px; min-height: 250px;">
+      <div class="relative w-full" style="height: 40vh; max-height: 300px; min-height: 200px;">
         <div data-controller="photo-switcher"
              data-photos='<%= @all_photos.map { |r| { url: (r.photo.variable? ? url_for(r.photo.variant(resize_to_limit: [400, 600])) : url_for(r.photo)), date: r.recorded_at.strftime("%Y-%m-%d") } }.to_json %>'
              class="h-full flex flex-col items-center justify-center">
           <div class="relative mx-auto bg-gray-100 rounded overflow-hidden border border-gray-300"
-               style="width:240px; height:400px;">
+               style="width:200px; height:320px;">
             <% if @photos.present? %>
               <% photo = @photos.first %>
               <% if photo.variable? %>
@@ -46,7 +46,7 @@
             <% end %>
           </div>
           <% if @photos.size > 1 %>
-            <div class="w-[200px] mx-auto mt-1">
+            <div class="w-[180px] mx-auto mt-1">
               <input type="range" min="1" max="<%= @photos.size %>" value="1"
                 data-action="input->photo-switcher#slide"
                 class="w-full h-3 slider-large"
