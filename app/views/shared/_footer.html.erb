@@ -1,32 +1,32 @@
-<footer class="fixed bottom-0 left-0 w-full bg-violet-500 text-white h-15 sm:h-16">
+<footer class="fixed bottom-0 left-0 w-full bg-violet-500 text-white h-12 sm:h-16">
   <nav class="grid grid-cols-4 divide-x divide-violet-400/60 text-center select-none h-full px-2 sm:px-4">
 
     <!-- ─── 1. 入力 ─── -->
     <%= link_to authenticated_root_path,
-        class: "flex flex-col items-center justify-center py-2 hover:bg-violet-600 transition" do %>
-      <span class="material-icons md-24 mb-1">event_note</span>
+        class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition" do %>
+      <span class="material-icons md-24">event_note</span>
       <span class="text-xs font-medium">入力</span>
     <% end %>
 
     <!-- ─── 2. 経過 ─── -->
     <%= link_to progress_path,
-        class: "flex flex-col items-center justify-center py-2 hover:bg-violet-600 transition",
+        class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition",
         data: { turbo: false } do %>
-      <%= image_tag "graph_record.png", class: "w-7 h-7 mb-1" %>
+      <%= image_tag "graph_record.png", class: "w-6 h-6" %>
       <span class="text-xs font-medium">経過</span>
     <% end %>
 
     <!-- ─── 3. 動画 ─── -->
     <%= link_to recommended_videos_path,
-        class: "flex flex-col items-center justify-center py-2 hover:bg-violet-600 transition" do %>
-      <span class="material-icons md-24 mb-1">video_library</span>
+        class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition" do %>
+      <span class="material-icons md-24">video_library</span>
       <span class="text-xs font-medium">動画</span>
     <% end %>
 
     <!-- ─── 4. マイページ ─── -->
     <%= link_to profile_path,
-        class: "flex flex-col items-center justify-center py-2 hover:bg-violet-600 transition" do %>
-      <span class="material-icons md-24 mb-1">person</span>
+        class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition" do %>
+      <span class="material-icons md-24">person</span>
       <span class="text-xs font-medium">マイページ</span>
     <% end %>
 

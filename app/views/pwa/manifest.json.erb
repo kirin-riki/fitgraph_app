@@ -1,28 +1,34 @@
 {
   "name": "FitGraph",
   "short_name": "FitGraph",
+  "description": "FitGraph - フィットネス記録アプリ",
+  "start_url": "/",
+  "display": "standalone",
+  "scope": "/",
+  "orientation": "portrait",
+  "theme_color": "#8B5CF6",
+  "background_color": "#8B5CF6",
+  "categories": ["health", "fitness"],
+  "lang": "ja",
+  "dir": "ltr",
   "icons": [
     {
       "src": "<%= asset_path('icon_logo_camera.png') %>",
       "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "<%= asset_path('icon_logo_camera.png') %>",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "192x192",
+      "purpose": "any"
     },
     {
       "src": "<%= asset_path('icon_logo_camera.png') %>",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "<%= asset_path('icon_logo_camera.png') %>",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "scope": "/",
-  "description": "FitGraph - フィットネス記録アプリ",
-  "theme_color": "#8B5CF6",
-  "background_color": "#8B5CF6"
+  ]
 }
