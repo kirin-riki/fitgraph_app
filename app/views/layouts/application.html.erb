@@ -16,27 +16,29 @@
     <%= yield :head %>
 
     <!-- タブ／ブックマーク用ファビコン -->
-    <%= favicon_link_tag "icon.png",
-        rel: "icon",
-        type: "image/png",
-        sizes: "32x32" %>
-    <%= favicon_link_tag "icon.png",
-        rel: "shortcut icon",
-        type: "image/png" %>
+    <link rel="icon" href="/icon.png?v=5" type="image/png" sizes="32x32">
+    <link rel="shortcut icon" href="/icon.png?v=5" type="image/png">
 
     <!-- iOSホーム画面用 -->
-    <%= favicon_link_tag "icon.png",
-        rel: "apple-touch-icon",
-        type: "image/png",
-        sizes: "180x180" %>
-    <%= favicon_link_tag "icon.png",
-        rel: "apple-touch-icon",
-        type: "image/png",
-        sizes: "152x152" %>
-    <%= favicon_link_tag "icon.png",
-        rel: "apple-touch-icon",
-        type: "image/png",
-        sizes: "120x120" %>
+    <link rel="apple-touch-icon" href="/icon.png?v=5" sizes="180x180">
+    <link rel="apple-touch-icon" href="/icon.png?v=5" sizes="152x152">
+    <link rel="apple-touch-icon" href="/icon.png?v=5" sizes="120x120">
+    <link rel="apple-touch-icon" href="/icon.png?v=5" sizes="114x114">
+    <link rel="apple-touch-icon" href="/icon.png?v=5" sizes="76x76">
+    <link rel="apple-touch-icon" href="/icon.png?v=5" sizes="72x72">
+    <link rel="apple-touch-icon" href="/icon.png?v=5" sizes="60x60">
+    <link rel="apple-touch-icon" href="/icon.png?v=5" sizes="57x57">
+
+    <!-- Safari用の追加設定 -->
+    <meta name="apple-touch-icon-precomposed" content="/icon.png?v=5">
+    <meta name="apple-touch-icon-precomposed" sizes="180x180" content="/icon.png?v=5">
+    <meta name="apple-touch-icon-precomposed" sizes="152x152" content="/icon.png?v=5">
+    <meta name="apple-touch-icon-precomposed" sizes="120x120" content="/icon.png?v=5">
+    <meta name="apple-touch-icon-precomposed" sizes="114x114" content="/icon.png?v=5">
+    <meta name="apple-touch-icon-precomposed" sizes="76x76" content="/icon.png?v=5">
+    <meta name="apple-touch-icon-precomposed" sizes="72x72" content="/icon.png?v=5">
+    <meta name="apple-touch-icon-precomposed" sizes="60x60" content="/icon.png?v=5">
+    <meta name="apple-touch-icon-precomposed" sizes="57x57" content="/icon.png?v=5">
 
     <!-- PWAマニフェスト -->
     <link rel="manifest" href="/manifest.json">
