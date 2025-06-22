@@ -31,6 +31,9 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  # development環境でもpublic配下の静的ファイルを配信する
+  config.public_file_server.enabled = true
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
