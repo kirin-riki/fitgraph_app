@@ -25,7 +25,7 @@
         rel: "shortcut icon",
         type: "image/png" %>
 
-    <!-- iOSホーム画面用 -->
+    <!-- iOSホーム画面用 - Safari対応強化 -->
     <%= favicon_link_tag "icon.png",
         rel: "apple-touch-icon",
         type: "image/png",
@@ -59,7 +59,7 @@
         type: "image/png",
         sizes: "57x57" %>
 
-    <!-- Safari用の追加設定 -->
+    <!-- Safari用の追加設定 - より具体的な設定 -->
     <meta name="apple-touch-icon-precomposed" content="<%= asset_path('icon.png') %>">
     <meta name="apple-touch-icon-precomposed" sizes="180x180" content="<%= asset_path('icon.png') %>">
     <meta name="apple-touch-icon-precomposed" sizes="152x152" content="<%= asset_path('icon.png') %>">
@@ -70,8 +70,35 @@
     <meta name="apple-touch-icon-precomposed" sizes="60x60" content="<%= asset_path('icon.png') %>">
     <meta name="apple-touch-icon-precomposed" sizes="57x57" content="<%= asset_path('icon.png') %>">
 
+    <!-- Safari用の直接リンク（フォールバック） -->
+    <link rel="apple-touch-icon" href="<%= asset_path('icon.png') %>?v=<%= Time.current.to_i %>">
+    <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_path('icon.png') %>?v=<%= Time.current.to_i %>">
+    <link rel="apple-touch-icon" sizes="152x152" href="<%= asset_path('icon.png') %>?v=<%= Time.current.to_i %>">
+    <link rel="apple-touch-icon" sizes="120x120" href="<%= asset_path('icon.png') %>?v=<%= Time.current.to_i %>">
+
+    <!-- Safari用のpublicディレクトリ直接参照（最終フォールバック） -->
+    <link rel="apple-touch-icon" href="/icon.png?v=<%= Time.current.to_i %>">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon.png?v=<%= Time.current.to_i %>">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icon.png?v=<%= Time.current.to_i %>">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icon.png?v=<%= Time.current.to_i %>">
+    <link rel="apple-touch-icon" sizes="114x114" href="/icon.png?v=<%= Time.current.to_i %>">
+    <link rel="apple-touch-icon" sizes="76x76" href="/icon.png?v=<%= Time.current.to_i %>">
+    <link rel="apple-touch-icon" sizes="72x72" href="/icon.png?v=<%= Time.current.to_i %>">
+    <link rel="apple-touch-icon" sizes="60x60" href="/icon.png?v=<%= Time.current.to_i %>">
+    <link rel="apple-touch-icon" sizes="57x57" href="/icon.png?v=<%= Time.current.to_i %>">
+
     <!-- PWAマニフェスト -->
     <link rel="manifest" href="/manifest.json">
+
+    <!-- アイコンのプリロード（Safari対応） -->
+    <link rel="preload" href="<%= asset_path('icon.png') %>" as="image" type="image/png">
+    <link rel="preload" href="/icon.png" as="image" type="image/png">
+    <link rel="preload" href="<%= asset_path('favicon.ico') %>" as="image" type="image/x-icon">
+
+    <!-- キャッシュ制御（Safari対応） -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload", media: "all" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
