@@ -69,12 +69,12 @@ Rails.application.configure do
 
   # Enable asset debugging
   config.assets.debug = true
-  
+
   # Compress assets
   config.assets.compress = false
-  
+
   # Add precompiled assets
-  config.assets.precompile += %w( *.png *.jpg *.jpeg *.gif *.svg )
+  config.assets.precompile += %w[ *.png *.jpg *.jpeg *.gif *.svg ]
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

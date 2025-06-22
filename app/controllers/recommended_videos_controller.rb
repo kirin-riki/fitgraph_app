@@ -7,35 +7,35 @@ class RecommendedVideosController < ApplicationController
   def index
     begin
       Rails.logger.info "RecommendedVideosController#index: User ID: #{current_user.id}"
-      
+
       unless current_user.profile
         Rails.logger.warn "RecommendedVideosController#index: No profile found for user #{current_user.id}"
         @videos = []
         flash.now[:warning] = "プロフィール設定が必要です。"
         return
       end
-      
+
       Rails.logger.info "RecommendedVideosController#index: Profile found, gender: #{current_user.profile.gender}, training_intensity: #{current_user.profile.training_intensity}"
-      
+
       condition_key = current_user.profile.condition_key
       Rails.logger.info "RecommendedVideosController#index: Condition key: #{condition_key}"
-      
+
       if condition_key.nil?
         Rails.logger.warn "RecommendedVideosController#index: Condition key is nil for user #{current_user.id}"
         @videos = []
         flash.now[:warning] = "プロフィールの性別またはトレーニング強度が設定されていません。"
         return
       end
-      
+
       @videos = RecommendedVideo.where(condition_key: condition_key)
       Rails.logger.info "RecommendedVideosController#index: Found #{@videos.count} videos"
-      
+
       # 動画が存在しない場合、自動でAPIから取得
       if @videos.empty?
         Rails.logger.info "RecommendedVideosController#index: No videos found, fetching from API"
         fetch_and_cache_videos(current_user.profile.gender, current_user.profile.training_intensity)
       end
-      
+
     rescue => e
       Rails.logger.error "RecommendedVideosController#index: Error: #{e.message}"
       Rails.logger.error "RecommendedVideosController#index: Backtrace: #{e.backtrace.first(5).join("\n")}"
@@ -46,7 +46,7 @@ class RecommendedVideosController < ApplicationController
 
   def refresh
     Rails.logger.info "RecommendedVideosController#refresh: Starting refresh for user #{current_user.id}"
-    
+
     unless current_user.profile
       Rails.logger.warn "RecommendedVideosController#refresh: No profile found for user #{current_user.id}"
       redirect_to recommended_videos_path, alert: "プロフィール設定が必要です。"
@@ -54,7 +54,7 @@ class RecommendedVideosController < ApplicationController
     end
 
     Rails.logger.info "RecommendedVideosController#refresh: Profile found, gender: #{current_user.profile.gender}, training_intensity: #{current_user.profile.training_intensity}"
-    
+
     condition_key = current_user.profile.condition_key
     Rails.logger.info "RecommendedVideosController#refresh: Condition key: #{condition_key}"
 
@@ -71,7 +71,7 @@ class RecommendedVideosController < ApplicationController
       intensity: current_user.profile.training_intensity,
       target_count: 5
     )
-    
+
     Rails.logger.info "RecommendedVideosController#refresh: Fetched #{videos_data.size} videos from API"
 
     # データベースに保存
@@ -81,7 +81,7 @@ class RecommendedVideosController < ApplicationController
       next unless video_id
 
       Rails.logger.info "RecommendedVideosController#refresh: Saving video #{video_id}"
-      
+
       begin
         RecommendedVideo.create!(
           video_id: video_id,
