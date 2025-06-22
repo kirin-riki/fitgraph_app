@@ -15,33 +15,31 @@
 
     <%= yield :head %>
 
-    <!-- Chrome/Firefox 等のタブアイコン -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/icon.png?v=4">
-    <link rel="shortcut icon" href="/icon.png?v=4" type="image/png">
+    <!-- タブ／ブックマーク用ファビコン -->
+    <%= favicon_link_tag "icon.png",
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32" %>
+    <%= favicon_link_tag "icon.png",
+        rel: "shortcut icon",
+        type: "image/png" %>
 
-    <!-- iOS ホーム画面追加用アイコン -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/icon.png?v=4">
-    <link rel="apple-touch-icon" sizes="152x152" href="/icon.png?v=4">
-    <link rel="apple-touch-icon" sizes="144x144" href="/icon.png?v=4">
-    <link rel="apple-touch-icon" sizes="120x120" href="/icon.png?v=4">
-    <link rel="apple-touch-icon" sizes="76x76"   href="/icon.png?v=4">
+    <!-- iOSホーム画面用 -->
+    <%= favicon_link_tag "icon.png",
+        rel: "apple-touch-icon",
+        type: "image/png",
+        sizes: "180x180" %>
+    <%= favicon_link_tag "icon.png",
+        rel: "apple-touch-icon",
+        type: "image/png",
+        sizes: "152x152" %>
+    <%= favicon_link_tag "icon.png",
+        rel: "apple-touch-icon",
+        type: "image/png",
+        sizes: "120x120" %>
 
-    <!-- Safari ピン留めタブ用マスクアイコン（SVG推奨） -->
-    <link rel="mask-icon" href="/icon.svg" color="#8B5CF6">
-
-    <!-- PWA マニフェスト -->
+    <!-- PWAマニフェスト -->
     <link rel="manifest" href="/manifest.json">
-
-    <!-- ファビコンプリロード -->
-    <link rel="preload" href="/icon.png?v=4" as="image" type="image/png">
-
-    <!-- Windows Tile Icon -->
-    <meta name="msapplication-TileImage" content="/icon.png?v=4">
-
-    <!-- デバッグ情報（開発時のみ） -->
-    <!-- Icon Path: /icon.png?v=4 -->
-    <!-- Current Time: <%= Time.current %> -->
-    <!-- Icon File Size: <%= File.size(Rails.root.join('public','icon.png')) rescue 'N/A' %> bytes -->
 
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload", media: "all" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
@@ -51,24 +49,18 @@
 
   <body class="min-h-screen flex flex-col bg-gray-50">
     <%= render "shared/header" %>
-
     <main class="flex-1">
       <%= yield %>
     </main>
-
     <% if user_signed_in? %>
       <%= render "shared/footer" %>
     <% end %>
-
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const btn  = document.getElementById("dropdown-button")
         const menu = document.getElementById("dropdown-menu")
         if (!btn || !menu) return
-
-        btn.addEventListener("click", () => {
-          menu.classList.toggle("hidden")
-        })
+        btn.addEventListener("click", () => menu.classList.toggle("hidden"))
       })
     </script>
   </body>
