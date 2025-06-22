@@ -16,21 +16,10 @@
     <%= yield :head %>
 
     <!-- ブラウザタブ用ファビコン -->
-    <link rel="icon" href="/favicon.ico?v=<%= Time.current.to_i %>" type="image/x-icon">
-    <link rel="icon" href="/icon.png?v=<%= Time.current.to_i %>" type="image/png" sizes="32x32">
-    <link rel="icon" href="/icon.png?v=<%= Time.current.to_i %>" type="image/png" sizes="16x16">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-    <!-- iOSホーム画面用アイコン -->
-    <link rel="apple-touch-icon" href="/icon.png?v=<%= Time.current.to_i %>">
-    <link rel="apple-touch-icon" sizes="180x180" href="/icon.png?v=<%= Time.current.to_i %>">
-    <link rel="apple-touch-icon" sizes="152x152" href="/icon.png?v=<%= Time.current.to_i %>">
-    <link rel="apple-touch-icon" sizes="120x120" href="/icon.png?v=<%= Time.current.to_i %>">
-
-    <!-- デバッグ情報 -->
-    <!-- Favicon Debug: <%= Time.current %> -->
-    <!-- Favicon ICO: /favicon.ico?v=<%= Time.current.to_i %> -->
-    <!-- Favicon PNG: /icon.png?v=<%= Time.current.to_i %> -->
-    <!-- Apple Touch Icon: /icon.png?v=<%= Time.current.to_i %> -->
+    <!-- iOSホーム画面用アイコン (シンプル版) -->
+    <link rel="apple-touch-icon" href="/icon.png">
 
     <!-- PWAマニフェスト -->
     <link rel="manifest" href="/manifest.json">
