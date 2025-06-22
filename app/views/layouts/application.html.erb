@@ -18,16 +18,40 @@
     <link rel="manifest" href="/manifest.json">
     
     <!-- ファビコン（ブラウザタブ用） -->
-    <link rel="icon" href="/icon.png?v=3" type="image/png">
+    <link rel="icon" href="/icon.png?v=4" type="image/png">
     
-    <!-- Apple Touch Icon（iOS用） -->
-    <link rel="apple-touch-icon" href="/icon.png?v=3">
+    <!-- Apple Touch Icons（iOS用）- 複数サイズを提供 -->
+    <link rel="apple-touch-icon" href="/icon.png?v=4">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon.png?v=4">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icon.png?v=4">
+    <link rel="apple-touch-icon" sizes="144x144" href="/icon.png?v=4">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icon.png?v=4">
+    <link rel="apple-touch-icon" sizes="114x114" href="/icon.png?v=4">
+    <link rel="apple-touch-icon" sizes="76x76" href="/icon.png?v=4">
+    <link rel="apple-touch-icon" sizes="72x72" href="/icon.png?v=4">
+    <link rel="apple-touch-icon" sizes="60x60" href="/icon.png?v=4">
+    <link rel="apple-touch-icon" sizes="57x57" href="/icon.png?v=4">
+    
+    <!-- Safari用の追加設定 -->
+    <meta name="apple-touch-icon-precomposed" content="/icon.png?v=4">
+    <meta name="apple-touch-icon-precomposed" sizes="180x180" content="/icon.png?v=4">
+    <meta name="apple-touch-icon-precomposed" sizes="152x152" content="/icon.png?v=4">
+    <meta name="apple-touch-icon-precomposed" sizes="144x144" content="/icon.png?v=4">
+    <meta name="apple-touch-icon-precomposed" sizes="120x120" content="/icon.png?v=4">
+    <meta name="apple-touch-icon-precomposed" sizes="114x114" content="/icon.png?v=4">
+    <meta name="apple-touch-icon-precomposed" sizes="76x76" content="/icon.png?v=4">
+    <meta name="apple-touch-icon-precomposed" sizes="72x72" content="/icon.png?v=4">
+    <meta name="apple-touch-icon-precomposed" sizes="60x60" content="/icon.png?v=4">
+    <meta name="apple-touch-icon-precomposed" sizes="57x57" content="/icon.png?v=4">
+    
+    <!-- アイコンのプリロード -->
+    <link rel="preload" href="/icon.png?v=4" as="image" type="image/png">
     
     <!-- Windows Tile Icon -->
-    <meta name="msapplication-TileImage" content="/icon.png?v=3">
+    <meta name="msapplication-TileImage" content="/icon.png?v=4">
     
     <!-- デバッグ情報 -->
-    <!-- Icon Path: /icon.png?v=3 -->
+    <!-- Icon Path: /icon.png?v=4 -->
     <!-- Current Time: <%= Time.current %> -->
     <!-- Icon File Size: <%= File.size('public/icon.png') rescue 'N/A' %> bytes -->
 
