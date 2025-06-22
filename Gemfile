@@ -72,3 +72,5 @@ gem "devise"
 gem "simple_calendar", "~>2.0"
 
 gem "google-apis-youtube_v3"
+
+gem 'meta-tags'

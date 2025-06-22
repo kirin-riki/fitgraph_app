@@ -15,11 +15,9 @@
 
     <%= yield :head %>
 
-    <!-- ブラウザタブ用ファビコン -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-    <!-- iOSホーム画面用アイコン (シンプル版) -->
-    <link rel="apple-touch-icon" href="/icon.png">
+    <%= favicon_link_tag "favicon.ico", rel: "icon" %>
+    <%= favicon_link_tag "apple-touch-icon.png", rel: "apple-touch-icon", type: "image/png", sizes: "180x180" %>
+    <%= favicon_link_tag "android-chrome-512x512.png", sizes: '512x512', type: 'image/png' %>
 
     <!-- PWAマニフェスト -->
     <link rel="manifest" href="/manifest.json">
