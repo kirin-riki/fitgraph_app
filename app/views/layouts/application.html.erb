@@ -16,6 +16,7 @@
     <%= yield :head %>
 
     <!-- タブ／ブックマーク用ファビコン -->
+    <%= favicon_link_tag "favicon.ico" %>
     <%= favicon_link_tag "icon.png",
         rel: "icon",
         type: "image/png",
@@ -37,6 +38,37 @@
         rel: "apple-touch-icon",
         type: "image/png",
         sizes: "120x120" %>
+    <%= favicon_link_tag "icon.png",
+        rel: "apple-touch-icon",
+        type: "image/png",
+        sizes: "114x114" %>
+    <%= favicon_link_tag "icon.png",
+        rel: "apple-touch-icon",
+        type: "image/png",
+        sizes: "76x76" %>
+    <%= favicon_link_tag "icon.png",
+        rel: "apple-touch-icon",
+        type: "image/png",
+        sizes: "72x72" %>
+    <%= favicon_link_tag "icon.png",
+        rel: "apple-touch-icon",
+        type: "image/png",
+        sizes: "60x60" %>
+    <%= favicon_link_tag "icon.png",
+        rel: "apple-touch-icon",
+        type: "image/png",
+        sizes: "57x57" %>
+
+    <!-- Safari用の追加設定 -->
+    <meta name="apple-touch-icon-precomposed" content="<%= asset_path('icon.png') %>">
+    <meta name="apple-touch-icon-precomposed" sizes="180x180" content="<%= asset_path('icon.png') %>">
+    <meta name="apple-touch-icon-precomposed" sizes="152x152" content="<%= asset_path('icon.png') %>">
+    <meta name="apple-touch-icon-precomposed" sizes="120x120" content="<%= asset_path('icon.png') %>">
+    <meta name="apple-touch-icon-precomposed" sizes="114x114" content="<%= asset_path('icon.png') %>">
+    <meta name="apple-touch-icon-precomposed" sizes="76x76" content="<%= asset_path('icon.png') %>">
+    <meta name="apple-touch-icon-precomposed" sizes="72x72" content="<%= asset_path('icon.png') %>">
+    <meta name="apple-touch-icon-precomposed" sizes="60x60" content="<%= asset_path('icon.png') %>">
+    <meta name="apple-touch-icon-precomposed" sizes="57x57" content="<%= asset_path('icon.png') %>">
 
     <!-- PWAマニフェスト -->
     <link rel="manifest" href="/manifest.json">
