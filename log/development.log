@@ -32652,3 +32652,413 @@ Processing by BodyRecordsController#top as HTML
 Completed 200 OK in 148ms (Views: 89.1ms | ActiveRecord: 6.3ms (3 queries, 0 cached) | GC: 41.3ms)
 
 
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mActiveRecord::SchemaMigration Load (3.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (3.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, and [36mYOUTUBE_API_KEY[0m
+[dotenv] Loaded [33m.env[0m
+Started GET "/" for 172.25.0.1 at 2025-06-22 18:41:10 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mUser Load (2.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Load (1.7ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-22"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (0.6ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.4ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 7.4ms | GC: 0.6ms)
+  Rendered body_records/_calendar.html.erb (Duration: 13.2ms | GC: 0.6ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 16.2ms | GC: 0.6ms)
+  Rendered shared/_header.html.erb (Duration: 1.7ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 2.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 734.2ms | GC: 159.7ms)
+Completed 200 OK in 812ms (Views: 740.2ms | ActiveRecord: 6.9ms (3 queries, 0 cached) | GC: 169.4ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-06-22 18:41:11 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-74f40cb63438d026fea4f4ca69df04a4b2d358e0b1d5dd4583345c2e8badcf0e.map"):
+  
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 18:41:12 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+[dotenv] Loaded [33m.env[0m
+Started GET "/" for 172.25.0.1 at 2025-06-22 18:41:43 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Load (0.5ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-22"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (0.5ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.6ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 10.8ms | GC: 0.8ms)
+  Rendered body_records/_calendar.html.erb (Duration: 16.2ms | GC: 0.8ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 18.5ms | GC: 0.8ms)
+  Rendered shared/_header.html.erb (Duration: 1.0ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 3.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 48.4ms | GC: 1.7ms)
+Completed 200 OK in 67ms (Views: 49.1ms | ActiveRecord: 1.4ms (3 queries, 0 cached) | GC: 1.7ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-06-22 18:41:43 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-74f40cb63438d026fea4f4ca69df04a4b2d358e0b1d5dd4583345c2e8badcf0e.map"):
+  
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 18:41:43 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 7.1ms | GC: 0.6ms)
+Completed 200 OK in 12ms (Views: 8.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.4ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-06-22 18:44:47 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Load (0.7ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-22"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (0.4ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.8ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 28.5ms | GC: 0.0ms)
+  Rendered body_records/_calendar.html.erb (Duration: 38.9ms | GC: 0.0ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 43.9ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 6.1ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 6.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 90.5ms | GC: 0.0ms)
+Completed 200 OK in 156ms (Views: 95.3ms | ActiveRecord: 4.8ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-06-22 18:44:48 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 18:44:48 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-74f40cb63438d026fea4f4ca69df04a4b2d358e0b1d5dd4583345c2e8badcf0e.map"):
+  
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 12ms (Views: 12.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-06-22 18:46:26 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Load (0.5ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-22"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (0.6ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.5ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 25.5ms | GC: 0.0ms)
+  Rendered body_records/_calendar.html.erb (Duration: 36.3ms | GC: 0.0ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 38.4ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 2.6ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 2.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 63.7ms | GC: 0.0ms)
+Completed 200 OK in 127ms (Views: 66.0ms | ActiveRecord: 5.6ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-06-22 18:46:26 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-74f40cb63438d026fea4f4ca69df04a4b2d358e0b1d5dd4583345c2e8badcf0e.map"):
+  
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 18:46:26 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.7ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 2.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/body_records/top?start_date=2025-06-11" for 172.25.0.1 at 2025-06-22 18:46:47 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by BodyRecordsController#top as HTML
+  Parameters: {"start_date"=>"2025-06-11"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mBodyRecord Load (0.4ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-11"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (0.4ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout /usr/local/bundle/gems/turbo-rails-2.0.13/app/views/layouts/turbo_rails/frame.html.erb
+  Rendering body_records/top.html.erb within layouts/turbo_rails/frame
+  [1m[36mBodyRecord Load (0.5ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 15.8ms | GC: 1.7ms)
+  Rendered body_records/_calendar.html.erb (Duration: 22.7ms | GC: 1.7ms)
+  Rendered body_records/top.html.erb within layouts/turbo_rails/frame (Duration: 23.9ms | GC: 1.7ms)
+  Rendered layout /usr/local/bundle/gems/turbo-rails-2.0.13/app/views/layouts/turbo_rails/frame.html.erb (Duration: 25.5ms | GC: 1.7ms)
+Completed 200 OK in 52ms (Views: 27.3ms | ActiveRecord: 2.2ms (4 queries, 0 cached) | GC: 1.7ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-06-22 18:46:52 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Load (0.5ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-22"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (0.4ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.5ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 5.3ms | GC: 0.9ms)
+  Rendered body_records/_calendar.html.erb (Duration: 11.5ms | GC: 0.9ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 13.5ms | GC: 0.9ms)
+  Rendered shared/_header.html.erb (Duration: 1.0ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 1.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 32.4ms | GC: 1.6ms)
+Completed 200 OK in 47ms (Views: 37.5ms | ActiveRecord: 1.3ms (3 queries, 0 cached) | GC: 1.6ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-06-22 18:46:52 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 18:46:52 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-74f40cb63438d026fea4f4ca69df04a4b2d358e0b1d5dd4583345c2e8badcf0e.map"):
+  
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 2.8ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-06-22 18:54:22 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Load (1.2ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-22"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (0.6ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.8ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 19.9ms | GC: 3.6ms)
+  Rendered body_records/_calendar.html.erb (Duration: 28.5ms | GC: 3.6ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 30.9ms | GC: 3.6ms)
+  Rendered shared/_header.html.erb (Duration: 2.9ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 4.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 86.2ms | GC: 23.5ms)
+Completed 200 OK in 231ms (Views: 88.7ms | ActiveRecord: 3.0ms (3 queries, 0 cached) | GC: 97.9ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-06-22 18:54:22 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-74f40cb63438d026fea4f4ca69df04a4b2d358e0b1d5dd4583345c2e8badcf0e.map"):
+  
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 18:54:23 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.8ms | GC: 0.0ms)
+Completed 200 OK in 15ms (Views: 14.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-06-22 19:24:25 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Load (1.8ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-22"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (0.5ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.7ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 36.2ms | GC: 6.0ms)
+  Rendered body_records/_calendar.html.erb (Duration: 93.1ms | GC: 6.0ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 96.5ms | GC: 6.0ms)
+  Rendered shared/_header.html.erb (Duration: 2.2ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 2.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 152.6ms | GC: 28.6ms)
+Completed 200 OK in 313ms (Views: 155.0ms | ActiveRecord: 3.4ms (3 queries, 0 cached) | GC: 117.3ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-06-22 19:24:26 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 19:24:26 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-74f40cb63438d026fea4f4ca69df04a4b2d358e0b1d5dd4583345c2e8badcf0e.map"):
+  
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 42.3ms | GC: 13.8ms)
+Completed 200 OK in 44ms (Views: 43.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 13.8ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-06-22 19:24:51 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Load (0.6ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-22"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (1.0ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.5ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 5.6ms | GC: 0.0ms)
+  Rendered body_records/_calendar.html.erb (Duration: 11.1ms | GC: 0.0ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 11.4ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 1.6ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 1.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 28.4ms | GC: 0.0ms)
+Completed 200 OK in 44ms (Views: 28.7ms | ActiveRecord: 2.0ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-06-22 19:24:54 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Load (0.9ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-22"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (1.5ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.6ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 15.4ms | GC: 0.0ms)
+  Rendered body_records/_calendar.html.erb (Duration: 22.6ms | GC: 0.0ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 23.3ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 0.5ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 21.0ms | GC: 19.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 64.0ms | GC: 19.1ms)
+Completed 200 OK in 94ms (Views: 64.4ms | ActiveRecord: 2.0ms (3 queries, 0 cached) | GC: 19.1ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-06-22 19:27:38 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Load (0.4ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-22"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (1.2ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (1.0ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 16.6ms | GC: 0.0ms)
+  Rendered body_records/_calendar.html.erb (Duration: 43.3ms | GC: 0.3ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 48.4ms | GC: 0.3ms)
+  Rendered shared/_header.html.erb (Duration: 4.5ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 2.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 91.9ms | GC: 1.1ms)
+Completed 200 OK in 163ms (Views: 94.7ms | ActiveRecord: 7.2ms (3 queries, 0 cached) | GC: 1.7ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-06-22 19:27:39 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 19:27:39 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-74f40cb63438d026fea4f4ca69df04a4b2d358e0b1d5dd4583345c2e8badcf0e.map"):
+  
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.7ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 7.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-06-22 19:29:47 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Load (0.4ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" = $2 LIMIT $3[0m  [["user_id", 1], ["recorded_at", "2025-06-22"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:10:in `top'
+  [1m[36mBodyRecord Pluck (0.5ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/controllers/body_records_controller.rb:14:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.6ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 1], ["recorded_at", "2025-06-01"], ["recorded_at", "2025-07-05"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 14.9ms | GC: 0.3ms)
+  Rendered body_records/_calendar.html.erb (Duration: 23.5ms | GC: 0.3ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 25.7ms | GC: 0.3ms)
+  Rendered shared/_header.html.erb (Duration: 1.1ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 3.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 48.6ms | GC: 0.9ms)
+Completed 200 OK in 115ms (Views: 51.9ms | ActiveRecord: 4.7ms (3 queries, 0 cached) | GC: 2.7ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-06-22 19:29:47 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-74f40cb63438d026fea4f4ca69df04a4b2d358e0b1d5dd4583345c2e8badcf0e.map"):
+  
+Started GET "/manifest.json" for 172.25.0.1 at 2025-06-22 19:29:48 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.6ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
