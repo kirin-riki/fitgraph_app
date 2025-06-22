@@ -25,12 +25,12 @@ Rails.application.configure do
 
   # ファビコン配信のため、静的ファイル配信を有効化
   config.public_file_server.enabled = true
-  
+
   # 静的ファイルのキャッシュヘッダーを設定（ファビコン用）
   config.public_file_server.headers = {
-    'Cache-Control' => 'public, max-age=31536000'
+    "Cache-Control" => "public, max-age=31536000"
   }
-  
+
   # ファビコン関連ファイルの配信を確実にする
   config.public_file_server.index_name = nil
 
