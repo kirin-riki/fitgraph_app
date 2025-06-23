@@ -1,5 +1,4 @@
 class RecommendedVideo < ApplicationRecord
-
   validates :video_id, presence: true, uniqueness: { scope: :condition_key }
   validates :condition_key, presence: true
 

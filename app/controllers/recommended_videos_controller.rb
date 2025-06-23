@@ -53,7 +53,7 @@ class RecommendedVideosController < ApplicationController
       Rails.logger.warn "User #{current_user.id} profile has no condition key."
       flash.now[:warning] = "プロフィールの性別またはトレーニング強度が設定されていません。"
       @videos = []
-      return
+      nil
     end
   end
 
@@ -75,7 +75,7 @@ class RecommendedVideosController < ApplicationController
 
     Rails.logger.info "Saved #{saved_videos.size} new videos for key: #{@condition_key}"
     @videos = RecommendedVideo.where(condition_key: @condition_key).limit(5)
-    
+
     if @videos.empty?
       flash.now[:warning] = "条件に合う動画が見つかりませんでした。"
     end
