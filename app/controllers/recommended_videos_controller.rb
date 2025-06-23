@@ -42,9 +42,7 @@ class RecommendedVideosController < ApplicationController
     unless @profile
       Rails.logger.warn "User #{current_user.id} has no profile."
       flash.now[:warning] = "おすすめ動画を表示するには、まずプロフィール設定が必要です。"
-      # indexアクションの場合はレンダリングを許可し、refreshの場合はリダイレクトするなどの処理をここに書くこともできる
-      # 今回はシンプルにするため、flashで通知するのみ
-      @videos = [] # indexビューがエラーにならないように空配列をセット
+      @videos = []
       return
     end
 
