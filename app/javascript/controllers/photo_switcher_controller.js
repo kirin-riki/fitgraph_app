@@ -65,6 +65,8 @@ export default class extends Controller {
   }
 
   updateImage(index) {
+    if (!this.hasImageTarget) return;
+
     if (this.photos.length === 0) {
       this.imageTarget.src = this.imageTarget.dataset.placeholder
     } else {
