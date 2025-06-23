@@ -6,11 +6,13 @@ class ProfilesController < ApplicationController
   def edit; end
 
   def update
-    if @user.update(user_params) && @profile.update(profile_params)
-      redirect_to profile_path
-    else
-      render "edit"
+    ActiveRecord::Base.transaction do
+      @user.update!(user_params)
+      @profile.update!(profile_params)
     end
+    redirect_to profile_path, notice: "プロフィールを更新しました。"
+  rescue ActiveRecord::RecordInvalid
+    render "edit", status: :unprocessable_entity
   end
 
   private
