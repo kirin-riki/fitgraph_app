@@ -1,26 +1,80 @@
-<div class="w-full mx-auto min-h-screen flex items-center justify-center
-            bg-gray-50 flex flex-col justify-center py-4 sm:py-8 lg:py-10 sm:px-6 lg:px-8 px-4 pt-16 pb-20">
+<div class="w-full mx-auto min-h-screen flex items-center bg-gray-50 flex flex-col py-20 sm:px-6 lg:px-8 px-4">
   <div class="w-full max-w-screen-md min-h-[400px] sm:min-h-[500px] lg:min-h-[550px]">
-  <!-- グラフ / 写真タブ -->
-  <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-2 sm:mb-3 lg:mb-4">
+    <!-- グラフ / 写真タブ -->
+    <div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-2 sm:mb-3 lg:mb-4">
       <button id="tab-graph" class="w-full bg-violet-500 text-white py-1 rounded text-xs sm:text-sm">グラフ</button>
       <button id="tab-photo" class="w-full bg-violet-100 text-violet-500 py-1 rounded text-xs sm:text-sm">写真</button>
-  </div>
+    </div>
 
-  <!-- グラフビュー -->
-  <div id="graph-view" class="w-full max-w-screen-md mx-auto">
-    <div class="w-full flex border rounded overflow-hidden mb-2 sm:mb-3 lg:mb-4">
+    <!-- グラフビュー -->
+    <div id="graph-view" class="w-full max-w-screen-md mx-auto">
+      <div class="w-full flex border rounded overflow-hidden mb-2 sm:mb-3 lg:mb-4">
         <button class="w-full period-tab bg-violet-500 text-white py-1 rounded text-xs sm:text-sm" data-period="3m">3ヶ月</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1m">1ヶ月</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="3w">3週間</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1w">1週間</button>
+      </div>
+      <div class="relative w-full h-[40vh] sm:h-[50vh] max-h-[400px] sm:max-h-[560px] min-h-[250px] sm:min-h-[300px]">
+        <canvas id="weightChart" class="w-full h-full"></canvas>
+      </div>
     </div>
-    <div class="relative w-full" style="height: 50vh; max-height: 450px; min-height: 300px;">
-      <canvas id="weightChart" class="w-full h-full"></canvas>
-    </div>
-  </div>
 
-  <!-- 写真ビュー -->
+    <!-- ======= 目標体重カウントダウン＆比較表 ======= -->
+    <div id="stats-table" class="w-full max-w-screen-md mx-auto bg-white rounded-lg shadow p-4 m-3 h-[200px] hidden">
+      <div id="stats-content" class="hidden h-full flex flex-col justify-center">
+        <div class="text-center text-gray-700 text-base mb-3" id="goal-countdown-block">
+          <% unless @goal_achieved %>
+            <span id="goal-countdown-label">目標まであと</span>
+            <span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">
+              <%= number_with_precision(@weight_to_goal, precision: 2) %>
+            </span>
+            <span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>
+          <% else %>
+            <span id="goal-achieved-label" class="text-xl font-bold text-violet-600">目標達成！！！</span>
+          <% end %>
+        </div>
+        <table class="w-full text-center text-sm">
+          <tr class="border-b">
+            <th class="py-1 font-normal text-gray-500">体重</th>
+            <td class="py-1 text-xl font-bold text-gray-700">
+              <span id="first-weight"><%= number_with_precision(@first_weight, precision: 2) %></span>
+              <span class="text-xs font-normal text-gray-400">kg</span>
+            </td>
+            <td class="py-1 text-violet-500 text-lg">▶</td>
+            <td class="py-1 text-xl font-bold text-gray-700">
+              <span id="last-weight"><%= number_with_precision(@last_weight, precision: 2) %></span>
+              <span class="text-xs font-normal text-gray-400">kg</span>
+            </td>
+          </tr>
+          <tr class="border-b">
+            <th class="py-1 font-normal text-gray-500">体脂肪率</th>
+            <td class="py-1 text-xl font-bold text-gray-700">
+              <span id="first-fat"><%= number_with_precision(@first_fat, precision: 2) %></span>
+              <span class="text-xs font-normal text-gray-400">%</span>
+            </td>
+            <td class="py-1 text-violet-500 text-lg">▶</td>
+            <td class="py-1 text-xl font-bold text-gray-700">
+              <span id="last-fat"><%= number_with_precision(@last_fat, precision: 2) %></span>
+              <span class="text-xs font-normal text-gray-400">%</span>
+            </td>
+          </tr>
+          <tr>
+            <th class="py-1 font-normal text-gray-500">脂肪量</th>
+            <td class="py-1 text-xl font-bold text-gray-700">
+              <span id="first-fat-mass"><%= number_with_precision(@first_fat_mass, precision: 2) %></span>
+              <span class="text-xs font-normal text-gray-400">kg</span>
+            </td>
+            <td class="py-1 text-violet-500 text-lg">▶</td>
+            <td class="py-1 text-xl font-bold text-gray-700">
+              <span id="last-fat-mass"><%= number_with_precision(@last_fat_mass, precision: 2) %></span>
+              <span class="text-xs font-normal text-gray-400">kg</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 写真ビュー -->
     <div id="photo-view" class="w-full max-w-screen-md mx-auto hidden">
       <div class="w-full flex border rounded overflow-hidden mb-2 sm:mb-3 lg:mb-4">
         <button class="w-full period-tab bg-violet-500 text-white py-1 rounded text-xs sm:text-sm" data-period="3m">3ヶ月</button>
@@ -28,12 +82,18 @@
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="3w">3週間</button>
         <button class="w-full period-tab bg-violet-100 text-violet-600 py-1 rounded text-xs sm:text-sm" data-period="1w">1週間</button>
       </div>
-      <div class="relative w-full" style="height: 50vh; max-height: 450px; min-height: 300px;">
+      <!-- レイヤー/比較タブ -->
+      <div class="w-full flex border rounded overflow-hidden mb-2 sm:mb-3 lg:mb-4">
+        <button id="layer-tab" class="w-full bg-violet-500 text-white py-1 rounded text-xs sm:text-sm">レイヤー</button>
+        <button id="compare-tab" class="w-full bg-violet-100 text-violet-500 py-1 rounded text-xs sm:text-sm">比較</button>
+      </div>
+      <!-- レイヤービュー（既存のスライダー機能） -->
+      <div id="layer-view" class="relative w-full h-[70vh] sm:h-[70vh] max-h-[700px] sm:max-h-[800px] min-h-[400px] sm:min-h-[800px]">
         <div data-controller="photo-switcher"
-             data-photos='<%= @all_photos.map { |r| { url: (r.photo.variable? ? url_for(r.photo.variant(resize_to_limit: [400, 600], quality: 70, format: :jpeg).processed) : url_for(r.photo)), date: r.recorded_at.strftime("%Y-%m-%d") } }.to_json %>'
-             class="h-full flex flex-col items-center justify-center">
-          <div class="relative mx-auto bg-gray-100 rounded overflow-hidden border border-gray-300"
-               style="width:240px; height:400px;">
+             data-photos='<%= raw (@all_photos.present? ? @all_photos.map { |r| { url: (r.photo.variable? ? url_for(r.photo.variant(resize_to_limit: [400, 600], quality: 70, format: :jpeg).processed) : url_for(r.photo)), date: r.recorded_at.strftime("%Y-%m-%d") } } : [{ url: asset_path("avatar_placeholder.png"), date: Date.current.strftime("%Y-%m-%d") }]).to_json %>'
+             data-placeholder="<%= asset_path('avatar_placeholder.png') %>"
+             class="h-full flex flex-col items-center px-4 pt-5 pb-1">
+          <div class="relative mx-auto bg-gray-100 rounded overflow-hidden border border-gray-300 w-[240px] h-[600px] sm:w-[500px] sm:h-[600px]">
             <% if @photos.present? %>
               <% photo = @photos.first %>
               <% if photo.variable? %>
@@ -42,11 +102,11 @@
                 <%= image_tag photo, id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
               <% end %>
             <% else %>
-              <img src="<%= asset_path('avatar_placeholder.png') %>" class="w-full h-full object-contain rounded" alt="サンプル画像">
+              <img id="switch-photo" class="w-full h-full object-contain rounded" alt="サンプル画像" data-photo-switcher-target="image" src="<%= asset_path('avatar_placeholder.png') %>">
             <% end %>
           </div>
           <% if @photos.size > 1 %>
-            <div class="w-[220px] mx-auto mt-1">
+            <div class="w-[180px] sm:w-[260px] mx-auto mt-3 sm:mt-4">
               <input type="range" min="1" max="<%= @photos.size %>" value="1"
                 data-action="input->photo-switcher#slide"
                 class="w-full h-3 slider-large"
@@ -54,6 +114,19 @@
                 data-photo-switcher-target="slider">
             </div>
           <% end %>
+        </div>
+      </div>
+      <!-- 比較ビュー（before/after） -->
+      <div id="compare-view" class="relative w-full h-auto pb-24">
+        <div class="flex flex-col items-center px-4 pt-5 pb-1 h-full">
+          <div class="mb-2 w-[240px] sm:w-[400px]">
+            <span class="inline-block bg-violet-400 text-white text-xs px-3 py-1 rounded-t">BEFORE</span>
+            <img id="compare-before" class="w-full h-[350px] sm:h-[500px] object-contain bg-gray-100 rounded border" src="<%= asset_path('avatar_placeholder.png') %>" alt="Before">
+          </div>
+          <div class="mt-2 w-[240px] sm:w-[400px]">
+            <span class="inline-block bg-violet-400 text-white text-xs px-3 py-1 rounded-t">AFTER</span>
+            <img id="compare-after" class="w-full h-[350px] sm:h-[500px] object-contain bg-gray-100 rounded border" src="<%= asset_path('avatar_placeholder.png') %>" alt="After">
+          </div>
         </div>
       </div>
     </div> 
@@ -67,17 +140,22 @@ if (typeof allLabels === 'undefined') {
   const allLabels   = <%= raw @dates.to_json        %>; // ["yyyy-mm-dd", ...]
   const allWeights  = <%= raw @weight_values.to_json %>;
   const allFatRates = <%= raw @fat_values.to_json    %>;
+  const targetWeight = <%= raw @target_weight&.to_f || 'null' %>;
   
   // グローバル変数として設定
   window.allLabels = allLabels;
   window.allWeights = allWeights;
   window.allFatRates = allFatRates;
+  window.targetWeight = targetWeight;
 } else {
   // 既に存在する場合は値を更新
   window.allLabels = <%= raw @dates.to_json        %>;
   window.allWeights = <%= raw @weight_values.to_json %>;
   window.allFatRates = <%= raw @fat_values.to_json    %>;
+  window.targetWeight = <%= raw @target_weight&.to_f || 'null' %>;
 }
+
+window.allRecords = <%= raw @all_graph_records.to_json %>;
 
 /* ============ 共通ユーティリティ ============ */
 function generateDateRange(start, end){
@@ -159,10 +237,15 @@ function initGraphPage() {
     graphView.classList.add("hidden");
     photoView.classList.remove("hidden");
     setMainTab("photo");
+    // 統計表を非表示
+    document.getElementById("stats-table").classList.add("hidden");
   } else {
     graphView.classList.remove("hidden");
     photoView.classList.add("hidden");
     setMainTab("graph");
+    // 統計表を表示
+    document.getElementById("stats-table").classList.remove("hidden");
+    document.getElementById("stats-content").classList.remove("hidden");
   }
 
   // グラブビューの期間タブを初期化
@@ -211,6 +294,9 @@ function initGraphPage() {
     graphView.classList.remove("hidden");
     photoView.classList.add("hidden");
     setMainTab("graph");
+    // 統計表を表示
+    document.getElementById("stats-table").classList.remove("hidden");
+    document.getElementById("stats-content").classList.remove("hidden");
     // 期間ボタンを3ヶ月にリセット
     document.querySelectorAll("#graph-view .period-tab").forEach(btn => {
       if (btn.dataset.period === "3m") {
@@ -227,6 +313,8 @@ function initGraphPage() {
     graphView.classList.add("hidden");
     photoView.classList.remove("hidden");
     setMainTab("photo");
+    // 統計表を非表示
+    document.getElementById("stats-table").classList.add("hidden");
     // 期間ボタンを3ヶ月にリセット
     document.querySelectorAll("#photo-view .period-tab").forEach(btn => {
       if (btn.dataset.period === "3m") {
@@ -313,16 +401,17 @@ function initGraphPage() {
     const weights = rows.map(r => r.weight);
     const fats    = rows.map(r => r.fat);
 
+    // 最大・最小インデックスを計算
     const vw = weights.filter(v => v !== null);
     const vf = fats.filter(v => v !== null);
-    const wMin = vw.length ? Math.floor(Math.min(...vw)) - 5 : undefined;
-    const wMax = vw.length ? Math.ceil (Math.max(...vw)) + 5 : undefined;
+
     const fMin = vf.length ? Math.floor(Math.min(...vf)) - 5 : undefined;
-    const fMax = vf.length ? Math.ceil (Math.max(...vf)) + 5 : undefined;
+    const fMax = vf.length ? Math.ceil(Math.max(...vf)) + 5 : undefined;
 
     // スマホ判定
     const isMobile = window.innerWidth < 768;
 
+    // 体重・体脂肪率の点表示をすべての点で表示（元の仕様）
     // 新チャートを生成
     window.chart = new Chart(ctx, {
       type: "line",
@@ -363,6 +452,16 @@ function initGraphPage() {
                 size: isMobile ? 12 : 14
               }
             }
+          },
+          tooltip: {
+            callbacks: {
+              afterBody: function(context) {
+                if (window.targetWeight) {
+                  return `目標体重: ${window.targetWeight}kg`;
+                }
+                return '';
+              }
+            }
           }
         },
         scales: {
@@ -385,8 +484,8 @@ function initGraphPage() {
           y1: {
             type: "linear",
             position: "left",
-            min:  wMin,
-            max:  wMax,
+            min:  vw.length ? Math.floor(Math.min(...vw)) - 5 : undefined,
+            max:  vw.length ? Math.ceil (Math.max(...vw)) + 5 : undefined,
             title: { 
               display: true, 
               text: "体重",
@@ -425,6 +524,46 @@ function initGraphPage() {
 
     // 横軸範囲制御
     setChartLabel(labels.length, window.chart, period);
+
+    // Chart.jsカスタムプラグイン: 目標体重の丸＋数値
+    Chart.register({
+      id: 'customTargetWeight',
+      afterDraw(chart, args, options) {
+        if (!window.targetWeight) return;
+        const yScale = chart.scales['y1'];
+        const xScale = chart.scales['x'];
+        if (!yScale || !xScale) return;
+        const y = yScale.getPixelForValue(window.targetWeight);
+        const radius = window.innerWidth < 768 ? 10 : 12;
+        const x = xScale.left - radius - 6;
+        const ctx = chart.ctx;
+        ctx.save();
+        // 丸
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'rgba(139, 92, 246, 0.7)';
+        ctx.shadowColor = 'rgba(139, 92, 246, 0.2)';
+        ctx.shadowBlur = 2;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        // 数字
+        ctx.font = (window.innerWidth < 768 ? 'bold 10px sans-serif' : 'bold 12px sans-serif');
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(String(window.targetWeight), x, y);
+        // 破線
+        ctx.beginPath();
+        ctx.setLineDash([5, 5]);
+        ctx.strokeStyle = 'rgba(139, 92, 246, 0.8)';
+        ctx.lineWidth = 2;
+        ctx.moveTo(x + radius, y); // 円の右端から
+        ctx.lineTo(chart.chartArea.right, y); // グラフ右端まで
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+      }
+    });
   }
 
   /* ---- 期間ボタン ------------------------------ */
@@ -478,6 +617,167 @@ document.addEventListener("turbo:load", initGraphPage);
 // });
 
 window.activeTab = "<%= params[:tab] || 'graph' %>";
+
+function updateStatsTable(period) {
+  // 期間の開始日を計算
+  const now = new Date();
+  let start = new Date(now);
+  switch (period) {
+    case "1w":
+      start = new Date(now.getTime() - 7 * 86400000);
+      break;
+    case "3w":
+      start = new Date(now.getTime() - 21 * 86400000);
+      break;
+    case "1m":
+      start.setMonth(now.getMonth() - 1);
+      break;
+    case "3m":
+    default:
+      start.setMonth(now.getMonth() - 3);
+      break;
+  }
+
+  // 期間内のデータ抽出
+  const records = (window.allRecords || []).filter(r => {
+    const d = new Date(r[0]);
+    return d >= start && d <= now && r[1] != null && r[2] != null;
+  });
+
+  // 最初・最後の値
+  const first = records[0];
+  const last  = records[records.length - 1];
+
+  const firstWeight = first ? Number(first[1]) : 0;
+  const lastWeight  = last  ? Number(last[1])  : 0;
+  const firstFat    = first ? Number(first[2]) : 0;
+  const lastFat     = last  ? Number(last[2])  : 0;
+  const firstFatMass = first ? +(firstWeight * firstFat / 100).toFixed(2) : 0;
+  const lastFatMass  = last  ? +(lastWeight  * lastFat  / 100).toFixed(2) : 0;
+
+  // 目標体重までのカウントダウン
+  let weightToGoal = 0;
+  let goalAchieved = false;
+  if (window.targetWeight && lastWeight > 0) {
+    if (lastWeight <= window.targetWeight) {
+      weightToGoal = 0;
+      goalAchieved = true;
+    } else {
+      weightToGoal = +(lastWeight - window.targetWeight).toFixed(2);
+      goalAchieved = false;
+    }
+  }
+
+  // 表の書き換え
+  document.getElementById('first-weight').textContent = firstWeight.toFixed(2);
+  document.getElementById('last-weight').textContent  = lastWeight.toFixed(2);
+  document.getElementById('first-fat').textContent    = firstFat.toFixed(2);
+  document.getElementById('last-fat').textContent     = lastFat.toFixed(2);
+  document.getElementById('first-fat-mass').textContent = firstFatMass.toFixed(2);
+  document.getElementById('last-fat-mass').textContent  = lastFatMass.toFixed(2);
+
+  // カウントダウン・達成表示
+  const block = document.getElementById('goal-countdown-block');
+  if (goalAchieved) {
+    block.innerHTML = '<span id="goal-achieved-label" class="text-xl font-bold text-violet-600">目標達成！！！</span>';
+  } else {
+    block.innerHTML = '<span id="goal-countdown-label">目標まであと</span>' +
+      '<span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">' +
+      weightToGoal.toFixed(2) +
+      '</span>' +
+      '<span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>';
+  }
+}
+
+// 期間タブ切り替え時に表も更新
+function patchPeriodTabEvents() {
+  document.querySelectorAll('.period-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      updateStatsTable(btn.dataset.period);
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  updateStatsTable('3m');
+  patchPeriodTabEvents();
+});
+document.addEventListener("turbo:load", function() {
+  updateStatsTable('3m');
+  patchPeriodTabEvents();
+});
+
+// レイヤー/比較タブ切り替え
+const layerTab = document.getElementById("layer-tab");
+const compareTab = document.getElementById("compare-tab");
+const layerView = document.getElementById("layer-view");
+const compareView = document.getElementById("compare-view");
+
+function setPhotoSubTab(tab) {
+  if (tab === "layer") {
+    layerTab.className = "w-full bg-violet-500 text-white py-1 rounded text-xs sm:text-sm";
+    compareTab.className = "w-full bg-violet-100 text-violet-500 py-1 rounded text-xs sm:text-sm";
+    layerView.classList.remove("hidden");
+    compareView.classList.add("hidden");
+  } else {
+    layerTab.className = "w-full bg-violet-100 text-violet-500 py-1 rounded text-xs sm:text-sm";
+    compareTab.className = "w-full bg-violet-500 text-white py-1 rounded text-xs sm:text-sm";
+    layerView.classList.add("hidden");
+    compareView.classList.remove("hidden");
+    updateCompareView(currentPeriod);
+  }
+}
+
+let currentPeriod = "3m";
+if(layerTab && compareTab) {
+  layerTab.onclick = () => setPhotoSubTab("layer");
+  compareTab.onclick = () => setPhotoSubTab("compare");
+}
+
+// 期間タブクリック時
+document.querySelectorAll("#photo-view .period-tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentPeriod = btn.dataset.period;
+    if (!layerView.classList.contains("hidden")) {
+      // レイヤービューの期間切り替え（既存のまま）
+    } else {
+      updateCompareView(currentPeriod);
+    }
+  });
+});
+
+// 比較ビューの更新
+function updateCompareView(period) {
+  const photoSwitcherEl = document.querySelector('[data-controller="photo-switcher"]');
+  if (!photoSwitcherEl) return;
+  const allPhotos = JSON.parse(photoSwitcherEl.dataset.photos);
+  const placeholder = photoSwitcherEl.dataset.placeholder || '/assets/avatar_placeholder.png';
+  const now = new Date();
+  let start = new Date(now);
+  switch (period) {
+    case "1w": start = new Date(now.getTime() - 7 * 86400000); break;
+    case "3w": start = new Date(now.getTime() - 21 * 86400000); break;
+    case "1m": start.setMonth(now.getMonth() - 1); break;
+    case "3m": default: start.setMonth(now.getMonth() - 3); break;
+  }
+  const startStr = start.toISOString().slice(0, 10);
+  const nowStr = now.toISOString().slice(0, 10);
+  // 昇順ソート
+  const sortedPhotos = allPhotos.slice().sort((a, b) => a.date.localeCompare(b.date));
+  const filtered = sortedPhotos.filter(p => p.date >= startStr && p.date <= nowStr);
+  if (filtered.length === 0) {
+    document.getElementById("compare-before").src = placeholder;
+    document.getElementById("compare-after").src = placeholder;
+  } else {
+    const before = filtered[0];
+    const after = filtered[filtered.length - 1];
+    document.getElementById("compare-before").src = before.url || placeholder;
+    document.getElementById("compare-after").src = after.url || placeholder;
+  }
+}
+
+// 初期表示
+setPhotoSubTab("layer");
 </script>
 
 <style>
