@@ -68,9 +68,18 @@ export default class extends Controller {
     if (!this.hasImageTarget) return;
 
     if (this.photos.length === 0) {
-      this.imageTarget.src = this.imageTarget.dataset.placeholder
+      // プレースホルダー画像を使用
+      const placeholder = this.element.dataset.placeholder || '/assets/avatar_placeholder.png'
+      this.imageTarget.src = placeholder
     } else {
-      this.imageTarget.src = this.photos[index]?.url
+      const photo = this.photos[index]
+      if (photo && photo.url) {
+        this.imageTarget.src = photo.url
+      } else {
+        // フォールバックとしてプレースホルダー画像を使用
+        const placeholder = this.element.dataset.placeholder || '/assets/avatar_placeholder.png'
+        this.imageTarget.src = placeholder
+      }
     }
   }
 } 
