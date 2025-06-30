@@ -50,7 +50,7 @@
     <div class="mb-1">
       <label class="relative inline-block text-center
                     border border-violet-600 text-violet-600
-                    w-1/2 py-1 rounded hover:bg-violet-50
+                    w-1/3 py-1 rounded hover:bg-violet-50
                     cursor-pointer mb-1 transition-colors text-xs">
         ファイルを選択
         <%= f.file_field :photo,
@@ -63,7 +63,7 @@
     </div>
 
     <!-- プレビューエリア -->
-    <div class="relative w-full h-48 border-2 border-dashed border-violet-400 rounded
+    <div class="relative w-1/2 h-48 border-2 border-dashed border-violet-400 rounded
                 flex items-center justify-center overflow-hidden bg-gray-50"
          data-camera-target="previewContainer">
       <% if @body_record.photo.attached? %>
