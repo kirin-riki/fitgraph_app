@@ -1,25 +1,20 @@
-<h2>Change your password</h2>
-
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
-
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
+<div class="w-full max-w-xs mx-auto mt-8 bg-white rounded shadow p-6">
+  <div class="border-t-4 border-violet-400 mb-6"></div>
+  <h2 class="text-xs text-gray-500 mb-4">パスワード再設定</h2>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+    <%= f.hidden_field :reset_password_token %>
+    <div class="mb-4">
+      <%= f.label :password, "新しいパスワード", class: "block text-xs text-violet-700 mb-1" %>
+      <%= f.password_field :password, autocomplete: "new-password", class: "w-full border rounded px-2 py-1" %>
+    </div>
+    <div class="mb-4">
+      <%= f.label :password_confirmation, "パスワード確認", class: "block text-xs text-violet-700 mb-1" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full border rounded px-2 py-1" %>
+    </div>
+    <div>
+      <%= f.submit "再設定", class: "w-full bg-violet-500 hover:bg-violet-600 text-white font-semibold rounded-full py-2 transition" %>
+    </div>
+  <% end %>
+</div>
 
 <%= render "devise/shared/links" %>
