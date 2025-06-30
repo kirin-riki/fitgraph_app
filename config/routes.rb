@@ -33,5 +33,4 @@ Rails.application.routes.draw do
     end
   end
   resources :favorite_videos, only: [ :create, :destroy ]
-
 end
