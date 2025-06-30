@@ -23,14 +23,16 @@
     <div id="stats-table" class="w-full max-w-screen-md mx-auto bg-white rounded-lg shadow p-4 m-3 h-[200px] hidden">
       <div id="stats-content" class="hidden h-full flex flex-col justify-center">
         <div class="text-center text-gray-700 text-base mb-3" id="goal-countdown-block">
-          <% unless @goal_achieved %>
-            <span id="goal-countdown-label">目標まであと</span>
-            <span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">
-              <%= number_with_precision(@weight_to_goal, precision: 2) %>
-            </span>
-            <span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>
-          <% else %>
-            <span id="goal-achieved-label" class="text-xl font-bold text-violet-600">目標達成！！！</span>
+          <% if @target_weight.present? && @last_weight > 0 %>
+            <% unless @goal_achieved %>
+              <span id="goal-countdown-label">目標まであと</span>
+              <span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">
+                <%= number_with_precision(@weight_to_goal, precision: 2) %>
+              </span>
+              <span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>
+            <% else %>
+              <span id="goal-achieved-label" class="text-xl font-bold text-violet-600">目標達成！！！</span>
+            <% end %>
           <% end %>
         </div>
         <table class="w-full text-center text-sm">
@@ -408,6 +410,29 @@ function initGraphPage() {
     const fMin = vf.length ? Math.floor(Math.min(...vf)) - 5 : undefined;
     const fMax = vf.length ? Math.ceil(Math.max(...vf)) + 5 : undefined;
 
+    // 目標体重の表示条件とスケール調整
+    let wMin = vw.length ? Math.floor(Math.min(...vw)) - 5 : undefined;
+    let wMax = vw.length ? Math.ceil(Math.max(...vw)) + 5 : undefined;
+    
+    // 目標体重が設定されている場合の処理
+    if (window.targetWeight && vw.length > 0) {
+      const targetWeight = window.targetWeight;
+      const currentMin = Math.min(...vw);
+      const currentMax = Math.max(...vw);
+      
+      // 目標体重が現在の範囲外の場合、範囲に含めるように調整
+      if (targetWeight < currentMin) {
+        // 目標体重が最小値より小さい場合、最小値側にスケールを寄せる
+        wMin = Math.floor(targetWeight) - 5;
+        wMax = Math.ceil(currentMax) + 5;
+      } else if (targetWeight > currentMax) {
+        // 目標体重が最大値より大きい場合、最大値側にスケールを寄せる
+        wMin = Math.floor(currentMin) - 5;
+        wMax = Math.ceil(targetWeight) + 5;
+      }
+      // 目標体重が範囲内の場合は何もしない（既存の範囲を使用）
+    }
+
     // スマホ判定
     const isMobile = window.innerWidth < 768;
 
@@ -456,6 +481,7 @@ function initGraphPage() {
           tooltip: {
             callbacks: {
               afterBody: function(context) {
+                // 目標体重が設定されている場合のみ表示
                 if (window.targetWeight) {
                   return `目標体重: ${window.targetWeight}kg`;
                 }
@@ -484,8 +510,8 @@ function initGraphPage() {
           y1: {
             type: "linear",
             position: "left",
-            min:  vw.length ? Math.floor(Math.min(...vw)) - 5 : undefined,
-            max:  vw.length ? Math.ceil (Math.max(...vw)) + 5 : undefined,
+            min:  wMin,
+            max:  wMax,
             title: { 
               display: true, 
               text: "体重",
@@ -529,10 +555,18 @@ function initGraphPage() {
     Chart.register({
       id: 'customTargetWeight',
       afterDraw(chart, args, options) {
+        // 目標体重が設定されていない場合は表示しない
         if (!window.targetWeight) return;
+        
+        // 身体情報のデータが存在しない場合は表示しない
         const yScale = chart.scales['y1'];
         const xScale = chart.scales['x'];
         if (!yScale || !xScale) return;
+        
+        // 体重データが存在しない場合は表示しない
+        const weightData = chart.data.datasets.find(d => d.label === "体重(kg)");
+        if (!weightData || !weightData.data.some(d => d !== null)) return;
+        
         const y = yScale.getPixelForValue(window.targetWeight);
         const radius = window.innerWidth < 768 ? 10 : 12;
         const x = xScale.left - radius - 6;
@@ -678,14 +712,20 @@ function updateStatsTable(period) {
 
   // カウントダウン・達成表示
   const block = document.getElementById('goal-countdown-block');
-  if (goalAchieved) {
-    block.innerHTML = '<span id="goal-achieved-label" class="text-xl font-bold text-violet-600">目標達成！！！</span>';
+  // 目標体重が設定されている場合のみ表示
+  if (window.targetWeight && lastWeight > 0) {
+    if (goalAchieved) {
+      block.innerHTML = '<span id="goal-achieved-label" class="text-xl font-bold text-violet-600">目標達成！！！</span>';
+    } else {
+      block.innerHTML = '<span id="goal-countdown-label">目標まであと</span>' +
+        '<span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">' +
+        weightToGoal.toFixed(2) +
+        '</span>' +
+        '<span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>';
+    }
   } else {
-    block.innerHTML = '<span id="goal-countdown-label">目標まであと</span>' +
-      '<span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">' +
-      weightToGoal.toFixed(2) +
-      '</span>' +
-      '<span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>';
+    // 目標体重が設定されていない場合は非表示
+    block.innerHTML = '';
   }
 }
 
