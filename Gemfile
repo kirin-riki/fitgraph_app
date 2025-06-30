@@ -73,4 +73,4 @@ gem "simple_calendar", "~>2.0"
 
 gem "google-apis-youtube_v3"
 
-gem 'letter_opener_web', '2.0.0'
+gem "letter_opener_web", "2.0.0"
