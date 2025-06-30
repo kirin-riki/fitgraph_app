@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_21_161033) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_30_180001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,12 +54,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_21_161033) do
     t.index ["user_id"], name: "index_body_records_on_user_id"
   end
 
+  create_table "favorite_videos", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "youtube_url", null: false
+    t.string "title", null: false
+    t.string "thumbnail_url", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "channel_title"
+    t.index ["user_id"], name: "index_favorite_videos_on_user_id"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "height"
     t.integer "gender", default: 0, null: false
     t.integer "training_intensity", default: 0, null: false
-    t.decimal "target_weight", precision: 5, scale: 2
+    t.integer "target_weight"
     t.date "start_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -98,5 +109,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_21_161033) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "body_records", "users"
+  add_foreign_key "favorite_videos", "users"
   add_foreign_key "profiles", "users"
 end

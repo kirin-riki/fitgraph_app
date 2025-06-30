@@ -9,6 +9,7 @@ class RecommendedVideosController < ApplicationController
     return unless @condition_key
 
     @videos = RecommendedVideo.where(condition_key: @condition_key)
+    @favorite_videos = current_user.favorite_videos.order(created_at: :desc)
     Rails.logger.info "RecommendedVideosController#index: Found #{@videos.count} videos for key: #{@condition_key}"
 
     # 動画が存在しない場合、自動でAPIから取得

@@ -2,82 +2,375 @@
   <div class="w-full max-w-4xl mx-auto px-4">
     <h2 class="text-2xl font-bold mb-4 text-violet-600">動画</h2>
     
-    <!-- フラッシュメッセージ -->
-    <% if flash[:error] %>
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-        <%= flash[:error] %>
+    <!-- タブUI -->
+    <div class="mb-4">
+      <div class="flex border rounded overflow-hidden w-100">
+        <button id="tab-proposal" class="w-full bg-violet-500 text-white py-1 rounded text-xs sm:text-sm" onclick="showTab('proposal')">提案</button>
+        <button id="tab-favorite" class="w-full bg-violet-100 text-violet-500 font-semibold py-1 rounded text-xs sm:text-sm" onclick="showTab('favorite')">お気に入り</button>
       </div>
-    <% end %>
-    
-    <% if flash[:warning] %>
-      <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
-        <%= flash[:warning] %>
-      </div>
-    <% end %>
+    </div>
 
-    <% if flash[:notice] %>
-      <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-        <%= flash[:notice] %>
-      </div>
-    <% end %>
-
-    <% if flash[:alert] %>
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-        <%= flash[:alert] %>
-      </div>
-    <% end %>
-    
-    <!-- プロフィール設定案内 -->
-    <% unless current_user.profile&.gender.present? && current_user.profile&.training_intensity.present? %>
-      <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">
-        <p class="mb-2">動画の表示にはプロフィール設定が必要です。</p>
-        <%= link_to "プロフィール設定へ", profile_path, 
-            class: "text-blue-800 underline hover:text-blue-600" %>
-      </div>
-    <% end %>
-    
-    <div class="grid grid-cols-1 gap-6">
-      <% if @videos.present? %>
-        <% @videos.each do |rec| %>
-          <div class="border rounded-lg overflow-hidden shadow bg-white">
-            <div class="aspect-w-16 aspect-h-9">
-              <iframe
-                src="https://www.youtube.com/embed/<%= rec.video_id %>"
-                frameborder="0"
-                allowfullscreen
-                class="w-full h-full"
-                loading="lazy"
-              ></iframe>
-            </div>
-            <div class="p-4">
-              <h3 class="text-lg font-semibold mb-2"><%= rec.title %></h3>
-              <p class="text-sm text-gray-500 mb-2">
-                <%= rec.channel_title %>
-                <% if rec.view_count.present? && rec.view_count > 0 %>
-                  • <%= number_to_human(rec.view_count, precision: 1, units: {thousand: "K", million: "M"}) %> 回
-                <% end %>
-              </p>
-              <div class="flex justify-between items-center">
-                <span class="text-xs text-gray-400">
-                  取得日: <%= rec.fetched_at.strftime("%Y/%m/%d") %>
-                </span>
-                <a href="https://www.youtube.com/watch?v=<%= rec.video_id %>" 
-                   target="_blank" 
-                   class="text-violet-600 hover:text-violet-800 text-sm">
-                  YouTubeで開く →
-                </a>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      <% else %>
-        <div class="text-center py-12">
-          <p class="text-gray-500 mb-4">動画が見つかりませんでした</p>
-          <p class="text-sm text-gray-400">
-            プロフィール設定を確認するか、しばらく時間をおいて再度お試しください。
-          </p>
+    <!-- 提案タブ -->
+    <div id="tab-content-proposal">
+      <!-- フラッシュメッセージ -->
+      <% if flash[:error] %>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <%= flash[:error] %>
         </div>
       <% end %>
+      <% if flash[:warning] %>
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
+          <%= flash[:warning] %>
+        </div>
+      <% end %>
+      <% if flash[:notice] %>
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+      <!-- プロフィール設定案内 -->
+      <% unless current_user.profile&.gender.present? && current_user.profile&.training_intensity.present? %>
+        <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">
+          <p class="mb-2">動画の表示にはプロフィール設定が必要です。</p>
+          <%= link_to "プロフィール設定へ", profile_path, class: "text-blue-800 underline hover:text-blue-600" %>
+        </div>
+      <% end %>
+      <div class="grid grid-cols-1 gap-6">
+        <% if @videos.present? %>
+          <% @videos.each do |rec| %>
+            <div class="border rounded-lg overflow-hidden shadow bg-white">
+              <div class="w-full h-48 sm:h-64 md:h-96 lg:h-[500px]">
+                <iframe
+                  src="https://www.youtube.com/embed/<%= rec.video_id %>"
+                  frameborder="0"
+                  allowfullscreen
+                  class="w-full h-full"
+                  loading="lazy"
+                ></iframe>
+              </div>
+              <div class="p-4">
+                <h3 class="text-lg font-semibold mb-2"><%= rec.title %></h3>
+                <p class="text-sm text-gray-500 mb-2">
+                  <%= rec.channel_title %>
+                  <% if rec.view_count.present? && rec.view_count > 0 %>
+                    • <%= number_to_human(rec.view_count, precision: 1, units: {thousand: "K", million: "M"}) %> 回
+                  <% end %>
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-xs text-gray-400">
+                    取得日: <%= rec.fetched_at.strftime("%Y/%m/%d") %>
+                  </span>
+                  <a href="https://www.youtube.com/watch?v=<%= rec.video_id %>" 
+                     target="_blank" 
+                     class="text-violet-600 hover:text-violet-800 text-sm">
+                    YouTubeで開く →
+                  </a>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="text-center py-12">
+            <p class="text-gray-500 mb-4">動画が見つかりませんでした</p>
+            <p class="text-sm text-gray-400">
+              プロフィール設定を確認するか、しばらく時間をおいて再度お試しください。
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- お気に入りタブ -->
+    <div id="tab-content-favorite" style="display:none;">
+      <button class="text-violet-700 underline mb-2" onclick="showFavoriteForm()">+お気に入り動画を追加（最大５本）</button>
+      <div id="favorite-form" class="fixed z-10 left-0 top-0 w-full h-full flex items-center justify-center bg-black bg-opacity-20" style="display:none;">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-80">
+          <form onsubmit="return submitFavoriteForm(event)">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <label class="block text-sm mb-2">URLを入力</label>
+            <input type="text" name="youtube_url" class="w-full border rounded px-2 py-1 mb-4" required>
+            <button type="submit" class="w-full bg-violet-600 text-white rounded py-2">追加</button>
+            <button type="button" class="w-full mt-2 bg-gray-200 text-gray-700 rounded py-2" onclick="hideFavoriteForm()">キャンセル</button>
+          </form>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 gap-6 mt-4">
+        <% if @favorite_videos.present? %>
+          <% @favorite_videos.each do |fav| %>
+            <div class="border rounded-lg overflow-hidden shadow bg-white" data-video-id="<%= fav.id %>">
+              <div class="w-full h-48 sm:h-64 md:h-96 lg:h-[500px] bg-gray-200 flex items-center justify-center">
+                <% video_id = (fav.youtube_url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/) || [])[1] %>
+                <% if video_id.present? %>
+                  <iframe src="https://www.youtube.com/embed/<%= video_id %>" frameborder="0" allowfullscreen class="w-full h-full"></iframe>
+                <% else %>
+                  <span class="text-gray-400">No Video</span>
+                <% end %>
+              </div>
+              <div class="p-4">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="text-lg font-semibold flex-1"><%= fav.title %></h3>
+                  <button 
+                    onclick="deleteFavoriteVideo(<%= fav.id %>)" 
+                    class="text-red-500 hover:text-red-700 ml-2 p-1"
+                    title="削除">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                </div>
+                <p class="text-sm text-gray-500 mb-2">
+                  <%= fav.channel_title %>
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-xs text-gray-400">
+                    取得日: <%= fav.created_at.strftime("%Y/%m/%d") %>
+                  </span>
+                  <a href="<%= fav.youtube_url %>" 
+                     target="_blank" 
+                     class="text-violet-600 hover:text-violet-800 text-sm">
+                    YouTubeで開く →
+                  </a>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="text-center py-12">
+            <p class="text-gray-500 mb-4">お気に入り動画がありません</p>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </main>
+
+<script>
+// 初期タブ設定
+document.addEventListener('DOMContentLoaded', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const tab = urlParams.get('tab');
+  if (tab === 'favorite') {
+    showTab('favorite');
+  } else {
+    showTab('proposal');
+  }
+});
+
+function showTab(tab) {
+  // コンテンツの表示/非表示を切り替え
+  document.getElementById('tab-content-proposal').style.display = (tab === 'proposal') ? '' : 'none';
+  document.getElementById('tab-content-favorite').style.display = (tab === 'favorite') ? '' : 'none';
+  
+  // 提案タブの色を切り替え
+  const proposalTab = document.getElementById('tab-proposal');
+  if (tab === 'proposal') {
+    proposalTab.classList.remove('bg-violet-100', 'text-violet-500', 'font-semibold');
+    proposalTab.classList.add('bg-violet-500', 'text-white');
+  } else {
+    proposalTab.classList.remove('bg-violet-500', 'text-white');
+    proposalTab.classList.add('bg-violet-100', 'text-violet-500', 'font-semibold');
+  }
+  
+  // お気に入りタブの色を切り替え
+  const favoriteTab = document.getElementById('tab-favorite');
+  if (tab === 'favorite') {
+    favoriteTab.classList.remove('bg-violet-100', 'text-violet-500', 'font-semibold');
+    favoriteTab.classList.add('bg-violet-500', 'text-white');
+  } else {
+    favoriteTab.classList.remove('bg-violet-500', 'text-white');
+    favoriteTab.classList.add('bg-violet-100', 'text-violet-500', 'font-semibold');
+  }
+}
+
+function showFavoriteForm() {
+  document.getElementById('favorite-form').style.display = '';
+}
+function hideFavoriteForm() {
+  document.getElementById('favorite-form').style.display = 'none';
+}
+
+function submitFavoriteForm(event) {
+  event.preventDefault();
+  
+  const form = event.target;
+  const urlInput = form.querySelector('input[name="youtube_url"]');
+  const url = urlInput.value;
+  const token = form.querySelector('input[name="authenticity_token"]').value;
+  
+  // フォームを送信
+  fetch('/favorite_videos', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': token,
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      youtube_url: url
+    })
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Add failed');
+    }
+  })
+  .then(data => {
+    if (data.success) {
+      // 成功時はフォームを閉じて、新しい動画をDOMに追加
+      hideFavoriteForm();
+      urlInput.value = '';
+      
+      // 新しい動画要素を作成してDOMに追加
+      addFavoriteVideoToDOM(data.favorite_video);
+      
+      // 成功メッセージを表示
+      showMessage(data.message, 'success');
+    } else {
+      showMessage(data.message || '追加に失敗しました', 'error');
+    }
+  })
+  .catch(error => {
+    showMessage('追加に失敗しました', 'error');
+  });
+  
+  return false;
+}
+
+function addFavoriteVideoToDOM(favoriteVideo) {
+  const gridElement = document.querySelector('#tab-content-favorite .grid');
+  if (!gridElement) return;
+  
+  // 空のメッセージがある場合は削除
+  const emptyMessage = gridElement.querySelector('.text-center');
+  if (emptyMessage) {
+    emptyMessage.remove();
+  }
+  
+  // 新しい動画要素を作成
+  const videoId = (favoriteVideo.youtube_url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/) || [])[1];
+  
+  const newVideoElement = document.createElement('div');
+  newVideoElement.className = 'border rounded-lg overflow-hidden shadow bg-white';
+  newVideoElement.setAttribute('data-video-id', favoriteVideo.id);
+  
+  newVideoElement.innerHTML = `
+    <div class="w-full h-48 sm:h-64 md:h-96 lg:h-[500px] bg-gray-200 flex items-center justify-center">
+      ${videoId ? `<iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen class="w-full h-full"></iframe>` : '<span class="text-gray-400">No Video</span>'}
+    </div>
+    <div class="p-4">
+      <div class="flex justify-between items-start mb-2">
+        <h3 class="text-lg font-semibold flex-1">${favoriteVideo.title}</h3>
+        <button 
+          onclick="deleteFavoriteVideo(${favoriteVideo.id})" 
+          class="text-red-500 hover:text-red-700 ml-2 p-1"
+          title="削除">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+      <p class="text-sm text-gray-500 mb-2">
+        ${favoriteVideo.channel_title}
+      </p>
+      <div class="flex justify-between items-center">
+        <span class="text-xs text-gray-400">
+          取得日: ${new Date().toLocaleDateString('ja-JP')}
+        </span>
+        <a href="${favoriteVideo.youtube_url}" 
+           target="_blank" 
+           class="text-violet-600 hover:text-violet-800 text-sm">
+          YouTubeで開く →
+        </a>
+      </div>
+    </div>
+  `;
+  
+  // 新しい要素を最初に追加
+  gridElement.insertBefore(newVideoElement, gridElement.firstChild);
+}
+
+function showMessage(message, type) {
+  // 既存のメッセージを削除
+  const existingMessage = document.querySelector('.message-toast');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+  
+  // 新しいメッセージを作成
+  const messageElement = document.createElement('div');
+  messageElement.className = `message-toast fixed top-4 right-4 z-50 px-4 py-2 rounded shadow-lg ${type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`;
+  messageElement.textContent = message;
+  
+  document.body.appendChild(messageElement);
+  
+  // 3秒後に自動削除
+  setTimeout(() => {
+    if (messageElement.parentNode) {
+      messageElement.remove();
+    }
+  }, 3000);
+}
+
+function deleteFavoriteVideo(videoId) {
+  if (confirm('このお気に入り動画を削除しますか？')) {
+    // CSRFトークンを取得
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    
+    // 削除リクエストを送信
+    const deleteUrl = `/favorite_videos/${videoId}`;
+    
+    fetch(deleteUrl, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRF-Token': token,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Delete failed');
+      }
+    })
+    .then(data => {
+      if (data.success) {
+        // 成功時は該当の動画要素をDOMから削除
+        const videoElement = document.querySelector(`[data-video-id="${videoId}"]`);
+        
+        if (videoElement) {
+          videoElement.remove();
+          
+          // お気に入り動画が0件になった場合のメッセージ表示
+          const favoriteVideos = document.querySelectorAll('[data-video-id]');
+          
+          if (favoriteVideos.length === 0) {
+            const favoriteContent = document.getElementById('tab-content-favorite');
+            const gridElement = favoriteContent.querySelector('.grid');
+            if (gridElement) {
+              gridElement.innerHTML = `
+                <div class="text-center py-12">
+                  <p class="text-gray-500 mb-4">お気に入り動画がありません</p>
+                </div>
+              `;
+            }
+          }
+        }
+      } else {
+        alert(data.message || '削除に失敗しました');
+      }
+    })
+    .catch(error => {
+      alert('削除に失敗しました');
+    });
+  }
+}
+</script>
