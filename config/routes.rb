@@ -31,5 +31,5 @@ Rails.application.routes.draw do
       get :refresh
     end
   end
-  resources :favorite_videos, only: [:create, :destroy]
+  resources :favorite_videos, only: [ :create, :destroy ]
 end

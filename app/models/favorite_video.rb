@@ -11,7 +11,7 @@ class FavoriteVideo < ApplicationRecord
 
   def favorite_videos_limit
     if user && user.favorite_videos.count >= 5
-      errors.add(:base, 'お気に入り動画は最大5件までです')
+      errors.add(:base, "お気に入り動画は最大5件までです")
     end
   end
 end
