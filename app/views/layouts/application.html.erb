@@ -28,18 +28,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js" defer></script>
 
-    <!-- OGP基本タグ（テスト用） -->
-    <meta property="og:title" content="FitGraph - 体重管理アプリ">
-    <meta property="og:description" content="毎日の体重や体調をグラフで記録・管理できるWebアプリです。">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fitgraph-app.onrender.com/">
-    <meta property="og:image" content="https://fitgraph-app.onrender.com/images/icon.png">
-
-    <!-- Twitterカード用（テスト用） -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="FitGraph - 体重管理アプリ">
-    <meta name="twitter:description" content="毎日の体重や体調をグラフで記録・管理できるWebアプリです。">
-    <meta name="twitter:image" content="https://fitgraph.example.com/images/icon.png">
+    <%= display_meta_tags(default_meta_tags) %> 
   </head>
 
   <body class="min-h-screen flex flex-col bg-gray-50">
