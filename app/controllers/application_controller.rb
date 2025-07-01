@@ -47,4 +47,16 @@ class ApplicationController < ActionController::Base
     # 新しい512x512pxのアイコンファイルを使用
     asset_path("icon_logo512.png")
   end
+
+  # 未ログイン時は未認証トップページにリダイレクト
+  def authenticate_user!
+    unless user_signed_in?
+      redirect_to unauthenticated_root_path, alert: 'ログインが必要です。'
+    end
+  end
+
+  # Deviseのリダイレクト先もrootに
+  def after_sign_in_path_for(resource)
+    authenticated_root_path
+  end
 end
