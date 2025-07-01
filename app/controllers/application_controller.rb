@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
   # 未ログイン時は未認証トップページにリダイレクト
   def authenticate_user!
     unless user_signed_in?
-      redirect_to unauthenticated_root_path, alert: 'ログインが必要です。'
+      redirect_to new_user_session_path, alert: "ログインが必要です。"
     end
   end
 
