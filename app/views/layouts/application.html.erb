@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <title><%= content_for(:title) || "FitGraph" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -15,20 +15,25 @@
 
     <%= yield :head %>
 
+    <!-- ファビコン類（asset_host 設定により絶対 URL に変換されます） -->
     <%= favicon_link_tag "favicon.ico", rel: "icon" %>
     <%= favicon_link_tag "apple-touch-icon.png", rel: "apple-touch-icon", type: "image/png", sizes: "180x180" %>
     <%= favicon_link_tag "android-chrome-192x192.png", sizes: '192x192', type: 'image/png' %>
 
-    <!-- PWAマニフェスト -->
+    <!-- PWA マニフェスト -->
     <link rel="manifest" href="/manifest.json">
 
+    <!-- スタイルシート -->
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload", media: "all" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
+
+    <!-- JavaScript -->
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module", defer: true %>
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js" defer></script>
 
-    <%= display_meta_tags(default_meta_tags) %> 
+    <!-- OGP／Twitterカード -->
+    <%= display_meta_tags(default_meta_tags) %>
   </head>
 
   <body class="min-h-screen flex flex-col bg-gray-50">
@@ -39,6 +44,7 @@
     <% if user_signed_in? %>
       <%= render "shared/footer" %>
     <% end %>
+
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const btn  = document.getElementById("dropdown-button")
