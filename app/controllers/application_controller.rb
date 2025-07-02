@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :set_default_meta_tags
 
   helper_method :icon_path
+  add_flash_types :success, :danger
 
   protected
 

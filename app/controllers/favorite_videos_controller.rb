@@ -11,7 +11,7 @@ class FavoriteVideosController < ApplicationController
       if url.blank?
         respond_to do |format|
           format.json { render json: { success: false, message: "URLを入力してください" }, status: :bad_request }
-          format.html { redirect_to recommended_videos_path(tab: "favorite"), alert: "URLを入力してください" }
+          format.html { redirect_to recommended_videos_path(tab: "favorite"), danger: "URLを入力してください" }
         end
         return
       end
@@ -21,7 +21,7 @@ class FavoriteVideosController < ApplicationController
       if video_id.blank?
         respond_to do |format|
           format.json { render json: { success: false, message: "正しいYouTube URLを入力してください" }, status: :bad_request }
-          format.html { redirect_to recommended_videos_path(tab: "favorite"), alert: "正しいYouTube URLを入力してください" }
+          format.html { redirect_to recommended_videos_path(tab: "favorite"), danger: "正しいYouTube URLを入力してください" }
         end
         return
       end
@@ -30,7 +30,7 @@ class FavoriteVideosController < ApplicationController
       if current_user.favorite_videos.count >= 5
         respond_to do |format|
           format.json { render json: { success: false, message: "お気に入り動画は最大5件までです" }, status: :unprocessable_entity }
-          format.html { redirect_to recommended_videos_path(tab: "favorite"), alert: "お気に入り動画は最大5件までです" }
+          format.html { redirect_to recommended_videos_path(tab: "favorite"), danger: "お気に入り動画は最大5件までです" }
         end
         return
       end
@@ -40,7 +40,7 @@ class FavoriteVideosController < ApplicationController
       if existing_video
         respond_to do |format|
           format.json { render json: { success: false, message: "既に登録されている動画です" }, status: :unprocessable_entity }
-          format.html { redirect_to recommended_videos_path(tab: "favorite"), alert: "既に登録されている動画です" }
+          format.html { redirect_to recommended_videos_path(tab: "favorite"), danger: "既に登録されている動画です" }
         end
         return
       end
@@ -79,7 +79,7 @@ class FavoriteVideosController < ApplicationController
               }
             }
           }
-          format.html { redirect_to recommended_videos_path(tab: "favorite"), notice: "お気に入り動画を追加しました" }
+          format.html { redirect_to recommended_videos_path(tab: "favorite"), success: "お気に入り動画を追加しました" }
         end
       else
         respond_to do |format|
@@ -89,7 +89,7 @@ class FavoriteVideosController < ApplicationController
               message: fav.errors.full_messages.join(", ")
             }, status: :unprocessable_entity
           }
-          format.html { redirect_to recommended_videos_path(tab: "favorite"), alert: fav.errors.full_messages.join(", ") }
+          format.html { redirect_to recommended_videos_path(tab: "favorite"), danger: fav.errors.full_messages.join(", ") }
         end
       end
     rescue => e
@@ -100,7 +100,7 @@ class FavoriteVideosController < ApplicationController
             message: "エラーが発生しました: #{e.message}"
           }, status: :internal_server_error
         }
-        format.html { redirect_to recommended_videos_path(tab: "favorite"), alert: "エラーが発生しました: #{e.message}" }
+        format.html { redirect_to recommended_videos_path(tab: "favorite"), danger: "エラーが発生しました: #{e.message}" }
       end
     end
   end
@@ -111,12 +111,12 @@ class FavoriteVideosController < ApplicationController
     if fav&.destroy
       respond_to do |format|
         format.json { render json: { success: true, message: "お気に入り動画を削除しました" } }
-        format.html { redirect_to recommended_videos_path(tab: "favorite"), notice: "お気に入り動画を削除しました" }
+        format.html { redirect_to recommended_videos_path(tab: "favorite"), success: "お気に入り動画を削除しました" }
       end
     else
       respond_to do |format|
         format.json { render json: { success: false, message: "削除に失敗しました" }, status: :unprocessable_entity }
-        format.html { redirect_to recommended_videos_path(tab: "favorite"), alert: "削除に失敗しました" }
+        format.html { redirect_to recommended_videos_path(tab: "favorite"), danger: "削除に失敗しました" }
       end
     end
   end
