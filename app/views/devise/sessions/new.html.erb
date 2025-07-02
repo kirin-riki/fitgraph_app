@@ -2,7 +2,7 @@
 <!-- app/views/devise/sessions/new.html.erb -->
 <div class="w-full min-h-screen bg-gradient-to-b from-indigo-400 via-violet-500 to-purple-700 px-4 relative">
   <div class="absolute inset-0 flex items-center justify-center">
-    <div class="w-full max-w-md mx-auto transform scale-100 md:scale-125 transition-transform duration-300">
+    <div class="w-full max-w-md mx-auto transform scale-100 md:scale-110 transition-transform duration-300">
       <div class="bg-white/10 backdrop-blur-sm py-8 px-6 sm:px-10 rounded-xl shadow-lg">
         <!-- ロゴとタイトル -->
         <div class="flex flex-col items-center">
@@ -41,13 +41,7 @@
                          rounded-full py-2 hover:bg-opacity-90 transition" %>
           </div>
         <% end %>
-        <!-- フッタリンク -->
-        <div class="mt-4 text-center space-y-2">
-          <%= link_to "パスワードをお忘れの方はこちら", new_user_password_path,
-                class: "block text-sm text-white underline hover:text-violet-200" %>
-          <%= link_to "新規登録はこちら", new_user_registration_path,
-                class: "block text-sm text-white underline hover:text-violet-200" %>
-        </div>
+        <%= render "devise/shared/links" %>
       </div>
     </div>
   </div>

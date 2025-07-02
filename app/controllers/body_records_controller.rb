@@ -40,8 +40,9 @@ class BodyRecordsController < ApplicationController
 
     if @body_record.save
       redirect_to top_body_records_path(selected_date: @body_record.recorded_at),
-                  notice: @body_record.previously_new_record? ? "身体情報を登録しました" : "身体情報を更新しました"
+                  success: @body_record.previously_new_record? ? "身体情報を登録しました" : "身体情報を更新しました"
     else
+      flash.now[:danger] = "身体情報の登録・更新に失敗しました"
       render :new, status: :unprocessable_entity
     end
   end
@@ -59,8 +60,9 @@ class BodyRecordsController < ApplicationController
         attach_processed_photo(params[:body_record][:photo])
       end
       redirect_to top_body_records_path(selected_date: @body_record.recorded_at),
-                  notice: "身体情報を更新しました"
+                  success: "身体情報を更新しました"
     else
+      flash.now[:danger] = "身体情報の更新に失敗しました"
       render :edit, status: :unprocessable_entity
     end
   end

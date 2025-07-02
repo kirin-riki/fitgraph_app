@@ -15,14 +15,14 @@ module ApplicationHelper
         description: :description,
         type:       "website",
         url:        "https://fitgraph-app.onrender.com/",
-        image:      image_url('OGP_icon.png'),
-        secure_url: image_url('OGP_icon.png'),
+        image:      image_url("OGP_icon.png"),
+        secure_url: image_url("OGP_icon.png"),
         locale:     "ja_JP"
       },
       twitter: {
         card:  "summary_large_image",
         site:  "@fitgraph_app",
-        image: image_url('OGP_icon.png')
+        image: image_url("OGP_icon.png")
       }
     }
   end
