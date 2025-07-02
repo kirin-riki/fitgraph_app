@@ -106,6 +106,6 @@ class RecommendedVideosController < ApplicationController
     Rails.logger.error "RecommendedVideosController##{action_name}: Error: #{error.message}"
     Rails.logger.error "Backtrace: #{error.backtrace.first(5).join("\n")}"
     @videos = []
-    flash.now[:error] = "動画の処理中にエラーが発生しました。"
+    flash.now[:danger] = "動画の処理中にエラーが発生しました。"
   end
 end

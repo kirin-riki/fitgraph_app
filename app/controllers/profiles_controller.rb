@@ -1,18 +1,18 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: %i[show edit update]
+  before_action :authenticate_user!
 
   def show; end
 
   def edit; end
 
   def update
-    ActiveRecord::Base.transaction do
-      @user.update!(user_params)
-      @profile.update!(profile_params)
+    if @profile.update(profile_params)
+      redirect_to profile_path, success: "プロフィールを更新しました。"
+    else
+      flash.now[:danger] = "プロフィールの更新に失敗しました"
+      render :edit, status: :unprocessable_entity
     end
-    redirect_to profile_path, notice: "プロフィールを更新しました。"
-  rescue ActiveRecord::RecordInvalid
-    render "edit", status: :unprocessable_entity
   end
 
   private

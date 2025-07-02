@@ -15,9 +15,10 @@ class UsersController < ApplicationController
   def update
     @user = User.find(current_user.id)
     if @user.update(user_params)
-      redirect_to edit_user_path(current_user), notice: "登録情報を更新しました"
+      redirect_to edit_user_path(current_user), success: "登録情報を更新しました"
     else
-      render "edit"
+      flash.now[:danger] = "登録情報の更新に失敗しました"
+      render :edit, status: :unprocessable_entity
     end
   end
 
