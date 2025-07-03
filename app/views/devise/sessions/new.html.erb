@@ -34,7 +34,12 @@
                          px-4 py-2 placeholder-white placeholder-opacity-70
                          text-white focus:outline-none focus:ring-2 focus:ring-white
                          focus:ring-opacity-50" %>
+            <div class="flex items-center mt-1 text-white">
+              <%= f.check_box :remember_me %>
+              <%= f.label    :remember_me, "次回から自動的にログインする" %>
+            </div>
           </div>
+
           <div>
             <%= f.submit "ログイン",
                   class: "w-full bg-white text-violet-800 font-medium
