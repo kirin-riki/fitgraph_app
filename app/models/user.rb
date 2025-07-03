@@ -16,7 +16,17 @@ class User < ApplicationRecord
 
   def self.from_omniauth(auth)
     email = auth.info.email.presence || "#{auth.uid}-#{auth.provider}@example.com"
-    name = auth.info.name.presence || "LINEユーザー"
+    name = auth.info.name.presence || "#{auth.provider.capitalize}ユーザー"
+
+    # Google認証の場合、同じメールアドレスのユーザーがいれば紐付ける
+    if auth.provider.to_s == 'google_oauth2'
+      user = find_by(email: email)
+      if user
+        user.update(provider: auth.provider, uid: auth.uid)
+        return user
+      end
+    end
+
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.name = name
       user.email = email
