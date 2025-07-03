@@ -6,7 +6,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def line
-    callback_from :line
+    callback_for(:line)
   end
 
   def callback_for(provider)
