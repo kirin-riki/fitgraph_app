@@ -5,6 +5,9 @@
       マイページ編集
     </h2>
 
+    <%= render "devise/shared/error_messages", resource: @user %>
+    <%= render "devise/shared/error_messages", resource: @profile %>
+
     <%= form_with url: profile_path, scope: nil, method: :patch, class: "space-y-2 sm:space-y-3 lg:space-y-4" do %>
       <!-- User fields -->
       <div>
