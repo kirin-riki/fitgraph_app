@@ -6,4 +6,4 @@ class Users::PasswordsController < Devise::PasswordsController
     # メールアドレスが見つからない場合もエラーを出さずにログインページへ
     redirect_to new_user_session_path, notice: "パスワード再設定用のメールを送信しました。"
   end
-end 
+end
