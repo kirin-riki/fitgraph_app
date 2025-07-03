@@ -124,4 +124,9 @@ Rails.application.configure do
     authentication:       "plain",
     enable_starttls_auto: true
   }
+
+    # Only use :id for inspections in production.
+    config.active_record.attributes_for_inspect = [ :id ]
+
+    config.hosts << "saitamanear.com"
 end
