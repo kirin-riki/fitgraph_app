@@ -275,7 +275,7 @@ Devise.setup do |config|
                   ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"],
                   {
                     scope: "email,profile",
-                    redirect_uri: "#{ENV['HOST']}/users/auth/google_oauth2/callback"
+                    redirect_uri: "https://fitgraph-app.onrender.com/users/auth/google_oauth2/callback"
                   }
 
   # LINE認証を追加
