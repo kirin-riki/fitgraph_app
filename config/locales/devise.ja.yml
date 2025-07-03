@@ -30,4 +30,6 @@ ja:
       expired: "有効期限が切れています。"
       not_saved:
         one: "%{resource}の保存に失敗しました:"
-        other: "%{count}件のエラーにより%{resource}を保存できませんでした:" 
+        other: "%{count}件のエラーにより%{resource}を保存できませんでした:"
+    omniauth_callbacks:
+      success: "%{kind}アカウントで認証しました。" 

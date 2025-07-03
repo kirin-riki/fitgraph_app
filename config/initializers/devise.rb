@@ -280,7 +280,7 @@ Devise.setup do |config|
 
   # LINE認証を追加
   config.omniauth :line,
-                  ENV["LINE_CHANNEL_ID"], ENV["LINE_CHANNEL_SECRET"],
+                  ENV["LINE_KEY"], ENV["LINE_SECRET"],
                   scope: "profile openid",
                   callback_path: "/users/auth/line/callback"
 
