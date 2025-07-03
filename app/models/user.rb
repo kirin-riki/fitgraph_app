@@ -15,23 +15,20 @@ class User < ApplicationRecord
   validates :uid, presence: true, uniqueness: { scope: :provider }, if: -> { uid.present? }
 
   def self.from_omniauth(auth)
-    # 以下1行[user = where ...]コメントアウト
-    # user = where(provider: auth.provider, uid: auth.uid).first_or_initialize
-
-    # 以下の頭に[user = ]を追加
+    email = auth.info.email.presence || "#{auth.uid}-#{auth.provider}@example.com"
+    name = auth.info.name.presence || "LINEユーザー"
     user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.name = auth.info.name
-      user.email = auth.info.email
+      user.name = name
+      user.email = email
       pw = Devise.friendly_token[0, 20]
       user.password = pw
       user.password_confirmation = pw
     end
 
-    # デバッグ：エラーが出た時にどのようなエラーが出るか確認。
     if user.save
-      Rails.logger.debug "User saved: #{user.inspect}"
+      Rails.logger.debug "User saved: \\#{user.inspect}"
     else
-      Rails.logger.debug "User save failed: #{user.errors.full_messages}"
+      Rails.logger.debug "User save failed: \\#{user.errors.full_messages}"
     end
 
     user
