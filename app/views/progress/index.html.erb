@@ -704,30 +704,40 @@ function updateStatsTable(period) {
     }
   }
 
-  // 表の書き換え
-  document.getElementById('first-weight').textContent = firstWeight.toFixed(2);
-  document.getElementById('last-weight').textContent  = lastWeight.toFixed(2);
-  document.getElementById('first-fat').textContent    = firstFat.toFixed(2);
-  document.getElementById('last-fat').textContent     = lastFat.toFixed(2);
-  document.getElementById('first-fat-mass').textContent = firstFatMass.toFixed(2);
-  document.getElementById('last-fat-mass').textContent  = lastFatMass.toFixed(2);
-
-  // カウントダウン・達成表示
+  // 表の書き換え（要素の存在チェック付き）
+  const firstWeightEl = document.getElementById('first-weight');
+  const lastWeightEl = document.getElementById('last-weight');
+  const firstFatEl = document.getElementById('first-fat');
+  const lastFatEl = document.getElementById('last-fat');
+  const firstFatMassEl = document.getElementById('first-fat-mass');
+  const lastFatMassEl = document.getElementById('last-fat-mass');
   const block = document.getElementById('goal-countdown-block');
-  // 目標体重が設定されている場合のみ表示
-  if (window.targetWeight && lastWeight > 0) {
-    if (goalAchieved) {
-      block.innerHTML = '<span id="goal-achieved-label" class="text-xl font-bold text-violet-600">目標達成！！！</span>';
+
+  // 要素が存在する場合のみ更新
+  if (firstWeightEl) firstWeightEl.textContent = firstWeight.toFixed(2);
+  if (lastWeightEl) lastWeightEl.textContent = lastWeight.toFixed(2);
+  if (firstFatEl) firstFatEl.textContent = firstFat.toFixed(2);
+  if (lastFatEl) lastFatEl.textContent = lastFat.toFixed(2);
+  if (firstFatMassEl) firstFatMassEl.textContent = firstFatMass.toFixed(2);
+  if (lastFatMassEl) lastFatMassEl.textContent = lastFatMass.toFixed(2);
+
+  // カウントダウン・達成表示（要素の存在チェック付き）
+  if (block) {
+    // 目標体重が設定されている場合のみ表示
+    if (window.targetWeight && lastWeight > 0) {
+      if (goalAchieved) {
+        block.innerHTML = '<span id="goal-achieved-label" class="text-xl font-bold text-violet-600">目標達成！！！</span>';
+      } else {
+        block.innerHTML = '<span id="goal-countdown-label">目標まであと</span>' +
+          '<span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">' +
+          weightToGoal.toFixed(2) +
+          '</span>' +
+          '<span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>';
+      }
     } else {
-      block.innerHTML = '<span id="goal-countdown-label">目標まであと</span>' +
-        '<span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">' +
-        weightToGoal.toFixed(2) +
-        '</span>' +
-        '<span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>';
+      // 目標体重が設定されていない場合は非表示
+      block.innerHTML = '';
     }
-  } else {
-    // 目標体重が設定されていない場合は非表示
-    block.innerHTML = '';
   }
 }
 
