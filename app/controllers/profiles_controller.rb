@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: %i[show edit update]
   before_action :authenticate_user!
+  before_action :set_profile, only: %i[show edit update]
 
   def show; end
 
@@ -22,10 +22,8 @@ class ProfilesController < ApplicationController
 
   def set_profile
     @user    = current_user
-    @profile = current_user.profile ||
-               current_user.build_profile
+    @profile = current_user.profile || current_user.build_profile
   end
-
 
   def user_params
     params.require(:user).permit(:name, :email)
