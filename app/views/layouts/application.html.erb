@@ -38,7 +38,7 @@
 
   <body class="min-h-screen flex flex-col bg-gray-50">
     <%= render "shared/header" %>
-    <main class="min-h-[calc(100vh-60px)] <%= content_for?(:no_main_padding) ? '' : 'pt-[60px]' %>">
+    <main class="min-h-[calc(100vh-60px)] <%= content_for?(:no_main_padding) ? 'pt-0 bg-transparent' : 'pt-[60px] bg-gray-50' %>">
       <%= render "shared/flash" %>
       <%= yield %>
     </main>
