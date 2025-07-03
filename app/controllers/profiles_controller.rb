@@ -7,7 +7,10 @@ class ProfilesController < ApplicationController
   def edit; end
 
   def update
-    if @profile.update(profile_params)
+    user_updated = @user.update(user_params)
+    profile_updated = @profile.update(profile_params)
+
+    if user_updated && profile_updated
       redirect_to profile_path, success: "プロフィールを更新しました。"
     else
       flash.now[:danger] = "プロフィールの更新に失敗しました"
