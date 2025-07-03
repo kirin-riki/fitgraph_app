@@ -5,6 +5,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     callback_for(:google)
   end
 
+  def line
+    callback_from :line
+  end
+
   def callback_for(provider)
     @user = User.from_omniauth(request.env["omniauth.auth"])
 
