@@ -23,7 +23,7 @@ module Myapp
 
     # デフォルトのロケールを日本語に設定
     config.i18n.default_locale = :ja
-    config.i18n.available_locales = [:en, :ja]
+    config.i18n.available_locales = [ :en, :ja ]
 
     # Configuration for the application, engines, and railties goes here.
     #
