@@ -81,4 +81,4 @@ gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 gem "omniauth-line"
 
-gem "line-bot-api"
+gem 'line-bot-api', '1.30.0'
