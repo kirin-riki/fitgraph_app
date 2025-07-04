@@ -5,12 +5,7 @@ class LineBotController < ApplicationController
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
 
-    unless LineClient.validate_signature(body, signature)
-      head :bad_request
-      return
-    end
-
-    events = LineClient.client.parse_events_from(body)
+    events = LineClient.parse_events(body, signature)
 
     events.each do |event|
       case event
