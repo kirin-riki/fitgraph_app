@@ -36,6 +36,4 @@ Rails.application.routes.draw do
   
   # LINE Bot Webhook
   post "line/callback" => "line_bot#callback"
-
-  get '/auth/line/callback', to: 'users/omniauth_callbacks#line'
 end
