@@ -8,12 +8,8 @@ class LineBotController < ApplicationController
     events = LineClient.parse_events(body, signature)
 
     events.each do |event|
-      case event
-      when Line::Bot::Event::Message
-        case event.type
-        when Line::Bot::Event::MessageType::Text
-          handle_text_message(event)
-        end
+      if event['type'] == 'message' && event['message']['type'] == 'text'
+        handle_text_message(event)
       end
     end
 
@@ -24,7 +20,7 @@ class LineBotController < ApplicationController
 
   def handle_text_message(event)
     user_id = event['source']['userId']
-    text = event.message['text']
+    text = event['message']['text']
 
     case text
     when '通知'
