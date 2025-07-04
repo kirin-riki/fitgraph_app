@@ -8,7 +8,7 @@ class LineBotController < ApplicationController
     events = LineClient.parse_events(body, signature)
 
     events.each do |event|
-      if event['type'] == 'message' && event['message']['type'] == 'text'
+      if event.type == 'message' && event.message.type == 'text'
         handle_text_message(event)
       end
     end
@@ -19,16 +19,16 @@ class LineBotController < ApplicationController
   private
 
   def handle_text_message(event)
-    user_id = event['source']['userId']
-    text = event['message']['text']
+    user_id = event.source.user_id
+    text = event.message.text
 
     case text
     when '通知'
-      send_notification_quick_reply(event['replyToken'])
+      send_notification_quick_reply(event.reply_token)
     when /^(\d{1,2}):(\d{2})$/
-      handle_time_selection(user_id, $1, $2, event['replyToken'])
+      handle_time_selection(user_id, $1, $2, event.reply_token)
     else
-      send_help_message(event['replyToken'])
+      send_help_message(event.reply_token)
     end
   end
 
