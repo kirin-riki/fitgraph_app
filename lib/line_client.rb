@@ -1,3 +1,5 @@
+require "line/bot"
+
 class LineClient
   class << self
     def client
