@@ -1,87 +1,158 @@
 class LineBotController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  protect_from_forgery except: [:callback]
 
   def callback
     body = request.body.read
-    signature = request.env['HTTP_X_LINE_SIGNATURE']
-
-    events = LineClient.parse_events(body, signature)
-
-    events.each do |event|
-      if event.type == 'message' && event.message.type == 'text'
-        handle_text_message(event)
-      end
+    signature = request.env["HTTP_X_LINE_SIGNATURE"]
+    unless client.validate_signature(body, signature)
+      head :bad_request
+      return
     end
 
-    head :ok
+    events = client.parse_events_from(body)
+    events.each do |event|
+      client.reply_message(event["replyToken"], message(event))
+    end
   end
 
   private
 
-  def handle_text_message(event)
-    user_id = event.source.user_id
-    text = event.message.text
-
-    case text
-    when '通知'
-      send_notification_quick_reply(event.reply_token)
-    when /^(\d{1,2}):(\d{2})$/
-      handle_time_selection(user_id, $1, $2, event.reply_token)
-    else
-      send_help_message(event.reply_token)
+  def client
+    @client ||= Line::Bot::Client.new do |config|
+      config.channel_secret = Rails.application.credentials.dig(:LINE_BOT, :SECRET)
+      config.channel_token = Rails.application.credentials.dig(:LINE_BOT, :TOKEN)
     end
   end
 
-  def send_notification_quick_reply(reply_token)
-    messages = {
-      type: 'text',
-      text: '通知時刻を選択してください',
-      quickReply: {
-        items: generate_time_options
-      }
-    }
-
-    LineClient.reply_message(reply_token, messages)
-  end
-
-  def generate_time_options
-    times = []
-    
-    # 6:00から22:00まで30分間隔で時刻オプションを生成
-    (6..22).each do |hour|
-      [0, 30].each do |minute|
-        time_str = "#{hour.to_s.rjust(2, '0')}:#{minute.to_s.rjust(2, '0')}"
-        times << {
-          type: 'action',
-          action: {
-            type: 'message',
-            label: time_str,
-            text: time_str
-          }
-        }
+  def message(event)
+    case event
+    when Line::Bot::Event::Message
+      case event.type
+      when Line::Bot::Event::MessageType::Text
+        handle_message_event(event)
       end
     end
-
-    times
   end
 
-  def handle_time_selection(user_id, hour, minute, reply_token)
-    target_time = Time.current.change(hour: hour.to_i, min: minute.to_i)
-    
-    # 過去の時刻の場合は翌日に設定
-    if target_time <= Time.current
-      target_time = target_time + 1.day
+  def handle_message_event(event)
+    case event.message["text"]
+    when "タスクを確認"
+      {
+        type: "text",
+        text: get_all_milestones_and_tasks(event)
+      }
+    else
+      {
+        type: "text",
+        text: "タスクを確認するには「タスクを確認」と送信してください。"
+      }
     end
-
-    # ジョブを登録
-    NotificationJob.set(wait_until: target_time).perform_later(user_id)
-
-    message = "今日の#{hour}:#{minute}に通知を設定しました！"
-    LineClient.reply_message(reply_token, { type: 'text', text: message })
   end
 
-  def send_help_message(reply_token)
-    message = "「通知」と送信すると時刻選択ができます。\nまたは「HH:MM」の形式で直接時刻を指定することもできます。"
-    LineClient.reply_message(reply_token, { type: 'text', text: message })
+  # 星座とタスクの両方のリストを取得して結合する
+  def get_all_milestones_and_tasks(event)
+    user = get_user(event)
+
+    if user.nil?
+      "ユーザーIDが取得できませんでした。"
+    else
+      "#{get_milestones_list(event)} \n\n ---------- \n\n #{get_tasks_list(event)}"
+    end
+  end
+
+  # ユーザーを取得するメソッド
+  def get_user(event)
+    user_id = event["source"]["userId"]
+    user = User.find_by(uid: user_id)
+
+    if user.nil?
+      nil
+    else
+      user
+    end
+  end
+
+  # 星座のリストを取得するメソッド
+  def get_milestones_list(event)
+    user = get_user(event)
+    milestones = user.milestones.order(:start_date).where.not(progress: "completed")
+
+    if user.nil?
+      "ユーザーIDが取得できませんでした。"
+    elsif milestones.empty?
+      "星座はまだありません！"
+    else
+      messages = milestones.map do |milestone|
+        is_first = milestone == milestones.first
+        start_date = to_short_date(milestone.start_date)
+        end_date = to_short_date(milestone.end_date)
+        tasks_count = milestone.tasks.count
+
+        "#{is_first ? '' : "\n"}🌟：#{milestone.title}\
+        \n   📝：#{tasks_count}つ\
+        \n   #{start_date} ~ #{end_date}"
+      end
+      messages.join("\n")
+    end
+  end
+
+  # タスクのリストを取得するメソッド
+  def get_tasks_list(event)
+    user = get_user(event)
+    tasks = user.tasks.order(:start_date).reject { |t| t&.milestone_completed? }
+
+    if user.nil?
+      "ユーザーIDが取得できませんでした。"
+    elsif tasks.empty?
+      "タスクはありません！"
+    else
+      tasks_message(tasks)
+    end
+  end
+
+  def tasks_message(tasks)
+    tasks.map do |task|
+      is_first = task == tasks.first
+      start_date = to_short_date(task.start_date)
+      end_date = to_short_date(task.end_date)
+      task_milestone_title = task.milestone&.title || "---"
+      progress = get_progress(task)
+
+      "#{is_first ? '' : "\n"}📝：#{task.title} - #{progress}\
+      \n   🌟：#{task_milestone_title}\
+      \n    #{start_date} ~ #{end_date}"
+    end.join("\n")
+  end
+
+  # タスクの進捗を取得するメソッド
+  def get_progress(task)
+    case task.progress
+    when "not_started"
+      "🍵 未着手"
+    when "in_progress"
+      "👉 進行中"
+    when "completed"
+      "✅ 完了"
+    else
+      "❓不明な進捗"
+    end
+  end
+
+  # 曜日を取得するメソッド
+  def day_of_week(date)
+    return if date.nil?
+
+    day_name_ja = %w[日 月 火 水 木 金 土]
+
+    d = date.to_date.wday
+
+    day_name_ja[d]
+  end
+
+  # 日付を短縮形式で表示するメソッド
+  def to_short_date(date)
+    return if date.nil?
+
+    "#{date.mon}/#{date.mday} (#{day_of_week(date)})"
   end
 end
