@@ -25,6 +25,9 @@ module Myapp
     config.i18n.default_locale = :ja
     config.i18n.available_locales = [ :en, :ja ]
 
+    # Active Job設定
+    config.active_job.queue_adapter = :async
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

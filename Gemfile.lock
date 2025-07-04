@@ -225,6 +225,9 @@ GEM
       letter_opener (~> 1.7)
       railties (>= 5.2)
       rexml
+    line-bot-api (2.0.0)
+      base64 (~> 0.2)
+      multipart-post (~> 2.4)
     lint_roller (1.1.0)
     logger (1.7.0)
     loofah (2.24.1)
@@ -254,6 +257,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
+    multipart-post (2.4.1)
     mutex_m (0.3.0)
     net-http (0.6.0)
       uri
@@ -510,6 +514,7 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   letter_opener_web (= 2.0.0)
+  line-bot-api
   material_icons
   meta-tags
   mini_magick
