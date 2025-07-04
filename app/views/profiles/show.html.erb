@@ -31,5 +31,11 @@
         </p>
       <% end %>
     </div>
+
+    <% if current_user.line_user_id.present? && current_user.uid.present? %>
+      <p>LINE連携済み</p>
+    <% else %>
+      <%= link_to 'LINEと連携', '/auth/line' %>
+    <% end %>
   </section>
 </main>
