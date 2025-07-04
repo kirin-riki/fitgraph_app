@@ -11,7 +11,7 @@ class LineClient
     end
 
     def parse_events(body, signature)
-      parser.parse(body, signature)
+      parser.parse(body: body, signature: signature)
     end
 
     def reply_message(reply_token, messages)
