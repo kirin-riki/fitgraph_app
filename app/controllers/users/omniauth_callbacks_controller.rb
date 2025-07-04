@@ -7,17 +7,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def line
     Rails.logger.debug "=== LINE認証/連携デバッグ ==="
-    Rails.logger.debug "State parameter: #{request.params['state']}"
-    Rails.logger.debug "Current user present: #{current_user.present?}"
-    Rails.logger.debug "Auth UID: #{request.env['omniauth.auth']&.dig('uid')}"
-    
-    auth = request.env['omniauth.auth']
-    state = request.params['state']
+    Rails.logger.debug "Current user present: \\#{current_user.present?}"
+    Rails.logger.debug "Auth UID: \\#{request.env['omniauth.auth']&.dig('uid')}"
 
-    if state == 'link' && current_user
-      current_user.update(
-        line_user_id: auth['uid']
-      )
+    auth = request.env['omniauth.auth']
+
+    if current_user
+      # 連携処理
+      current_user.update(line_user_id: auth['uid'])
       redirect_to profile_path, notice: 'LINE連携が完了しました'
     else
       @user = User.from_omniauth(auth)
