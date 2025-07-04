@@ -11,7 +11,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if state == 'link' && current_user
       current_user.update(
-        uid: auth['uid'],
         line_user_id: auth['uid']
       )
       redirect_to profile_path, notice: 'LINE連携が完了しました'
