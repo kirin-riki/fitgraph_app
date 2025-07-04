@@ -1,4 +1,4 @@
-require "line/bot"
+require 'line/bot'
 
 class LineClient
   class << self
