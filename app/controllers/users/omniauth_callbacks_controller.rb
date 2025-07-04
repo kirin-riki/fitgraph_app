@@ -6,6 +6,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def line
+    Rails.logger.debug "=== LINE認証/連携デバッグ ==="
+    Rails.logger.debug "State parameter: #{request.params['state']}"
+    Rails.logger.debug "Current user present: #{current_user.present?}"
+    Rails.logger.debug "Auth UID: #{request.env['omniauth.auth']&.dig('uid')}"
+    
     auth = request.env['omniauth.auth']
     state = request.params['state']
 
