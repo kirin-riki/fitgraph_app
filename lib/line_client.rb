@@ -7,7 +7,7 @@ class LineClient
     end
 
     def client
-      @client ||= Line::Bot::V2::MessagingApi::ApiClient.new(channel_token: ENV['LINE_CHANNEL_TOKEN'])
+      @client ||= Line::Bot::V2::MessagingApi::ApiClient.new(channel_access_token: ENV['LINE_CHANNEL_TOKEN'])
     end
 
     def parse_events(body, signature)
