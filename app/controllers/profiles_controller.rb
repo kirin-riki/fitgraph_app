@@ -7,14 +7,19 @@ class ProfilesController < ApplicationController
   def edit; end
 
   def update
-    user_updated = @user.update(user_params)
-    profile_updated = @profile.update(profile_params)
-
-    if user_updated && profile_updated
-      redirect_to profile_path, success: "プロフィールを更新しました。"
+    if params[:line_friend]
+      current_user.update(line_friend: true)
+      redirect_to profile_path, notice: 'LINE友だち追加を確認しました'
     else
-      flash.now[:danger] = "プロフィールの更新に失敗しました"
-      render :edit, status: :unprocessable_entity
+      user_updated = @user.update(user_params)
+      profile_updated = @profile.update(profile_params)
+
+      if user_updated && profile_updated
+        redirect_to profile_path, success: "プロフィールを更新しました。"
+      else
+        flash.now[:danger] = "プロフィールの更新に失敗しました"
+        render :edit, status: :unprocessable_entity
+      end
     end
   end
 
