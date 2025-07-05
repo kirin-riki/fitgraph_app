@@ -5,11 +5,16 @@
       マイページ
     </h3>
 
-    <!-- 編集ボタン（左寄せ・幅50%） -->
-    <%= link_to "編集", edit_profile_path,
-        class: "block w-1/4 mb-3 bg-violet-600 hover:bg-violet-700
-                text-white font-semibold text-center py-1 rounded-full" %>
-
+    <!-- 編集ボタンと削除ボタン（上下配置） -->
+    <div class="mb-3">
+      <%= link_to "編集", edit_profile_path,
+          class: "block w-1/4 bg-violet-600 hover:bg-violet-700 text-white  text-center py-1 rounded-full mb-2" %>
+      <%= button_to '削除',
+        registration_path(:user),
+        method: :delete,
+        data: { turbo_confirm: '本当に削除しますか？ この操作は取り消せません。' },
+        class: 'block w-1/4 bg-red-600 hover:bg-red-700 text-white text-center py-1 rounded-full' %>
+    </div>
     <!-- ラベル1行 + 値1行 (下線のみ) -->
     <div class="space-y-2 sm:space-y-3 lg:space-y-4">
       <% fields = [
@@ -31,7 +36,6 @@
         </p>
       <% end %>
     </div>
-
     <% if current_user.line_user_id.present? && current_user.uid.present? %>
       <div class="flex items-center space-x-4 mt-6">
         <!-- LINE連携済み表示 -->
