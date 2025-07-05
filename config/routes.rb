@@ -38,4 +38,5 @@ Rails.application.routes.draw do
   post "line/callback" => "line_bot#callback"
 
   get "terms", to: "static_pages#terms", as: :terms
+  get "privacy", to: "static_pages#privacy", as: :privacy
 end
