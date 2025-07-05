@@ -64,9 +64,9 @@ export default class extends Controller {
     const file = event.target.files[0];
     if (!file) return;
 
-    // ファイルサイズチェック（5MB制限）
-    if (file.size > 5 * 1024 * 1024) {
-      this._showError("ファイルサイズが大きすぎます。5MB以下のファイルを選択してください。");
+    // ファイルサイズチェック（10MB制限）
+    if (file.size > 10 * 1024 * 1024) {
+      this._showError("ファイルサイズが大きすぎます。10MB以下のファイルを選択してください。");
       return;
     }
 
@@ -87,9 +87,9 @@ export default class extends Controller {
     const file = event.target.files[0];
     if (!file) return;
 
-    // ファイルサイズチェック（5MB制限）
-    if (file.size > 5 * 1024 * 1024) {
-      this._showError("ファイルサイズが大きすぎます。5MB以下のファイルを選択してください。");
+    // ファイルサイズチェック（10MB制限）
+    if (file.size > 10 * 1024 * 1024) {
+      this._showError("ファイルサイズが大きすぎます。10MB以下のファイルを選択してください。");
       return;
     }
 
