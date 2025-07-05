@@ -12,27 +12,6 @@
 
     <!-- 提案タブ -->
     <div id="tab-content-proposal">
-      <!-- フラッシュメッセージ -->
-      <% if flash[:error] %>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          <%= flash[:error] %>
-        </div>
-      <% end %>
-      <% if flash[:warning] %>
-        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
-          <%= flash[:warning] %>
-        </div>
-      <% end %>
-      <% if flash[:notice] %>
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-          <%= flash[:notice] %>
-        </div>
-      <% end %>
-      <% if flash[:alert] %>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          <%= flash[:alert] %>
-        </div>
-      <% end %>
       <!-- プロフィール設定案内 -->
       <% unless current_user.profile&.gender.present? && current_user.profile&.training_intensity.present? %>
         <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-4">
@@ -91,9 +70,16 @@
       <div id="favorite-form" class="fixed z-10 left-0 top-0 w-full h-full flex items-center justify-center bg-black bg-opacity-20" style="display:none;">
         <div class="bg-white rounded-lg shadow-lg p-6 w-80">
           <form onsubmit="return submitFavoriteForm(event)">
-            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <% if defined?(@favorite_video) && @favorite_video&.errors&.any? %>
+              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-2 text-sm">
+                <% @favorite_video.errors.full_messages.each do |msg| %>
+                  <div><%= msg %></div>
+                <% end %>
+              </div>
+            <% end %>
+            <input type="hidden" name="authenticity_token" id="authenticity_token" value="i54ph0LMOPJRsyhen5vqEdpd0eR0nYGcx4sMzS5CB9jDtwP3ORbOcxpQ0bZc_mavjupKVMCGHG-HVXnrM73uHw" autocomplete="off">
             <label class="block text-sm mb-2">URLを入力</label>
-            <input type="text" name="youtube_url" class="w-full border rounded px-2 py-1 mb-4" required>
+            <input type="text" name="youtube_url" class="w-full border rounded px-2 py-1 mb-4" required="">
             <button type="submit" class="w-full bg-violet-600 text-white rounded py-2">追加</button>
             <button type="button" class="w-full mt-2 bg-gray-200 text-gray-700 rounded py-2" onclick="hideFavoriteForm()">キャンセル</button>
           </form>
