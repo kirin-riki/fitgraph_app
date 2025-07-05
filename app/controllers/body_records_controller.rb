@@ -71,12 +71,20 @@ class BodyRecordsController < ApplicationController
 
   def attach_processed_photo(photo_param)
     begin
-      # 画像を圧縮してから添付
+      # 画像を圧縮してから添付（1MB以下を目標）
       processed = ImageProcessing::MiniMagick
                     .source(photo_param.tempfile)
-                    .resize_to_limit(800, 800)
-                    .quality(80)
+                    .resize_to_limit(600, 600)
+                    .quality(60)
                     .call
+
+      # 1MBを超える場合はさらに圧縮
+      if processed.size > 1024 * 1024
+        processed = ImageProcessing::MiniMagick
+                      .source(processed)
+                      .quality(50)
+                      .call
+      end
 
       @body_record.photo.attach(
         io: processed,
