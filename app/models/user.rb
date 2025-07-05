@@ -19,7 +19,7 @@ class User < ApplicationRecord
     name = auth.info.name.presence || "#{auth.provider.capitalize}ユーザー"
 
     # Google認証の場合、同じメールアドレスのユーザーがいれば紐付ける
-    if auth.provider.to_s == 'google_oauth2'
+    if auth.provider.to_s == "google_oauth2"
       user = find_by(email: email)
       if user
         user.update(provider: auth.provider, uid: auth.uid)
