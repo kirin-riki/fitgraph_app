@@ -36,4 +36,6 @@ Rails.application.routes.draw do
   
   # LINE Bot Webhook
   post "line/callback" => "line_bot#callback"
+
+  get "terms", to: "static_pages#terms", as: :terms
 end
