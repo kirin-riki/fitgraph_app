@@ -33,12 +33,128 @@
     </div>
 
     <% if current_user.line_user_id.present? && current_user.uid.present? %>
-      <p>LINE連携済み</p>
+      <div class="flex items-center space-x-4 mt-6">
+        <!-- LINE連携済み表示 -->
+        <div class="inline-flex items-center justify-center w-1/3 mb-3 py-1 bg-gray-100 border border-gray-300 rounded-full text-sm text-gray-600 tracking-wide">
+          <%= image_tag 'LINE_Brand_icon.png', class: 'w-6 h-6 mr-1 flex-shrink-0', alt: 'LINE' %>
+          <span>LINE連携済み</span>
+          <svg class="w-4 h-4 ml-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+
+        <!-- 友達追加ボタン -->
+        <button onclick="showLineFriendModal()" 
+                class="inline-flex items-center justify-center w-1/3 mb-3 py-1 bg-blue-500 border border-blue-500 rounded-full text-sm text-white tracking-wide hover:bg-blue-600 active:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+          <%= image_tag 'LINE_Brand_icon.png', class: 'w-6 h-6 mr-1 flex-shrink-0', alt: 'LINE' %>
+          <span>友達追加</span>
+        </button>
+      </div>
+
+      <!-- LINE友達追加モーダル -->
+      <div id="lineFriendModal" class="fixed z-50 left-0 top-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50" style="display:none;">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-80 max-w-sm">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">LINE Bot友達追加</h3>
+            <button onclick="hideLineFriendModal()" class="text-gray-400 hover:text-gray-600">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+          
+          <p class="text-sm text-gray-600 mb-4">
+            通知機能を利用するには、fitgraphのLINE Botを友達追加してください。
+          </p>
+
+          <!-- QRコード表示エリア -->
+          <div id="qrCodeArea" class="text-center mb-4">
+            <div class="bg-gray-100 p-4 rounded-lg">
+              <p class="text-xs text-gray-500 mb-2">QRコードを読み取って友達追加</p>
+              <div id="qrCode" class="w-48 h-48 mx-auto bg-white p-2 rounded">
+                <!-- QRコードがここに表示されます -->
+                <div class="w-full h-full bg-gray-200 rounded flex items-center justify-center">
+                  <p class="text-xs text-gray-500">QRコード生成中...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- または -->
+          <div class="text-center mb-4">
+            <p class="text-xs text-gray-500">または</p>
+          </div>
+
+          <!-- 招待リンクボタン -->
+          <a href="<%= ENV['LINE_BOT_INVITE_URL'] || '#' %>" 
+             target="_blank"
+             class="block w-full bg-[#06C755] hover:bg-[#05b94f] text-white font-semibold py-2 px-4 rounded-full text-center transition-colors duration-200">
+            <div class="flex items-center justify-center">
+              <%= image_tag 'LINE_Brand_icon.png', class: 'w-5 h-5 mr-2', alt: 'LINE' %>
+              <span>LINEで友達追加</span>
+            </div>
+          </a>
+
+          <div class="mt-4 text-center">
+            <button onclick="hideLineFriendModal()" 
+                    class="text-sm text-gray-500 hover:text-gray-700 underline">
+              後で追加する
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- JavaScript -->
+      <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+      <script>
+        function showLineFriendModal() {
+          document.getElementById('lineFriendModal').style.display = 'flex';
+          generateQRCode();
+        }
+
+        function hideLineFriendModal() {
+          document.getElementById('lineFriendModal').style.display = 'none';
+        }
+
+        function generateQRCode() {
+          const inviteUrl = '<%= ENV['LINE_BOT_INVITE_URL'] || '#' %>';
+          const qrCodeElement = document.getElementById('qrCode');
+          
+          // QRコードを生成
+          QRCode.toCanvas(qrCodeElement, inviteUrl, {
+            width: 192,
+            margin: 2,
+            color: {
+              dark: '#000000',
+              light: '#FFFFFF'
+            }
+          }, function (error) {
+            if (error) {
+              console.error('QRコード生成エラー:', error);
+              qrCodeElement.innerHTML = `
+                <div class="w-full h-full bg-white rounded flex items-center justify-center">
+                  <div class="text-center">
+                    <p class="text-xs text-gray-500 mb-2">QRコード生成失敗</p>
+                    <p class="text-xs text-blue-500 underline">${inviteUrl}</p>
+                  </div>
+                </div>
+              `;
+            }
+          });
+        }
+
+        // モーダル外クリックで閉じる
+        document.getElementById('lineFriendModal').addEventListener('click', function(e) {
+          if (e.target === this) {
+            hideLineFriendModal();
+          }
+        });
+      </script>
     <% else %>
       <%= button_to omniauth_authorize_path(:user, :line),
             method: :post,
             data: { turbo: false },
-            class: "inline-flex items-center justify-center w-1/4 mb-3 py-1 bg-[#06C755] border border-[#06C755] rounded-full text-sm text-white tracking-wide hover:bg-[#05b94f] active:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#06C755] transition-colors duration-200 mt-6" do %>
+            class: "inline-flex items-center justify-center w-1/3 mb-3 py-1 bg-[#06C755] border border-[#06C755] rounded-full text-sm text-white tracking-wide hover:bg-[#05b94f] active:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#06C755] transition-colors duration-200 mt-6" do %>
         <%= image_tag 'LINE_Brand_icon.png', class: 'w-6 h-6 mr-1 flex-shrink-0', alt: 'LINE' %>
         <span>LINEと連携</span>
       <% end %>

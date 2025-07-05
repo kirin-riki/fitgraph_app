@@ -56,19 +56,7 @@ class LineBotController < ApplicationController
   def quick_reply_message
     {
       type: 'text',
-      text: '何時に通知しますか？',
-      quickReply: {
-        items: (6..18).map do |h|
-          {
-            type: 'action',
-            action: {
-              type: 'message',
-              label: "#{h}:00",
-              text: "#{h}:00"
-            }
-          }
-        end
-      }
+      text: '通知時刻を入力してください（例: 12:00）'
     }
   end
 end
