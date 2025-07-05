@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     end
   end
   resources :favorite_videos, only: [ :create, :destroy ]
-  
+
   # LINE Bot Webhook
   post "line/callback" => "line_bot#callback"
 
