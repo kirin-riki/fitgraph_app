@@ -107,47 +107,44 @@
       <!-- JavaScript -->
       <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
       <script>
-        function showLineFriendModal() {
-          document.getElementById('lineFriendModal').style.display = 'flex';
-          generateQRCode();
-        }
-
-        function hideLineFriendModal() {
-          document.getElementById('lineFriendModal').style.display = 'none';
-        }
-
-        function generateQRCode() {
-          const inviteUrl = '<%= ENV['LINE_BOT_INVITE_URL'] || '#' %>';
-          const qrCodeElement = document.getElementById('qrCode');
-          
-          // QRコードを生成
-          QRCode.toCanvas(qrCodeElement, inviteUrl, {
-            width: 192,
-            margin: 2,
-            color: {
-              dark: '#000000',
-              light: '#FFFFFF'
+        document.addEventListener('turbo:load', function() {
+          window.showLineFriendModal = function() {
+            document.getElementById('lineFriendModal').style.display = 'flex';
+            if (typeof QRCode !== 'undefined') {
+              generateQRCode();
+            } else {
+              document.getElementById('qrCode').innerHTML = '<p class="text-xs text-red-500">QRコードライブラリの読み込みに失敗しました</p>';
             }
-          }, function (error) {
-            if (error) {
-              console.error('QRコード生成エラー:', error);
-              qrCodeElement.innerHTML = `
-                <div class="w-full h-full bg-white rounded flex items-center justify-center">
-                  <div class="text-center">
-                    <p class="text-xs text-gray-500 mb-2">QRコード生成失敗</p>
-                    <p class="text-xs text-blue-500 underline">${inviteUrl}</p>
-                  </div>
-                </div>
-              `;
+          };
+
+          window.hideLineFriendModal = function() {
+            document.getElementById('lineFriendModal').style.display = 'none';
+          };
+
+          window.generateQRCode = function() {
+            const inviteUrl = '<%= ENV['LINE_BOT_INVITE_URL'] || '#' %>';
+            const qrCodeElement = document.getElementById('qrCode');
+            qrCodeElement.innerHTML = '';
+            QRCode.toCanvas(qrCodeElement, inviteUrl, {
+              width: 192,
+              margin: 2,
+              color: {
+                dark: '#000000',
+                light: '#FFFFFF'
+              }
+            }, function (error) {
+              if (error) {
+                qrCodeElement.innerHTML = '<p class="text-xs text-red-500">QRコード生成失敗</p>';
+              }
+            });
+          };
+
+          // モーダル外クリックで閉じる
+          document.getElementById('lineFriendModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+              hideLineFriendModal();
             }
           });
-        }
-
-        // モーダル外クリックで閉じる
-        document.getElementById('lineFriendModal').addEventListener('click', function(e) {
-          if (e.target === this) {
-            hideLineFriendModal();
-          }
         });
       </script>
     <% else %>
