@@ -9,7 +9,7 @@ class ProfilesController < ApplicationController
   def update
     if params[:line_friend]
       current_user.update(line_friend: true)
-      redirect_to profile_path, notice: 'LINE友だち追加を確認しました'
+      redirect_to profile_path, notice: "LINE友だち追加を確認しました"
     else
       user_updated = @user.update(user_params)
       profile_updated = @profile.update(profile_params)

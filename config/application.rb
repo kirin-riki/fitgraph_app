@@ -27,9 +27,9 @@ module Myapp
 
     # Active Job設定
     config.active_job.queue_adapter = :async
-    
+
     # タイムゾーンをJST（日本時間）に設定
-    config.time_zone = 'Asia/Tokyo'
+    config.time_zone = "Asia/Tokyo"
     config.active_record.default_timezone = :local
 
     # Configuration for the application, engines, and railties goes here.
@@ -38,6 +38,6 @@ module Myapp
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    config.eager_load_paths << Rails.root.join('lib')
+    config.eager_load_paths << Rails.root.join("lib")
   end
 end
