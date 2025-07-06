@@ -33,7 +33,7 @@ class BodyRecordsController < ApplicationController
     date = begin
       Date.parse(body_record_params[:recorded_at])
     rescue ArgumentError, TypeError
-      Date.today
+      Date.current
     end
     recorded_at = date.beginning_of_day
 
