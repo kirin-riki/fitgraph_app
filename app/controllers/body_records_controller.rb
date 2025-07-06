@@ -28,6 +28,8 @@ class BodyRecordsController < ApplicationController
 
   def create
     # recorded_atを日付（00:00:00）に揃える
+    Rails.logger.info "body_record persisted?: #{@body_record.persisted?}"
+    Rails.logger.info "body_record id: #{@body_record.id}"
     date = begin
       Date.parse(body_record_params[:recorded_at])
     rescue ArgumentError, TypeError
