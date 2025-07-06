@@ -3,11 +3,7 @@ class BodyRecordsController < ApplicationController
   before_action :set_record,       only: %i[edit update]
 
   def top
-    Rails.logger.info "=== DEBUG INFO ==="
-    Rails.logger.info "selected_date: #{@selected_date}"
-    Rails.logger.info "body_record.persisted?: #{@body_record.persisted?}"
-    Rails.logger.info "body_record.recorded_at: #{@body_record.recorded_at}"
-    Rails.logger.info "body_record.id: #{@body_record.id}"
+    
 
     @selected_date = (params[:start_date] || Date.today).to_date
     @body_record = current_user.body_records.where("DATE(recorded_at) = ?", @selected_date).first ||
@@ -16,6 +12,12 @@ class BodyRecordsController < ApplicationController
                    @selected_date.end_of_month.end_of_week(:sunday))
     @body_records = current_user.body_records.where(recorded_at: @date_range)
     @days_with_records = @body_records.pluck(:recorded_at).map(&:to_date)
+
+    Rails.logger.info "=== DEBUG INFO ==="
+    Rails.logger.info "selected_date: #{@selected_date}"
+    Rails.logger.info "body_record.persisted?: #{@body_record.persisted?}"
+    Rails.logger.info "body_record.recorded_at: #{@body_record.recorded_at}"
+    Rails.logger.info "body_record.id: #{@body_record.id}"
     # Turbo Frame の処理は不要。top.html.erb が自動的にレンダリングされる
   end
 
