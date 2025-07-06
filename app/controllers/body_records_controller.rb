@@ -4,36 +4,38 @@ class BodyRecordsController < ApplicationController
 
   def top
     @selected_date = (params[:start_date] || params[:selected_date] || Date.today).to_date
-    @body_record = current_user.body_records.where("DATE(recorded_at) = ?", @selected_date).first ||
-                   current_user.body_records.new(recorded_at: @selected_date)
-    @date_range = (@selected_date.beginning_of_month.beginning_of_week(:sunday)..
-                   @selected_date.end_of_month.end_of_week(:sunday))
+    Rails.logger.info "=== PARAMS DEBUG ==="
+    Rails.logger.info "All params: \\#{params.inspect}"
+    Rails.logger.info "params[:selected_date]: \\#{params[:selected_date]}"
+    Rails.logger.info "params[:start_date]: \\#{params[:start_date]}"
+    Rails.logger.info "=== TIMEZONE DEBUG ==="
+    Rails.logger.info "Time.zone: \\#{Time.zone.name}"
+    Rails.logger.info "Date.current: \\#{Date.current}"
+    Rails.logger.info "Time.current: \\#{Time.current}"
+    Rails.logger.info "@selected_date: \\#{@selected_date}"
+    Rails.logger.info "@selected_date class: \\#{@selected_date.class}"
+    Rails.logger.info "=== DATABASE SEARCH DEBUG ==="
+    @body_record = current_user.body_records.where("DATE(recorded_at) = ?", @selected_date).first
+    # カレンダー表示用のbody_recordsを必ずRelationで代入
+    @date_range = (@selected_date.beginning_of_month.beginning_of_week(:sunday)..@selected_date.end_of_month.end_of_week(:sunday))
     @body_records = current_user.body_records.where(recorded_at: @date_range)
     @days_with_records = @body_records.pluck(:recorded_at).map(&:to_date)
-
-    Rails.logger.info "=== PARAMS DEBUG ==="
-    Rails.logger.info "All params: #{params.inspect}"
-    Rails.logger.info "params[:selected_date]: #{params[:selected_date]}"
-    Rails.logger.info "params[:start_date]: #{params[:start_date]}"
-    
-    Rails.logger.info "=== TIMEZONE DEBUG ==="
-    Rails.logger.info "Time.zone: #{Time.zone}"
-    Rails.logger.info "Date.current: #{Date.current}"
-    Rails.logger.info "Time.current: #{Time.current}"
-    Rails.logger.info "@selected_date: #{@selected_date}"
-    Rails.logger.info "@selected_date class: #{@selected_date.class}"
-
-    Rails.logger.info "=== DATABASE SEARCH DEBUG ==="
-    Rails.logger.info "Searching for records on date: #{@selected_date}"
-
-    # データベース検索の結果を詳しく確認
-    @body_records = # あなたの検索処理
-
-    Rails.logger.info "Found #{@body_records.count} records"
-    @body_records.each_with_index do |record, index|
-      Rails.logger.info "  Record #{index + 1}: id=#{record.id}, recorded_at=#{record.recorded_at}, to_date=#{record.recorded_at.to_date}"
+    Rails.logger.info "Found \\#{@body_records.count} records"
+    Rails.logger.info "@body_records class: \\#{@body_records.class}"
+    Rails.logger.info "@body_records inspect: \\#{@body_records.inspect}"
+    if @body_records.respond_to?(:each_with_index)
+      @body_records.each_with_index do |record, index|
+        Rails.logger.info "  Record \\#{index + 1}: id=\\#{record.id}, recorded_at=\\#{record.recorded_at}"
+      end
+    else
+      Rails.logger.info "ERROR: @body_records does not respond to each_with_index"
+      Rails.logger.info "@body_records value: \\#{@body_records}"
     end
-  
+    Rails.logger.info "=== FINAL CHECK DEBUG ==="
+    Rails.logger.info "@body_records class: \\#{@body_records.class}"
+    Rails.logger.info "@body_records value: \\#{@body_records.inspect}"
+    Rails.logger.info "@body_records responds to each?: \\#{@body_records.respond_to?(:each)}"
+    Rails.logger.info "@body_records responds to reject?: \\#{@body_records.respond_to?(:reject)}"
   end
 
   def new
