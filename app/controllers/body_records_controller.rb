@@ -5,7 +5,7 @@ class BodyRecordsController < ApplicationController
   def top
     
 
-    @selected_date = (params[:start_date] || Date.today).to_date
+    @selected_date = (params[:start_date] || Date.current).to_date
     @body_record = current_user.body_records.where("DATE(recorded_at) = ?", @selected_date).first ||
                    current_user.body_records.new(recorded_at: @selected_date)
     @date_range = (@selected_date.beginning_of_month.beginning_of_week(:sunday)..
@@ -13,13 +13,13 @@ class BodyRecordsController < ApplicationController
     @body_records = current_user.body_records.where(recorded_at: @date_range)
     @days_with_records = @body_records.pluck(:recorded_at).map(&:to_date)
 
-    Rails.logger.info "=== TIMEZONE DEBUG ==="
-    Rails.logger.info "Time.zone: #{Time.zone}"
-    Rails.logger.info "Date.today: #{Date.today}"
-    Rails.logger.info "Time.current: #{Time.current}"
-    Rails.logger.info "selected_date: #{@selected_date}"
-    Rails.logger.info "selected_date class: #{@selected_date.class}"
-    
+      Rails.logger.info "=== TIMEZONE DEBUG ==="
+  Rails.logger.info "Time.zone: #{Time.zone}"
+  Rails.logger.info "Date.today: #{Date.today}"
+  Rails.logger.info "Time.current: #{Time.current}"
+  Rails.logger.info "selected_date: #{@selected_date}"
+  Rails.logger.info "selected_date class: #{@selected_date.class}"
+  
   end
 
   def new
@@ -31,7 +31,7 @@ class BodyRecordsController < ApplicationController
                   end
 
     @body_record = current_user.body_records.new(
-      recorded_at: parsed_date || Date.today
+      recorded_at: parsed_date || Date.current
     )
   end
 
