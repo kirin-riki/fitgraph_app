@@ -28,7 +28,7 @@ class BodyRecordsController < ApplicationController
 
   def create
     Rails.logger.info "=== CREATE ACTION START ==="
-    Rails.logger.info "current_user: #{current_user&.id}"
+    Rails.logger.info "current_user present?: #{current_user.present?}"
     Rails.logger.info "body_record_params: #{body_record_params}"
     date = begin
       Date.parse(body_record_params[:recorded_at])
