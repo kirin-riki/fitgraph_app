@@ -3,8 +3,7 @@ class BodyRecordsController < ApplicationController
   before_action :set_record,       only: %i[edit update]
 
   def top
-
-    @selected_date = (params[:start_date] || Date.current).to_date
+    @selected_date = (params[:start_date] || params[:selected_date] || Date.today).to_date
     @body_record = current_user.body_records.where("DATE(recorded_at) = ?", @selected_date).first ||
                    current_user.body_records.new(recorded_at: @selected_date)
     @date_range = (@selected_date.beginning_of_month.beginning_of_week(:sunday)..
@@ -21,18 +20,16 @@ class BodyRecordsController < ApplicationController
     Rails.logger.info "Time.zone: #{Time.zone}"
     Rails.logger.info "Date.current: #{Date.current}"
     Rails.logger.info "Time.current: #{Time.current}"
-    Rails.logger.info "selected_date: #{@selected_date}"
-    Rails.logger.info "selected_date class: #{@selected_date.class}"
+    Rails.logger.info "@selected_date: #{@selected_date}"
+    Rails.logger.info "@selected_date class: #{@selected_date.class}"
 
     Rails.logger.info "=== DATABASE SEARCH DEBUG ==="
-    Rails.logger.info "Searching for records on date: #{selected_date}"
+    Rails.logger.info "Searching for records on date: #{@selected_date}"
     
-    # データベース検索の前後でログを出力
-    @body_records = # ここでどのような検索をしていますか？
-    
-    Rails.logger.info "Found #{@body_records.count} records"
-    @body_records.each do |record|
-      Rails.logger.info "  Record date: #{record.recorded_at} -> to_date: #{record.recorded_at.to_date}"
+    if @body_record
+      Rails.logger.info "Found record: id=#{@body_record.id}, recorded_at=#{@body_record.recorded_at}, to_date=#{@body_record.recorded_at.to_date}"
+    else
+      Rails.logger.info "No record found for #{@selected_date}"
     end
   
   end
