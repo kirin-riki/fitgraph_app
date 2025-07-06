@@ -27,6 +27,9 @@ class BodyRecordsController < ApplicationController
   end
 
   def create
+    Rails.logger.info "=== CREATE ACTION START ==="
+    Rails.logger.info "body_record_params: #{body_record_params}"
+    
     # recorded_atを日付（00:00:00）に揃える
     Rails.logger.info "body_record persisted?: #{@body_record.persisted?}"
     Rails.logger.info "body_record id: #{@body_record.id}"
