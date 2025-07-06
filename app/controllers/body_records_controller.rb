@@ -25,11 +25,13 @@ class BodyRecordsController < ApplicationController
 
     Rails.logger.info "=== DATABASE SEARCH DEBUG ==="
     Rails.logger.info "Searching for records on date: #{@selected_date}"
-    
-    if @body_record
-      Rails.logger.info "Found record: id=#{@body_record.id}, recorded_at=#{@body_record.recorded_at}, to_date=#{@body_record.recorded_at.to_date}"
-    else
-      Rails.logger.info "No record found for #{@selected_date}"
+
+    # データベース検索の結果を詳しく確認
+    @body_records = # あなたの検索処理
+
+    Rails.logger.info "Found #{@body_records.count} records"
+    @body_records.each_with_index do |record, index|
+      Rails.logger.info "  Record #{index + 1}: id=#{record.id}, recorded_at=#{record.recorded_at}, to_date=#{record.recorded_at.to_date}"
     end
   
   end
