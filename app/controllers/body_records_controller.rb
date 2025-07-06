@@ -70,6 +70,15 @@ class BodyRecordsController < ApplicationController
 
   def edit
     # @body_record は set_record で取得済み
+    Rails.logger.info "=== EDIT ACTION DEBUG ==="
+    Rails.logger.info "Params selected_date: #{params[:selected_date]}"
+    Rails.logger.info "Date.current: #{Date.current}"
+    Rails.logger.info "Time.current: #{Time.current}"
+    
+    # selected_date の処理部分
+    selected_date = # ここの処理をログ出力
+    Rails.logger.info "Processed selected_date: #{selected_date}"
+    Rails.logger.info "selected_date class: #{selected_date.class}"
   end
 
   def update
