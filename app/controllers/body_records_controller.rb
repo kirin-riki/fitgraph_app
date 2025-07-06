@@ -16,6 +16,7 @@ class BodyRecordsController < ApplicationController
     Rails.logger.info "@selected_date class: \\#{@selected_date.class}"
     Rails.logger.info "=== DATABASE SEARCH DEBUG ==="
     @body_record = current_user.body_records.where("DATE(recorded_at) = ?", @selected_date).first
+    @body_record ||= current_user.body_records.new(recorded_at: @selected_date)
     # カレンダー表示用のbody_recordsを必ずRelationで代入
     @date_range = (@selected_date.beginning_of_month.beginning_of_week(:sunday)..@selected_date.end_of_month.end_of_week(:sunday))
     @body_records = current_user.body_records.where(recorded_at: @date_range)
