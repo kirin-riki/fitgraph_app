@@ -38,9 +38,6 @@ class BodyRecordsController < ApplicationController
   end
 
   def create
-    Rails.logger.info "=== CREATE ACTION START ==="
-    Rails.logger.info "current_user present?: #{current_user.present?}"
-    Rails.logger.info "body_record_params: #{body_record_params}"
     date = begin
       Date.parse(body_record_params[:recorded_at])
     rescue ArgumentError, TypeError
@@ -72,15 +69,8 @@ class BodyRecordsController < ApplicationController
 
   def edit
     # @body_record は set_record で取得済み
-    Rails.logger.info "=== EDIT ACTION DEBUG ==="
-    Rails.logger.info "Params selected_date: #{params[:selected_date]}"
-    Rails.logger.info "Date.current: #{Date.current}"
-    Rails.logger.info "Time.current: #{Time.current}"
-    
     # selected_date の処理部分
     selected_date = # ここの処理をログ出力
-    Rails.logger.info "Processed selected_date: #{selected_date}"
-    Rails.logger.info "selected_date class: #{selected_date.class}"
   end
 
   def update
@@ -124,7 +114,6 @@ class BodyRecordsController < ApplicationController
         content_type: photo_param.content_type
       )
     rescue => e
-      Rails.logger.error "Image processing failed: #{e.message}"
       # 画像処理に失敗した場合は、元の画像をそのまま添付
       @body_record.photo.attach(photo_param)
     end
