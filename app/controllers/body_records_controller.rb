@@ -15,7 +15,7 @@ class BodyRecordsController < ApplicationController
 
       Rails.logger.info "=== TIMEZONE DEBUG ==="
   Rails.logger.info "Time.zone: #{Time.zone}"
-  Rails.logger.info "Date.today: #{Date.today}"
+  Rails.logger.info "Date.current: #{Date.current}"
   Rails.logger.info "Time.current: #{Time.current}"
   Rails.logger.info "selected_date: #{@selected_date}"
   Rails.logger.info "selected_date class: #{@selected_date.class}"
