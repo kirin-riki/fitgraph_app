@@ -26,13 +26,22 @@ class BodyRecordsController < ApplicationController
   end
 
   def create
+    # recorded_atを日付（00:00:00）に揃える
+    date = begin
+      Date.parse(body_record_params[:recorded_at])
+    rescue ArgumentError, TypeError
+      Date.today
+    end
+    recorded_at = date.beginning_of_day
+
     # 既存のレコードを探すか、新しいレコードを作成
     @body_record = current_user.body_records.find_or_initialize_by(
-      recorded_at: body_record_params[:recorded_at]
+      recorded_at: recorded_at
     )
 
     # 既存のデータを更新
     @body_record.assign_attributes(body_record_params.except(:photo))
+    @body_record.recorded_at = recorded_at # 念のため再代入
 
     if params[:body_record][:photo].present?
       attach_processed_photo(params[:body_record][:photo])
