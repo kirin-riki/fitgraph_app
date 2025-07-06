@@ -69,8 +69,6 @@ class BodyRecordsController < ApplicationController
 
   def edit
     # @body_record は set_record で取得済み
-    # selected_date の処理部分
-    selected_date = # ここの処理をログ出力
   end
 
   def update
