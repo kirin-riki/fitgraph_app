@@ -3,45 +3,27 @@ class BodyRecordsController < ApplicationController
   before_action :set_record,       only: %i[edit update]
 
   def top
-    @selected_date = (params[:start_date] || params[:selected_date] || Date.today).to_date
-    Rails.logger.info "=== PARAMS DEBUG ==="
-    Rails.logger.info "All params: \\#{params.inspect}"
-    Rails.logger.info "params[:selected_date]: \\#{params[:selected_date]}"
-    Rails.logger.info "params[:start_date]: \\#{params[:start_date]}"
-    Rails.logger.info "=== TIMEZONE DEBUG ==="
-    Rails.logger.info "Time.zone: \\#{Time.zone.name}"
-    Rails.logger.info "Date.current: \\#{Date.current}"
-    Rails.logger.info "Time.current: \\#{Time.current}"
-    Rails.logger.info "@selected_date: \\#{@selected_date}"
-    Rails.logger.info "@selected_date class: \\#{@selected_date.class}"
-    Rails.logger.info "=== DATABASE SEARCH DEBUG ==="
-    @body_record = current_user.body_records.where(recorded_at: @selected_date.all_day).first
-    @body_record ||= current_user.body_records.new(recorded_at: @selected_date)
-    # カレンダー表示用のbody_recordsを月初〜月末の全日で取得（end_of_dayまで）
+    @selected_date = (params[:start_date] || params[:selected_date] || Date.current).to_date
+  
+    # ① 表示用レンジ ― すべて Date オブジェクト
     @date_range = (
-      @selected_date.beginning_of_month.beginning_of_week(:sunday).beginning_of_day..
-      @selected_date.end_of_month.end_of_week(:sunday).end_of_day
+      @selected_date.beginning_of_month.beginning_of_week(:sunday) ..
+      @selected_date.end_of_month      .end_of_week(:sunday)
     )
-    @body_records = current_user.body_records.where(recorded_at: @date_range)
+  
+    # ② DB 検索用レンジ ― 端を JST の 0:00 / 23:59 にした Time レンジ
+    time_range = @date_range.first.beginning_of_day ..
+                 @date_range.last .end_of_day
+  
+    @body_records = current_user.body_records.where(recorded_at: time_range)
     @days_with_records = @body_records.pluck(:recorded_at).map(&:to_date)
-    Rails.logger.info "Found \\#{@body_records.count} records"
-    Rails.logger.info "@body_records class: \\#{@body_records.class}"
-    Rails.logger.info "@body_records inspect: \\#{@body_records.inspect}"
-    if @body_records.respond_to?(:each_with_index)
-      @body_records.each_with_index do |record, index|
-        Rails.logger.info "  Record \\#{index + 1}: id=\\#{record.id}, recorded_at=\\#{record.recorded_at}"
-      end
-    else
-      Rails.logger.info "ERROR: @body_records does not respond to each_with_index"
-      Rails.logger.info "@body_records value: \\#{@body_records}"
-    end
-    Rails.logger.info "=== FINAL CHECK DEBUG ==="
-    Rails.logger.info "@body_records class: \\#{@body_records.class}"
-    Rails.logger.info "@body_records value: \\#{@body_records.inspect}"
-    Rails.logger.info "@body_records responds to each?: \\#{@body_records.respond_to?(:each)}"
-    Rails.logger.info "@body_records responds to reject?: \\#{@body_records.respond_to?(:reject)}"
+  
+    # 選択日の 1 件 (new 兼 edit)
+    @body_record = current_user.body_records
+                    .where(recorded_at: @selected_date.all_day).first ||
+                  current_user.body_records.new(recorded_at: @selected_date)
   end
-
+  
   def new
     # recorded_at をパースし、失敗時は今日の日付を採用
     parsed_date = begin
