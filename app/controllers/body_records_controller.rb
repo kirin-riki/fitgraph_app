@@ -3,7 +3,6 @@ class BodyRecordsController < ApplicationController
   before_action :set_record,       only: %i[edit update]
 
   def top
-    
 
     @selected_date = (params[:start_date] || Date.current).to_date
     @body_record = current_user.body_records.where("DATE(recorded_at) = ?", @selected_date).first ||
@@ -13,12 +12,17 @@ class BodyRecordsController < ApplicationController
     @body_records = current_user.body_records.where(recorded_at: @date_range)
     @days_with_records = @body_records.pluck(:recorded_at).map(&:to_date)
 
-      Rails.logger.info "=== TIMEZONE DEBUG ==="
-  Rails.logger.info "Time.zone: #{Time.zone}"
-  Rails.logger.info "Date.current: #{Date.current}"
-  Rails.logger.info "Time.current: #{Time.current}"
-  Rails.logger.info "selected_date: #{@selected_date}"
-  Rails.logger.info "selected_date class: #{@selected_date.class}"
+    Rails.logger.info "=== PARAMS DEBUG ==="
+    Rails.logger.info "All params: #{params.inspect}"
+    Rails.logger.info "params[:selected_date]: #{params[:selected_date]}"
+    Rails.logger.info "params[:start_date]: #{params[:start_date]}"
+    
+    Rails.logger.info "=== TIMEZONE DEBUG ==="
+    Rails.logger.info "Time.zone: #{Time.zone}"
+    Rails.logger.info "Date.current: #{Date.current}"
+    Rails.logger.info "Time.current: #{Time.current}"
+    Rails.logger.info "selected_date: #{@selected_date}"
+    Rails.logger.info "selected_date class: #{@selected_date.class}"
   
   end
 
