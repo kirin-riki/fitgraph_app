@@ -15,10 +15,13 @@ class BodyRecordsController < ApplicationController
     Rails.logger.info "@selected_date: \\#{@selected_date}"
     Rails.logger.info "@selected_date class: \\#{@selected_date.class}"
     Rails.logger.info "=== DATABASE SEARCH DEBUG ==="
-    @body_record = current_user.body_records.where("DATE(recorded_at) = ?", @selected_date).first
+    @body_record = current_user.body_records.where(recorded_at: @selected_date.all_day).first
     @body_record ||= current_user.body_records.new(recorded_at: @selected_date)
-    # カレンダー表示用のbody_recordsを必ずRelationで代入
-    @date_range = (@selected_date.beginning_of_month.beginning_of_week(:sunday)..@selected_date.end_of_month.end_of_week(:sunday))
+    # カレンダー表示用のbody_recordsを月初〜月末の全日で取得（end_of_dayまで）
+    @date_range = (
+      @selected_date.beginning_of_month.beginning_of_week(:sunday).beginning_of_day..
+      @selected_date.end_of_month.end_of_week(:sunday).end_of_day
+    )
     @body_records = current_user.body_records.where(recorded_at: @date_range)
     @days_with_records = @body_records.pluck(:recorded_at).map(&:to_date)
     Rails.logger.info "Found \\#{@body_records.count} records"
