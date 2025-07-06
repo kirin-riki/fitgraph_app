@@ -13,12 +13,13 @@ class BodyRecordsController < ApplicationController
     @body_records = current_user.body_records.where(recorded_at: @date_range)
     @days_with_records = @body_records.pluck(:recorded_at).map(&:to_date)
 
-    Rails.logger.info "=== DEBUG INFO ==="
+    Rails.logger.info "=== TIMEZONE DEBUG ==="
+    Rails.logger.info "Time.zone: #{Time.zone}"
+    Rails.logger.info "Date.today: #{Date.today}"
+    Rails.logger.info "Time.current: #{Time.current}"
     Rails.logger.info "selected_date: #{@selected_date}"
-    Rails.logger.info "body_record.persisted?: #{@body_record.persisted?}"
-    Rails.logger.info "body_record.recorded_at: #{@body_record.recorded_at}"
-    Rails.logger.info "body_record.id: #{@body_record.id}"
-    # Turbo Frame の処理は不要。top.html.erb が自動的にレンダリングされる
+    Rails.logger.info "selected_date class: #{@selected_date.class}"
+    
   end
 
   def new
