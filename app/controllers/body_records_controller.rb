@@ -23,6 +23,17 @@ class BodyRecordsController < ApplicationController
     Rails.logger.info "Time.current: #{Time.current}"
     Rails.logger.info "selected_date: #{@selected_date}"
     Rails.logger.info "selected_date class: #{@selected_date.class}"
+
+    Rails.logger.info "=== DATABASE SEARCH DEBUG ==="
+    Rails.logger.info "Searching for records on date: #{selected_date}"
+    
+    # データベース検索の前後でログを出力
+    @body_records = # ここでどのような検索をしていますか？
+    
+    Rails.logger.info "Found #{@body_records.count} records"
+    @body_records.each do |record|
+      Rails.logger.info "  Record date: #{record.recorded_at} -> to_date: #{record.recorded_at.to_date}"
+    end
   
   end
 
