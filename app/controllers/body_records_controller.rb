@@ -3,6 +3,12 @@ class BodyRecordsController < ApplicationController
   before_action :set_record,       only: %i[edit update]
 
   def top
+    Rails.logger.info "=== DEBUG INFO ==="
+    Rails.logger.info "selected_date: #{@selected_date}"
+    Rails.logger.info "body_record.persisted?: #{@body_record.persisted?}"
+    Rails.logger.info "body_record.recorded_at: #{@body_record.recorded_at}"
+    Rails.logger.info "body_record.id: #{@body_record.id}"
+
     @selected_date = (params[:start_date] || Date.today).to_date
     @body_record = current_user.body_records.where("DATE(recorded_at) = ?", @selected_date).first ||
                    current_user.body_records.new(recorded_at: @selected_date)
