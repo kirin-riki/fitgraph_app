@@ -110,13 +110,25 @@ ja:
   activerecord:
     models:
       user: ユーザー
+      body_record: 身体情報
     attributes:
       user:
         name: ユーザー名
         password: パスワード
         password_confirmation: パスワード確認
         email: メールアドレス
-
+      body_record:
+        weight: 体重
+        body_fat: 体脂肪率
+    errors:
+      models:
+        body_record:
+          attributes:
+            weight:
+              less_than_or_equal_to: "は300以下で入力してください"
+            body_fat:
+              less_than_or_equal_to: "は100以下で入力してください"
+  
   date:
     abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
     day_names: [日曜日, 月曜日, 火曜日, 水曜日, 木曜日, 金曜日, 土曜日]
