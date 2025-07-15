@@ -10,8 +10,7 @@
 
     <!-- ─── 2. 経過 ─── -->
     <%= link_to progress_path,
-        class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition",
-        data: { turbo: false } do %>
+        class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition" do %>
       <%= image_tag "graph_record.png", class: "w-6 h-6" %>
       <span class="text-xs font-medium">経過</span>
     <% end %>
