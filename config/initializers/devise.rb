@@ -9,6 +9,14 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+  # devise-two-factorのWardenストラテジーを設定
+  require "devise-two-factor"
+
+  config.warden do |manager|
+    # 2FA認証を最初に実行し、その後データベース認証を実行
+    manager.default_strategies(scope: :user).unshift :two_factor_authenticatable
+  end
+
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.

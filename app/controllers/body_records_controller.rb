@@ -4,26 +4,26 @@ class BodyRecordsController < ApplicationController
 
   def top
     @selected_date = (params[:start_date] || params[:selected_date] || Date.current).to_date
-  
+
     # ① 表示用レンジ ― すべて Date オブジェクト
     @date_range = (
       @selected_date.beginning_of_month.beginning_of_week(:sunday) ..
       @selected_date.end_of_month      .end_of_week(:sunday)
     )
-  
+
     # ② DB 検索用レンジ ― 端を JST の 0:00 / 23:59 にした Time レンジ
     time_range = @date_range.first.beginning_of_day ..
                  @date_range.last .end_of_day
-  
+
     @body_records = current_user.body_records.where(recorded_at: time_range)
     @days_with_records = @body_records.pluck(:recorded_at).map(&:to_date)
-  
+
     # 選択日の 1 件 (new 兼 edit)
     @body_record = current_user.body_records
                     .where(recorded_at: @selected_date.all_day).first ||
                   current_user.body_records.new(recorded_at: @selected_date)
   end
-  
+
   def new
     # recorded_at をパースし、失敗時は今日の日付を採用
     parsed_date = begin

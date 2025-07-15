@@ -15,7 +15,7 @@
         <span class="ml-1 text-xs text-violet-600">kg</span>
       </div>
       <% if @body_record.errors[:weight].present? %>
-        <div class="text-xs text-red-600 mt-1"><%= @body_record.errors.full_messages_for(:weight).join('<br>').html_safe %></div>
+        <div class="text-xs text-red-600 mt-1"><%= safe_join(@body_record.errors.full_messages_for(:weight).map { |msg| h(msg) }, '<br>'.html_safe) %></div>
       <% end %>
     </div>
     <div>
@@ -26,7 +26,7 @@
         <span class="ml-1 text-xs text-violet-600">%</span>
       </div>
       <% if @body_record.errors[:body_fat].present? %>
-        <div class="text-xs text-red-600 mt-1"><%= @body_record.errors.full_messages_for(:body_fat).join('<br>').html_safe %></div>
+        <div class="text-xs text-red-600 mt-1"><%= safe_join(@body_record.errors.full_messages_for(:body_fat).map { |msg| h(msg) }, '<br>'.html_safe) %></div>
       <% end %>
     </div>
   </div>

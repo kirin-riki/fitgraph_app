@@ -14,6 +14,8 @@ export default class extends Controller {
         this.setPeriod(btn.dataset.period)
       })
     })
+    // 外部からアクセスできるようにする
+    this.element.StimulusController = this;
   }
 
   setPeriod(period) {
@@ -52,15 +54,18 @@ export default class extends Controller {
     this.photos = this.allPhotos.filter(p => p.date >= startStr && p.date <= nowStr)
     // 画像・スライダー更新
     this.updateImage(0)
-    if (this.hasSliderTarget) {
-      this.sliderTarget.max = this.photos.length
-      this.sliderTarget.value = 1
-      this.sliderTarget.style.display = this.photos.length > 1 ? '' : 'none'
+    // スライダーの取得を都度行う
+    const slider = this.targets.find("slider")
+    if (slider) {
+      slider.max = this.photos.length
+      slider.value = 1
+      slider.style.display = this.photos.length > 1 ? '' : 'none'
     }
   }
 
   slide() {
-    const index = parseInt(this.sliderTarget.value, 10) - 1
+    const slider = this.targets.find("slider")
+    const index = parseInt(slider?.value || 1, 10) - 1
     this.updateImage(index)
   }
 

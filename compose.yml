@@ -27,6 +27,10 @@ services:
       - node_modules:/myapp/node_modules
     environment:
       TZ: Asia/Tokyo
+      ENCRYPTION_KEY: tY06k3KZa0qg8XLqzspuyp8DWD8AWUjF
+      ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY: tY06k3KZa0qg8XLqzspuyp8DWD8AWUjF
+      ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY: NUVqvEDpHGKZGDlSHQSHJkNvK0EBGhPw
+      ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT: a9j0Ef1ChsLY5nGzkgSPxBaRA6eeWmA1
     ports:
       - "3000:3000"
     depends_on:

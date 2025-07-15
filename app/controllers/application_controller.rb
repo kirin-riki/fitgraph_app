@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
+    devise_parameter_sanitizer.permit(:sign_in, keys: [ :otp_attempt ])
   end
 
   private
@@ -49,8 +50,23 @@ class ApplicationController < ActionController::Base
     asset_path("icon_logo512.png")
   end
 
-  # Deviseのリダイレクト先もrootに
-  def after_sign_in_path_for(resource)
-    authenticated_root_path
+  # 2FA待機中ユーザー取得
+  def pre_2fa_user
+    User.find_by(id: session[:user_id])
   end
+  helper_method :pre_2fa_user
+
+  def current_user
+    user = super
+    return user if user && !user.otp_required_for_login?
+    return user if user && session[:two_factor_authenticated]
+    return user if user && session[:just_enabled_2fa]
+    nil
+  end
+
+  # Deviseのリダイレクト先もrootに
+  # 2FAフローを優先するため、一時的にコメントアウト
+  # def after_sign_in_path_for(resource)
+  #   authenticated_root_path
+  # end
 end
