@@ -20,7 +20,7 @@
       <p class="text-center mb-2 text-gray-700 text-sm">下記QRコードを認証アプリで読み取ってください。</p>
       <div class="flex justify-center mb-4">
         <div class="bg-gray-100 rounded-xl p-2 shadow-sm flex items-center justify-center">
-          <%= raw @qr_svg %>
+          <%= sanitize(@qr_svg, tags: %w(svg path rect), attributes: %w(class fill d viewBox width height x y)) %>
         </div>
       </div>
       <div class="mb-4 text-center">
