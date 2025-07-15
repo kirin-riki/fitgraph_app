@@ -40,7 +40,7 @@
         <%= collection_radio_buttons :profile, :gender,
              Profile.genders.keys, :to_s, :humanize, checked: @profile.gender do |b| %>
           <div class="inline-flex items-center mr-4">
-            <%= b.radio_button(class: "mr-1") %><%= b.label(class: "text-black") %>
+            <%= b.radio_button(class: "mr-1 bg-white") %><%= b.label(class: "text-black") %>
           </div>
         <% end %>
       </div>
@@ -51,7 +51,7 @@
              Profile.training_intensities.keys, :to_s, :humanize,
              checked: @profile.training_intensity do |b| %>
           <div class="inline-flex items-center mr-4">
-            <%= b.radio_button(class: "mr-1") %><%= b.label(class: "text-black") %>
+            <%= b.radio_button(class: "mr-1 bg-white") %><%= b.label(class: "text-black") %>
           </div>
         <% end %>
       </div>
