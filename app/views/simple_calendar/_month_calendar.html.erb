@@ -32,7 +32,7 @@
         <tr>
           <% week.each do |day| %>
             <% has_record   = @days_with_records.include?(day) %>   <!-- レコード存在 -->
-            <% is_today     = (day == Date.today) %>                <!-- 今日 -->
+            <% is_today     = (day == Date.current) %>                <!-- 今日 -->
             <% selected_day = (day == @selected_date) %>            <!-- 選択中 -->
 
             <% classes  = "w-10 h-10 flex items-center justify-center rounded-full mx-auto" %>
