@@ -69,7 +69,7 @@ gem "dotenv-rails"
 
 gem "devise"
 
-gem "simple_calendar", "~>2.0"
+gem "simple_calendar", "~>3.1"
 
 gem "google-apis-youtube_v3"
 
