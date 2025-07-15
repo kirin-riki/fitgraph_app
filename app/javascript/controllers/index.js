@@ -8,6 +8,7 @@ import CameraController from "./camera_controller"
 import PhotoSwitcherController from "./photo_switcher_controller"
 import DropdownController from "./dropdown_controller"
 import LoadingController from "./loading_controller"
+import ProgressController from "./progress_controller"
 
 window.Stimulus = Application.start()
 Stimulus.register("hello", HelloController)
@@ -15,3 +16,4 @@ Stimulus.register("camera", CameraController)
 Stimulus.register("photo-switcher", PhotoSwitcherController)
 Stimulus.register("dropdown", DropdownController)
 Stimulus.register("loading", LoadingController)
+Stimulus.register("progress", ProgressController)

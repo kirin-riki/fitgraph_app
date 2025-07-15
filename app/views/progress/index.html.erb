@@ -90,8 +90,8 @@
         </div>
         <!-- レイヤー/比較タブ -->
         <div class="w-full flex border rounded overflow-hidden mb-2">
-          <button id="layer-tab" data-progress-target="layerTab" class="w-full bg-violet-500 text-white py-2 rounded text-xs sm:text-sm">レイヤー</button>
-          <button id="compare-tab" data-progress-target="compareTab" class="w-full bg-violet-100 text-violet-500 py-2 rounded text-xs sm:text-sm">比較</button>
+          <button id="layer-tab" data-progress-target="layerTab" data-action="click->progress#setPhotoSubTab" data-tab="layer" class="w-full bg-violet-500 text-white py-2 rounded text-xs sm:text-sm">レイヤー</button>
+          <button id="compare-tab" data-progress-target="compareTab" data-action="click->progress#setPhotoSubTab" data-tab="compare" class="w-full bg-violet-100 text-violet-500 py-2 rounded text-xs sm:text-sm">比較</button>
         </div>
         <!-- レイヤービュー（既存のスライダー機能） -->
         <div id="layer-view" data-progress-target="layerView" class="relative w-full h-[70vh] sm:h-[70vh] max-h-[700px] sm:max-h-[800px] min-h-[400px] sm:min-h-[800px]">
@@ -761,77 +761,6 @@ document.addEventListener("turbo:load", function() {
   patchPeriodTabEvents();
 });
 
-// レイヤー/比較タブ切り替え
-const layerTab = document.getElementById("layer-tab");
-const compareTab = document.getElementById("compare-tab");
-const layerView = document.getElementById("layer-view");
-const compareView = document.getElementById("compare-view");
-
-function setPhotoSubTab(tab) {
-  if (tab === "layer") {
-    layerTab.className = "w-full bg-violet-500 text-white py-2 rounded text-xs sm:text-sm";
-    compareTab.className = "w-full bg-violet-100 text-violet-500 py-2 rounded text-xs sm:text-sm";
-    layerView.classList.remove("hidden");
-    compareView.classList.add("hidden");
-  } else {
-    layerTab.className = "w-full bg-violet-100 text-violet-500 py-2 rounded text-xs sm:text-sm";
-    compareTab.className = "w-full bg-violet-500 text-white py-2 rounded text-xs sm:text-sm";
-    layerView.classList.add("hidden");
-    compareView.classList.remove("hidden");
-    updateCompareView(currentPeriod);
-  }
-}
-
-let currentPeriod = "3m";
-if(layerTab && compareTab) {
-  layerTab.onclick = () => setPhotoSubTab("layer");
-  compareTab.onclick = () => setPhotoSubTab("compare");
-}
-
-// 期間タブクリック時
-document.querySelectorAll("#photo-view .period-tab").forEach(btn => {
-  btn.addEventListener("click", () => {
-    currentPeriod = btn.dataset.period;
-    if (!layerView.classList.contains("hidden")) {
-      // レイヤービューの期間切り替え（既存のまま）
-    } else {
-      updateCompareView(currentPeriod);
-    }
-  });
-});
-
-// 比較ビューの更新
-function updateCompareView(period) {
-  const photoSwitcherEl = document.querySelector('[data-controller="photo-switcher"]');
-  if (!photoSwitcherEl) return;
-  const allPhotos = JSON.parse(photoSwitcherEl.dataset.photos);
-  const placeholder = photoSwitcherEl.dataset.placeholder || '/assets/avatar_placeholder.png';
-  const now = new Date();
-  let start = new Date(now);
-  switch (period) {
-    case "1w": start = new Date(now.getTime() - 7 * 86400000); break;
-    case "3w": start = new Date(now.getTime() - 21 * 86400000); break;
-    case "1m": start.setMonth(now.getMonth() - 1); break;
-    case "3m": default: start.setMonth(now.getMonth() - 3); break;
-  }
-  const startStr = start.toISOString().slice(0, 10);
-  const nowStr = now.toISOString().slice(0, 10);
-  // 昇順ソート
-  const sortedPhotos = allPhotos.slice().sort((a, b) => a.date.localeCompare(b.date));
-  const filtered = sortedPhotos.filter(p => p.date >= startStr && p.date <= nowStr);
-  if (filtered.length === 0) {
-    document.getElementById("compare-before").src = placeholder;
-    document.getElementById("compare-after").src = placeholder;
-  } else {
-    const before = filtered[0];
-    const after = filtered[filtered.length - 1];
-    document.getElementById("compare-before").src = before.url || placeholder;
-    document.getElementById("compare-after").src = after.url || placeholder;
-  }
-}
-
-// 初期表示
-setPhotoSubTab("layer");
 </script>
 
 <style>

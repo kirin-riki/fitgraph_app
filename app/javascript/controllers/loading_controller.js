@@ -19,12 +19,10 @@ export default class extends Controller {
   }
 
   show() {
-    console.log("ローディング表示: hiddenを外します");
     this.spinnerTarget.classList.remove("hidden")
   }
 
   hide() {
-    console.log("ローディング非表示: hiddenを付与します");
     this.spinnerTarget.classList.add("hidden")
   }
 } 
