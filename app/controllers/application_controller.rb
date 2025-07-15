@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
     asset_path("icon_logo512.png")
   end
 
-  # 2FA待機中ユーザーを取得
+  # 2FA待機中ユーザー取得
   def pre_2fa_user
     User.find_by(id: session[:user_id])
   end
