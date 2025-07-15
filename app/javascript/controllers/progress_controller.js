@@ -8,6 +8,7 @@ export default class extends Controller {
   ]
 
   connect() {
+    console.log("Progress controller connected!");
     this.currentPeriod = "3m"
     this.setMainTab("graph")
     this.initTabs()
@@ -27,10 +28,7 @@ export default class extends Controller {
         this.setMainTab("photo")
       })
     }
-    if (this.hasLayerTabTarget && this.hasCompareTabTarget) {
-      this.layerTabTarget.addEventListener("click", () => this.setPhotoSubTab("layer"))
-      this.compareTabTarget.addEventListener("click", () => this.setPhotoSubTab("compare"))
-    }
+    // layerTab/compareTabのaddEventListenerは削除（data-actionに任せる）
   }
 
   setMainTab(active) {
@@ -110,7 +108,20 @@ export default class extends Controller {
   }
 
   // 写真タブ切り替え
-  setPhotoSubTab(tab) {
+  setPhotoSubTab(tabOrEvent) {
+    if (tabOrEvent && tabOrEvent.currentTarget) {
+      console.log("setPhotoSubTab called", tabOrEvent.currentTarget.dataset.tab);
+    } else {
+      console.log("setPhotoSubTab called", tabOrEvent);
+    }
+    let tab;
+    if (typeof tabOrEvent === "string") {
+      tab = tabOrEvent;
+    } else if (tabOrEvent && tabOrEvent.currentTarget) {
+      tab = tabOrEvent.currentTarget.dataset.tab;
+    } else {
+      tab = "layer";
+    }
     if (!this.hasLayerTabTarget || !this.hasCompareTabTarget || !this.hasLayerViewTarget || !this.hasCompareViewTarget) return
     if (tab === "layer") {
       this.layerTabTarget.classList.add("bg-violet-500", "text-white")
