@@ -1,0 +1,24 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  user: one
+  youtube_url: "https://youtu.be/xxxx"
+  title: "テスト動画1"
+  channel_title: "テストチャンネル1"
+  thumbnail_url: "https://img.youtube.com/vi/xxxx/default.jpg"
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+# column: value
+#
+two:
+  user: two
+  youtube_url: "https://youtu.be/yyyy"
+  title: "テスト動画2"
+  channel_title: "テストチャンネル2"
+  thumbnail_url: "https://img.youtube.com/vi/yyyy/default.jpg"
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

@@ -1,31 +1,37 @@
-<footer class="fixed bottom-0 left-0 w-full z-40 bg-violet-500 text-white">
-  <nav class="grid grid-cols-4 divide-x divide-violet-400/60 text-center select-none">
+<footer class="fixed bottom-0 left-0 w-full bg-violet-500 text-white h-12 sm:h-14">
+  <nav class="grid grid-cols-4 divide-x divide-violet-400/60 text-center select-none h-full px-2 sm:px-4">
+
     <!-- ─── 1. 入力 ─── -->
-    <%= link_to '#',
-         class: "flex flex-col items-center justify-center py-6 hover:bg-violet-600 transition" do %>
-      <i class="fa-solid fa-calendar-plus fa-2x mb-2"></i>
-      <span class="text-sm font-medium">入力</span>
+    <%= link_to authenticated_root_path,
+        class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition" do %>
+      <span class="material-icons md-24">event_note</span>
+      <span class="text-xs font-medium">入力</span>
     <% end %>
 
     <!-- ─── 2. 経過 ─── -->
-    <%= link_to '#',
-         class: "flex flex-col items-center justify-center py-6 hover:bg-violet-600 transition" do %>
-      <i class="fa-solid fa-chart-line fa-2x mb-2"></i>
-      <span class="text-sm font-medium">経過</span>
+    <%= link_to progress_path,
+        class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition",
+        data: { turbo: false } do %>
+      <%= image_tag "graph_record.png", class: "w-6 h-6" %>
+      <span class="text-xs font-medium">経過</span>
     <% end %>
 
     <!-- ─── 3. 動画 ─── -->
-    <%= link_to '#',
-         class: "flex flex-col items-center justify-center py-6 hover:bg-violet-600 transition" do %>
-      <i class="fa-solid fa-circle-play fa-2x mb-2"></i>
-      <span class="text-sm font-medium">動画</span>
+    <%= link_to recommended_videos_path,
+        class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition" do %>
+      <span class="material-icons md-24">video_library</span>
+      <span class="text-xs font-medium">動画</span>
     <% end %>
 
     <!-- ─── 4. マイページ ─── -->
-    <%= link_to '#',
-         class: "flex flex-col items-center justify-center py-6 hover:bg-violet-600 transition" do %>
-      <i class="fa-solid fa-user fa-2x mb-2"></i>
-      <span class="text-sm font-medium">マイページ</span>
+    <%= link_to profile_path,
+        class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition" do %>
+      <span class="material-icons md-24">person</span>
+      <span class="text-xs font-medium">マイページ</span>
     <% end %>
+
+    <!-- ─── お問い合わせ ─── -->
+    <%= link_to "お問い合わせ", "https://docs.google.com/forms/d/1zWUS4LPi4SCyts7xiIcolfqvomtAWl5rR_MkbKJWSrM/viewform", target: "_blank", rel: "noopener", class: "flex flex-col items-center justify-center py-1 hover:bg-violet-600 transition col-span-4 text-xs font-medium text-white" %>
+
   </nav>
 </footer>

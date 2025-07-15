@@ -41,3 +41,24 @@
 
 .DS_Store
 /vendor/bundle
+
+.env
+
+# 編集ソフトの一時ファイル
+*.swp
+*.swo
+*.bak
+*.orig
+
+# pry/byebug の履歴
+.byebug_history
+.pry_history
+
+# credentials の環境別ファイル（Rails 6+）
+config/credentials/*.yml.enc
+
+# coverage (simplecovなど)
+coverage/
+
+# Rubocopキャッシュ
+.rubocop-https---*

@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    background-color: #7c3aed; /* violet-600 */
+  }
+  body {
+    background-color: #7c3aed; /* violet-600 */
+  }
+}
+
 /*
 
 @layer components {
@@ -11,3 +20,14 @@
 }
 
 */
+
+.simple-calendar .day {
+  border: 1px solid #ddd;
+  min-height: 80px;
+}
+.simple-calendar .day a {
+  display: block;
+}
+.simple-calendar .wday-0 { background-color: #fdd; } /* 日曜日 */
+.simple-calendar .wday-6 { background-color: #ddf; } /* 土曜日 */
+.simple-calendar .today { background-color: #ffc; } /* 今日 */

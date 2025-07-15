@@ -1,0 +1,71 @@
+<div class="mt-4 text-center flex flex-col">
+  <% if devise_mapping.omniauthable? && controller_name != 'passwords' %>
+    <% resource_class.omniauth_providers.each do |provider| %>
+      <% if provider.to_s == "google_oauth2" %>
+        <%= button_to omniauth_authorize_path(resource_name, provider),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "
+                        inline-flex items-center justify-center
+                        w-full
+                        h-10 px-3 mb-4
+                        bg-white border border-[#747775]
+                        rounded-full
+                        text-sm font-medium text-[#1f1f1f]
+                        tracking-wide
+                        hover:bg-gray-100 active:opacity-80
+                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300
+                        transition-colors duration-200
+                      ".squish do %>
+          <svg class="w-5 h-5 mr-3 flex-shrink-0"
+               version="1.1" xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 48 48"
+               xmlns:xlink="http://www.w3.org/1999/xlink"
+               style="display: block;">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            <path fill="none" d="M0 0h48v48H0z"/>
+          </svg>
+          <span>Googleでログイン</span>
+        <% end %>
+      <% elsif provider.to_s == "line" %>
+        <%= button_to omniauth_authorize_path(resource_name, provider),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "
+                        inline-flex items-center justify-center
+                        w-full
+                        h-10 px-3
+                        bg-[#06C755] border border-[#06C755]
+                        rounded-full
+                        text-sm font-medium text-white
+                        tracking-wide
+                        hover:bg-[#05b94f] active:opacity-80
+                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#06C755]
+                        transition-colors duration-200
+                      ".squish do %>
+          <%= image_tag 'LINE_Brand_icon.png', class: 'w-7 h-7 mr-3 flex-shrink-0', alt: 'LINE' %>
+          <span>LINEでログイン</span>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %></br>
+
+  <% if controller_name != 'sessions' %>
+    <%= link_to "ログインはこちら", new_user_session_path, class: "block text-sm #{controller_name == 'passwords' ? 'text-violet-600' : 'text-white'} underline hover:text-violet-200 my-1" %>
+  <% end %>
+
+  <% if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <%= link_to "新規登録はこちら", new_user_registration_path, class: "block text-sm #{controller_name == 'passwords' ? 'text-violet-600' : 'text-white'} underline hover:text-violet-200 my-1" %>
+  <% end %>
+
+  <% if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+    <%= link_to "パスワードをお忘れの方", new_password_path(resource_name), class: "block text-sm #{controller_name == 'sessions' ? 'text-white' : 'text-violet-600'} underline hover:text-violet-200" %>
+  <% end %>
+
+  <% if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+    <%= link_to "ロック解除メールを送信", new_unlock_path(resource_name), class: "block text-sm text-white underline hover:text-violet-200" %>
+  <% end %>
+</div>

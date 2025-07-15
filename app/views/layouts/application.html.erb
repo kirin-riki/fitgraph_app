@@ -1,31 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title><%= content_for(:title) || "FitGraph" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="standalone">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FitGraph">
+    <meta name="theme-color" content="#8B5CF6">
+    <meta name="msapplication-TileColor" content="#8B5CF6">
+    <meta name="mobile-web-app-capable" content="standalone">
+    <meta name="application-name" content="FitGraph">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
+    <!-- ファビコン類（asset_host 設定により絶対 URL に変換されます） -->
+    <%= favicon_link_tag "favicon.ico", rel: "icon" %>
+    <%= favicon_link_tag "apple-touch-icon.png", rel: "apple-touch-icon", type: "image/png", sizes: "180x180" %>
+    <%= favicon_link_tag "android-chrome-192x192.png", sizes: '192x192', type: 'image/png' %>
+
+    <!-- PWA マニフェスト -->
     <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+
+    <!-- スタイルシート -->
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload", media: "all" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
+
+    <!-- JavaScript -->
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module", defer: true %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js" defer></script>
+
+    <!-- OGP／Twitterカード -->
+    <%= display_meta_tags(default_meta_tags) %>
   </head>
 
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-gray-50">
     <%= render "shared/header" %>
-
-    <!-- ここが伸縮するメイン領域 -->
-    <main class="flex-1 flex items-center justify-center">
+    <main class="min-h-[calc(100vh-60px)] <%= content_for?(:no_main_padding) ? 'pt-0 bg-transparent' : 'pt-[60px] bg-gray-50' %>">
+      <%= render "shared/flash" %>
       <%= yield %>
     </main>
+    <% if user_signed_in? %>
+      <%= render "shared/footer" %>
+    <% end %>
 
-    <%= render "shared/footer" %>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const btn  = document.getElementById("dropdown-button")
+        const menu = document.getElementById("dropdown-menu")
+        if (!btn || !menu) return
+        btn.addEventListener("click", () => menu.classList.toggle("hidden"))
+      })
+    </script>
   </body>
 </html>

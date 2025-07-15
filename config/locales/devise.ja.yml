@@ -1,0 +1,35 @@
+ja:
+  devise:
+    sessions:
+      signed_in: "ログインに成功しました。"
+      signed_out: "ログアウトしました。"
+      already_signed_out: "すでにログアウトしています。"
+    registrations:
+      signed_up: "新規登録が完了しました。ようこそ！"
+      updated: "アカウント情報を更新しました。"
+      destroyed: "アカウントを削除しました。ご利用ありがとうございました。"
+    passwords:
+      send_instructions: "パスワード再設定用のメールを送信しました。"
+      updated: "パスワードを変更しました。"
+      updated_not_active: "パスワードを変更しました。"
+    confirmations:
+      send_instructions: "確認メールを送信しました。"
+      confirmed: "メールアドレスの確認が完了しました。"
+    unlocks:
+      send_instructions: "アカウントのロック解除メールを送信しました。"
+      unlocked: "アカウントのロックを解除しました。"
+    failure:
+      invalid: "メールアドレスまたはパスワードが正しくありません。"
+      not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
+      already_authenticated: "すでにログインしています。"
+      unauthenticated: "ログインまたは新規登録が必要です。"
+      unconfirmed: "メールアドレスの確認が必要です。"
+      locked: "アカウントがロックされています。"
+      inactive: "アカウントが有効化されていません。"
+      timeout: "セッションの有効期限が切れました。再度ログインしてください。"
+      expired: "有効期限が切れています。"
+      not_saved:
+        one: "%{resource}の保存に失敗しました:"
+        other: "%{count}件のエラーにより%{resource}を保存できませんでした:"
+    omniauth_callbacks:
+      success: "%{kind}アカウントで認証しました。" 

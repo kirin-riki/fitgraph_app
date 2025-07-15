@@ -4,5 +4,14 @@
 
 import { application } from "./application"
 
+import CameraController from "./camera_controller"
+application.register("camera", CameraController)
+
+import DropdownController from "./dropdown_controller"
+application.register("dropdown", DropdownController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import PhotoSwitcherController from "./photo_switcher_controller"
+application.register("photo-switcher", PhotoSwitcherController)

@@ -1,0 +1,106 @@
+<%= form_with model: @body_record, class: "space-y-4", multipart: true do |f| %>
+  <!-- ===== 日付バッジ ===== -->
+  <p class="inline-block bg-violet-600 text-white text-xs font-medium rounded-full px-2 py-0.5">
+    <%= @body_record.recorded_at.strftime("%Y年%m月%d日") %>
+  </p>
+  <%= f.hidden_field :recorded_at %>
+
+  <!-- ===== 体重 & 体脂肪率 ===== -->
+  <div class="grid grid-cols-2 gap-2">
+    <div>
+      <%= f.label :weight, "体重", class: "block text-violet-600 text-xs mb-0.5" %>
+      <div class="flex items-center">
+        <%= f.number_field :weight, step: 0.1, min: 0,
+              class: "w-full border rounded-lg px-2 py-1 text-right text-sm" %>
+        <span class="ml-1 text-xs text-violet-600">kg</span>
+      </div>
+    </div>
+    <div>
+      <%= f.label :body_fat, "体脂肪率", class: "block text-violet-600 text-xs mb-0.5" %>
+      <div class="flex items-center">
+        <%= f.number_field :body_fat, step: 0.1, min: 0,
+              class: "w-full border rounded-lg px-2 py-1 text-right text-sm" %>
+        <span class="ml-1 text-xs text-violet-600">%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 写真 ===== -->
+  <div data-controller="camera" class="space-y-2">
+    <p class="text-xs font-semibold text-violet-600 mb-0.5">カラダの写真</p>
+
+    <!-- カメラ操作ボタン -->
+    <div class="flex gap-2 mb-1">
+      <!-- ネイティブカメラ起動ボタン -->
+      <button type="button"
+              data-camera-target="nativeCameraButton"
+              data-action="click->camera#openNativeCamera"
+              class="border border-violet-600 text-violet-600 w-1/2 py-1 rounded hover:bg-violet-50 transition-colors text-xs">
+        カメラ起動
+      </button>
+      <!-- 隠しファイル入力（ネイティブカメラ用） -->
+      <%= f.file_field :photo,
+            data: { camera_target: "nativeCameraInput" },
+            accept: "image/*",
+            capture: "environment",
+            class: "hidden" %>
+    </div>
+
+    <!-- ファイルアップロード（カスタムボタン） -->
+    <div class="mb-1">
+      <label class="relative inline-block text-center
+                    border border-violet-600 text-violet-600
+                    w-1/3 py-1 rounded hover:bg-violet-50
+                    cursor-pointer mb-1 transition-colors text-xs">
+        ファイルを選択
+        <%= f.file_field :photo,
+              data: { camera_target: "fileInput" },
+              accept: "image/*",
+              class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer" %>
+      </label>
+      <!-- 選択済みファイル名表示 -->
+      <span data-camera-target="fileName" class="ml-2 text-xs text-gray-600"></span>
+    </div>
+
+    <!-- プレビューエリア -->
+    <div class="relative w-1/2 h-48 border-2 border-dashed border-violet-400 rounded
+                flex items-center justify-center overflow-hidden bg-gray-50"
+         data-camera-target="previewContainer">
+      <% if @body_record.photo.attached? %>
+        <% if @body_record.photo.variable? %>
+          <%= image_tag @body_record.photo.variant(resize_to_limit: [400, 600], quality: 70, format: :jpeg).processed,
+                        data: { camera_target: "placeholder" },
+                        class: "w-full h-full object-cover rounded",
+                        alt: "身体写真",
+                        id: "existing-photo" %>
+        <% else %>
+          <%= image_tag @body_record.photo,
+                        data: { camera_target: "placeholder" },
+                        class: "w-full h-full object-cover rounded",
+                        alt: "身体写真",
+                        id: "existing-photo" %>
+        <% end %>
+        <!-- 画像削除ボタン -->
+        <button type="button"
+                data-action="click->camera#removeExistingImage"
+                class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white 
+                       rounded-full w-7 h-7 flex items-center justify-center text-xs
+                       transition-colors">
+          ×
+        </button>
+      <% else %>
+        <div class="text-center text-gray-400" data-camera-target="placeholder">
+          <img src="<%= asset_path 'avatar_placeholder.png' %>"
+               class="w-10 h-16 opacity-50 mx-auto mb-1"
+               alt="プレースホルダー" />
+          <p class="text-xs">カメラで撮影するか、ファイルを選択してください</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- ===== 送信ボタン ===== -->
+  <%= f.submit @body_record.persisted? ? "更新する" : "登録する",
+        class: "w-full bg-violet-600 hover:bg-violet-700 text-white font-semibold
+                py-2 rounded-full transition-colors text-base" %>
+<% end %>
