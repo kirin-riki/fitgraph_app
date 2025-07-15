@@ -14,7 +14,7 @@
     <!-- メニュー本体 -->
     <div
       data-dropdown-target="menu"
-      class="hidden absolute right-0 mt-2 w-40 text-right bg-white text-gray-800 rounded-lg shadow-lg
+      class="hidden absolute right-0 mt-2 w-48 text-right bg-white text-gray-800 rounded-lg shadow-lg
             ring-1 ring-black ring-opacity-5 overflow-hidden">
       <% if user_signed_in? %>
         <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete },
@@ -25,6 +25,7 @@
         <%= link_to "新規登録", new_user_registration_path,
               class: "block px-4 py-2 hover:bg-gray-100" %>
       <% end %>
+      <%= link_to "使い方", how_to_path, class: "block px-4 py-2 hover:bg-gray-100" %>
       <%= link_to "利用規約", terms_path, class: "block px-4 py-2 hover:bg-gray-100" %>
       <%= link_to "プライバシーポリシー", privacy_path, class: "block px-4 py-2 hover:bg-gray-100" %>
       <%= link_to "お問い合わせ", "https://docs.google.com/forms/d/1zWUS4LPi4SCyts7xiIcolfqvomtAWl5rR_MkbKJWSrM/viewform", class: "block px-4 py-2 hover:bg-gray-100"  %>

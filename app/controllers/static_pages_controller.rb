@@ -6,4 +6,7 @@ class StaticPagesController < ApplicationController
 
   def privacy
   end
+
+  def how_to
+  end
 end
