@@ -14,7 +14,9 @@
         <!-- ログインフォーム -->
         <%= form_for(resource, as: resource_name,
                      url: session_path(resource_name),
-                     html: { class: "space-y-4" }) do |f| %>
+                     html: { class: "space-y-4" }, 
+                     local: true,
+                     data: { turbo: false }) do |f| %>
           <%= devise_error_messages! %>
           <div>
             <%= f.label :email, "メールアドレス", class: "block text-sm font-medium text-white" %>
