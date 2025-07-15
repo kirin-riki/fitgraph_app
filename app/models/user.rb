@@ -9,7 +9,7 @@ class User < ApplicationRecord
          :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable,
-         omniauth_providers: %i[google_oauth2 line], otp_secret_encryption_key: ENV['ENCRYPTION_KEY']
+         omniauth_providers: %i[google_oauth2 line], otp_secret_encryption_key: ENV["ENCRYPTION_KEY"]
 
   validates :password, length: { minimum: 6 }, if: -> { new_record? || changes[:encrypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:encrypted_password] }
@@ -52,7 +52,7 @@ class User < ApplicationRecord
   end
 
   # QR 用 URI を組み立てるヘルパ（任意）
-  def provisioning_uri(issuer: 'MyApp')
+  def provisioning_uri(issuer: "MyApp")
     otp_provisioning_uri(email, issuer: issuer)
   end
 end
