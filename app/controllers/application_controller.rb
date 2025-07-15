@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
   private
 
   def set_default_meta_tags
-    @page_title = "FitGraph"
-    @page_description = "FitGraphは、日々のフィットネス活動を記録し、グラフで可視化することで、あなたのモチベーションを高め、目標達成をサポートするアプリです。"
+    @page_title = "Fitgraph"
+    @page_description = "Fitgraphは、日々のフィットネス活動を記録し、グラフで可視化することで、あなたのモチベーションを高め、目標達成をサポートするアプリです。"
     @page_keywords = "フィットネス, 筋トレ, 記録, グラフ, ダイエット, 健康管理, トレーニング"
   end
 
