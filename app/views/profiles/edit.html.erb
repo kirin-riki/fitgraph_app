@@ -40,7 +40,7 @@
         <%= collection_radio_buttons :profile, :gender,
              Profile.genders.keys, :to_s, :humanize, checked: @profile.gender do |b| %>
           <div class="inline-flex items-center mr-4">
-            <%= b.radio_button(class: "mr-1 bg-white") %><%= b.label(class: "text-black") %>
+            <%= b.radio_button(class: "appearance-none w-4 h-4 border border-gray-300 rounded-full bg-white checked:bg-violet-600 checked:border-violet-600 focus:ring-2 focus:ring-violet-500 mr-1") %><%= b.label(class: "text-black") %>
           </div>
         <% end %>
       </div>
