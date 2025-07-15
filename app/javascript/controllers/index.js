@@ -2,16 +2,16 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application"
-
-import CameraController from "./camera_controller"
-application.register("camera", CameraController)
-
-import DropdownController from "./dropdown_controller"
-application.register("dropdown", DropdownController)
-
+import { Application } from "@hotwired/stimulus"
 import HelloController from "./hello_controller"
-application.register("hello", HelloController)
-
+import CameraController from "./camera_controller"
 import PhotoSwitcherController from "./photo_switcher_controller"
-application.register("photo-switcher", PhotoSwitcherController)
+import DropdownController from "./dropdown_controller"
+import LoadingController from "./loading_controller"
+
+window.Stimulus = Application.start()
+Stimulus.register("hello", HelloController)
+Stimulus.register("camera", CameraController)
+Stimulus.register("photo-switcher", PhotoSwitcherController)
+Stimulus.register("dropdown", DropdownController)
+Stimulus.register("loading", LoadingController)
