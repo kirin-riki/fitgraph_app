@@ -82,3 +82,7 @@ gem "omniauth-rails_csrf_protection"
 gem "omniauth-line"
 
 gem "line-bot-api", "1.30.0"
+
+gem 'devise-two-factor'
+gem 'rotp'
+gem 'rqrcode' 

@@ -4,9 +4,12 @@ class User < ApplicationRecord
   has_many :recommended_videos
   has_many :favorite_videos, dependent: :destroy
 
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,
+         :two_factor_authenticatable,
+         :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: %i[google_oauth2 line]
+         :omniauthable,
+         omniauth_providers: %i[google_oauth2 line], otp_secret_encryption_key: ENV['ENCRYPTION_KEY']
 
   validates :password, length: { minimum: 6 }, if: -> { new_record? || changes[:encrypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:encrypted_password] }
@@ -46,5 +49,10 @@ class User < ApplicationRecord
 
   def self.create_unique_string
     SecureRandom.uuid
+  end
+
+  # QR 用 URI を組み立てるヘルパ（任意）
+  def provisioning_uri(issuer: 'MyApp')
+    otp_provisioning_uri(email, issuer: issuer)
   end
 end
