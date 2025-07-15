@@ -10,8 +10,8 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   # devise-two-factorのWardenストラテジーを設定
-  require 'devise-two-factor'
-  
+  require "devise-two-factor"
+
   config.warden do |manager|
     # 2FA認証を最初に実行し、その後データベース認証を実行
     manager.default_strategies(scope: :user).unshift :two_factor_authenticatable
