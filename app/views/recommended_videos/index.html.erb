@@ -33,7 +33,7 @@
                 ></iframe>
               </div>
               <div class="p-4">
-                <h3 class="text-lg font-semibold mb-2"><%= rec.title %></h3>
+                <h3 class="text-lg font-semibold mb-2 text-black"><%= rec.title %></h3>
                 <p class="text-sm text-gray-500 mb-2">
                   <%= rec.channel_title %>
                   <% if rec.view_count.present? && rec.view_count > 0 %>
@@ -99,7 +99,7 @@
               </div>
               <div class="p-4">
                 <div class="flex justify-between items-start mb-2">
-                  <h3 class="text-lg font-semibold flex-1"><%= fav.title %></h3>
+                  <h3 class="text-lg font-semibold flex-1 text-black"><%= fav.title %></h3>
                   <button 
                     onclick="deleteFavoriteVideo(<%= fav.id %>)" 
                     class="text-red-500 hover:text-red-700 ml-2 p-1"
@@ -252,7 +252,7 @@ function addFavoriteVideoToDOM(favoriteVideo) {
     </div>
     <div class="p-4">
       <div class="flex justify-between items-start mb-2">
-        <h3 class="text-lg font-semibold flex-1">${favoriteVideo.title}</h3>
+        <h3 class="text-lg font-semibold flex-1 text-black">${favoriteVideo.title}</h3>
         <button 
           onclick="deleteFavoriteVideo(${favoriteVideo.id})" 
           class="text-red-500 hover:text-red-700 ml-2 p-1"

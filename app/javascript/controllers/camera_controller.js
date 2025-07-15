@@ -18,10 +18,11 @@ export default class extends Controller {
     this.nativeCameraInputTarget.addEventListener("change", this.previewNativeCamera.bind(this));
 
     // 簡易スマホ判定
-    const isMobile =
-      /Mobi|Android|iPhone|iPad|iPod/.test(navigator.userAgent);
+    const ua = navigator.userAgent;
+    const isIpad = /iPad/.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
+    const isMobile = /Mobi|Android|iPhone|iPod/.test(ua);
 
-    if (!isMobile) {
+    if (!isMobile && !isIpad) {
       // PCではネイティブカメラボタンを隠す（PCにはカメラアプリがないため）
       this.nativeCameraButtonTarget.classList.add("hidden");
     }
