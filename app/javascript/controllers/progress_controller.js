@@ -7,6 +7,14 @@ export default class extends Controller {
     "layerTab", "compareTab", "layerView", "compareView"
   ]
 
+  static values = {
+    labels: Array,
+    weights: Array,
+    fatRates: Array,
+    targetWeight: Number,
+    allRecords: Array
+  }
+
   connect() {
     console.log("Progress controller connected!");
     this.currentPeriod = "3m"
@@ -99,12 +107,14 @@ export default class extends Controller {
   // グラフ描画（Chart.js）
   renderChart(period = "3m") {
     if (!this.hasWeightChartTarget) return
-    // ... Chart.js描画ロジックをここに移植 ...
+    // 旧: window.allLabels, window.allWeights, ...
+    // 例: const labels = window.allLabels; const weights = window.allWeights; ...
   }
 
   // 統計表更新
   updateStatsTable(period) {
-    // ... 統計表更新ロジックをここに移植 ...
+    // 旧: window.allLabels, window.allWeights, ...
+    // 例: const labels = window.allLabels; const weights = window.allWeights; ...
   }
 
   // 写真タブ切り替え

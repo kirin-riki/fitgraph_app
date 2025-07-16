@@ -55,8 +55,7 @@
         <% end %>
       </div>
 
-      <%= submit_tag "登録",
-          class: "w-full bg-violet-600 text-white font-semibold py-3 rounded-full" %>
+      <%= render "shared/button", text: "登録", type: "submit", extra_class: "bg-violet-600 text-white font-semibold py-3 rounded-full" %>
     <% end %>
   </section>
 </main>

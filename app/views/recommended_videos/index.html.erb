@@ -80,8 +80,8 @@
             <input type="hidden" name="authenticity_token" id="authenticity_token" value="i54ph0LMOPJRsyhen5vqEdpd0eR0nYGcx4sMzS5CB9jDtwP3ORbOcxpQ0bZc_mavjupKVMCGHG-HVXnrM73uHw" autocomplete="off">
             <label class="block text-sm mb-2">URLを入力</label>
             <input type="text" name="youtube_url" class="w-full border rounded px-2 py-1 mb-4" required="">
-            <button type="submit" class="w-full bg-violet-600 text-white rounded py-2">追加</button>
-            <button type="button" class="w-full mt-2 bg-gray-200 text-gray-700 rounded py-2" onclick="hideFavoriteForm()">キャンセル</button>
+            <%= render "shared/button", text: "追加", extra_class: "bg-violet-600 text-white rounded py-2", type: "submit" %>
+            <%= render "shared/button", text: "キャンセル", extra_class: "mt-2 bg-gray-200 text-gray-700 rounded py-2", type: "button", data_attr: 'onclick="hideFavoriteForm()"' %>
           </form>
         </div>
       </div>
