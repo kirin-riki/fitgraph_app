@@ -26,7 +26,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def failure
-    unauthenticated_root_path
+    redirect_to unauthenticated_root_path, alert: "認証に失敗しました"
   end
 
   private
