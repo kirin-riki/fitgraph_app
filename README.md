@@ -33,9 +33,7 @@
 |----------------|----------------------------|-------------------------------|
 | バックエンド   | Ruby on Rails              | 7.2.1                        |
 | データベース   | PostgreSQL                 |                               |
-| フロントエンド | Hotwire (Turbo/Stimulus)   | turbo-rails, stimulus-rails   |
-| フロントエンド | Chart.js                   | グラフ描画                    |
-| スタイル       | Tailwind CSS, DaisyUI      |                              |
+| フロントエンド | Hotwire (Turbo/Stimulus), Chart.js, Tailwind CSS, DaisyUI | グラフ描画、UI、SPA対応         |
 | 認証           | Devise, 2FA, OmniAuth      | Google, LINE対応              |
 | ストレージ     | Active Storage             | 画像アップロード               |
 | テスト         | RSpec, FactoryBot          | モデル・システムスペック       |
