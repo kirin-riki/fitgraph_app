@@ -50,4 +50,4 @@ class FavoriteVideoService
     match = url.match(regex)
     match[1] if match
   end
-end 
+end

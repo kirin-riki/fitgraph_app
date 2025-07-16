@@ -25,4 +25,4 @@ class BodyRecordPhotoService
       @body_record.photo.attach(photo_param)
     end
   end
-end 
+end

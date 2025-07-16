@@ -46,4 +46,4 @@ class ProgressDataService
   def all_photos
     body_records_with_photo
   end
-end 
+end

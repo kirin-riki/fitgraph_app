@@ -2023,3 +2023,47 @@ Processing by Rails::PwaController#manifest as JSON
 Completed 200 OK in 4ms (Views: 3.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/progress" for 172.25.0.1 at 2025-07-17 02:08:17 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ProgressController#index as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mBodyRecord Load (0.8ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND (recorded_at >= $2) ORDER BY "body_records"."recorded_at" ASC[0m  [["user_id", 3], [nil, "2025-04-17 02:08:17.904783"]]
+  ↳ app/services/progress_data_service.rb:10:in `map'
+  [1m[36mBodyRecord Pluck (0.4ms)[0m  [1m[34mSELECT "body_records"."recorded_at", "body_records"."weight", "body_records"."body_fat" FROM "body_records" WHERE "body_records"."user_id" = $1 ORDER BY "body_records"."recorded_at" ASC[0m  [["user_id", 3]]
+  ↳ app/services/progress_data_service.rb:39:in `all_graph_records'
+  [1m[36mProfile Load (0.8ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles" WHERE "profiles"."user_id" = $1 LIMIT $2[0m  [["user_id", 3], ["LIMIT", 1]]
+  ↳ app/services/progress_data_service.rb:14:in `call'
+  [1m[36mBodyRecord Load (0.4ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 ORDER BY "body_records"."recorded_at" ASC[0m  [["user_id", 3]]
+  ↳ app/services/progress_data_service.rb:43:in `body_records_with_photo'
+  [1m[36mActiveStorage::Attachment Load (1.7ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_type" = $1 AND "active_storage_attachments"."name" = $2 AND "active_storage_attachments"."record_id" IN ($3, $4, $5, $6)[0m  [["record_type", "BodyRecord"], ["name", "photo"], ["record_id", 2], ["record_id", 3], ["record_id", 1], ["record_id", 4]]
+  ↳ app/services/progress_data_service.rb:43:in `body_records_with_photo'
+  [1m[36mCACHE BodyRecord Load (0.0ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 ORDER BY "body_records"."recorded_at" ASC[0m  [["user_id", 3]]
+  ↳ app/services/progress_data_service.rb:43:in `body_records_with_photo'
+  [1m[36mCACHE ActiveStorage::Attachment Load (0.0ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_type" = $1 AND "active_storage_attachments"."name" = $2 AND "active_storage_attachments"."record_id" IN ($3, $4, $5, $6)[0m  [["record_type", "BodyRecord"], ["name", "photo"], ["record_id", 2], ["record_id", 3], ["record_id", 1], ["record_id", 4]]
+  ↳ app/services/progress_data_service.rb:43:in `body_records_with_photo'
+  Rendering layout layouts/application.html.erb
+  Rendering progress/index.html.erb within layouts/application
+  Rendered progress/index.html.erb within layouts/application (Duration: 10.7ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 2.0ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.4ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 1.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 36.9ms | GC: 0.0ms)
+Completed 200 OK in 185ms (Views: 39.4ms | ActiveRecord: 15.5ms (8 queries, 2 cached) | GC: 12.7ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-07-17 02:08:18 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-08dd675eb42b4917014c8f315c275aa23adb69b720babae47645c5e51068318d.map"):
+  
+Started GET "/manifest.json" for 172.25.0.1 at 2025-07-17 02:08:18 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.4ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+

@@ -50,4 +50,4 @@ class RecommendedVideoService
     Rails.logger.error "Failed to save video \\#{video_id} for key \\#{@condition_key}: \\#{e.message}"
     nil
   end
-end 
+end

@@ -50,4 +50,4 @@ class LineBotService
       text: "通知時刻を入力してください（例: 12:00）"
     }
   end
-end 
+end

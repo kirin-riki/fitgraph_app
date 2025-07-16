@@ -91,4 +91,4 @@ gem "devise-two-factor"
 gem "rotp"
 gem "rqrcode"
 
-gem 'rack-canonical-host'
+gem "rack-canonical-host"
