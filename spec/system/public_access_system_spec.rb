@@ -4,31 +4,31 @@ RSpec.describe '未ログイン状態でのアクセス', type: :system do
     driven_by(:rack_test)
   end
 
-  it 'トップページにアクセスできる', skip: '一時的にskip' do
+  it 'トップページにアクセスできる' do
     # ...
   end
 
-  it '使い方ページにアクセスできる', skip: '一時的にskip' do
+  it '使い方ページにアクセスできる' do
     # ...
   end
 
-  it '利用規約ページにアクセスできる', skip: '一時的にskip' do
+  it '利用規約ページにアクセスできる' do
     # ...
   end
 
-  it 'プライバシーポリシーページにアクセスできる', skip: '一時的にskip' do
+  it 'プライバシーポリシーページにアクセスできる' do
     # ...
   end
 
-  it '新規登録ページにアクセスできる', skip: '一時的にskip' do
+  it '新規登録ページにアクセスできる' do
     # ...
   end
 
-  it 'パスワードリセットページにアクセスできる', skip: '一時的にskip' do
+  it 'パスワードリセットページにアクセスできる' do
     # ...
   end
 
-  it 'ログインページにアクセスできる', skip: '一時的にskip' do
+  it 'ログインページにアクセスできる' do
     # ...
   end
 end

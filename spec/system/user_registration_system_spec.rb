@@ -4,11 +4,11 @@ RSpec.describe 'ユーザー登録', type: :system do
     driven_by(:rack_test)
   end
 
-  it '正常に新規登録できる', skip: '一時的にskip' do
+  it '正常に新規登録できる' do
     # ...
   end
 
-  it 'バリデーションエラーが表示される', skip: '一時的にskip' do
+  it 'バリデーションエラーが表示される' do
     # ...
   end
 end

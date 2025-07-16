@@ -6,25 +6,25 @@ RSpec.describe '未ログイン状態での認証必須ページアクセス', t
     driven_by(:rack_test)
   end
 
-  it 'プロフィールページはログイン画面にリダイレクトされる', skip: '一時的にskip' do
+  it 'プロフィールページはログイン画面にリダイレクトされる' do
     visit profile_path
     expect(current_path).to eq new_user_session_path
     expect(page).to have_content('ログイン')
   end
 
-  it '動画一覧ページはログイン画面にリダイレクトされる', skip: '一時的にskip' do
+  it '動画一覧ページはログイン画面にリダイレクトされる' do
     visit recommended_videos_path
     expect(current_path).to eq new_user_session_path
     expect(page).to have_content('ログイン')
   end
 
-  it '経過ページはログイン画面にリダイレクトされる', skip: '一時的にskip' do
+  it '経過ページはログイン画面にリダイレクトされる' do
     visit progress_path
     expect(current_path).to eq new_user_session_path
     expect(page).to have_content('ログイン')
   end
 
-  it '身体情報入力ページはログイン画面にリダイレクトされる', skip: '一時的にskip' do
+  it '身体情報入力ページはログイン画面にリダイレクトされる' do
     visit new_body_record_path
     expect(current_path).to eq new_user_session_path
     expect(page).to have_content('ログイン')
