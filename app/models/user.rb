@@ -1,7 +1,6 @@
 class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   has_many :body_records
-  has_many :recommended_videos
   has_many :favorite_videos, dependent: :destroy
 
   devise :database_authenticatable,

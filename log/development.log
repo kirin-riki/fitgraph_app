@@ -190,3 +190,252 @@ User 3 has no profile.
 Completed 200 OK in 54ms (Views: 35.0ms | ActiveRecord: 1.6ms (2 queries, 0 cached) | GC: 0.6ms)
 
 
+Started GET "/" for 172.25.0.1 at 2025-07-16 11:07:16 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Pluck (1.4ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 3], ["recorded_at", "2025-06-29 00:00:00"], ["recorded_at", "2025-08-02 23:59:59.999999"]]
+  ↳ app/controllers/body_records_controller.rb:19:in `top'
+  [1m[36mBodyRecord Load (0.7ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3 ORDER BY "body_records"."id" ASC LIMIT $4[0m  [["user_id", 3], ["recorded_at", "2025-07-16 00:00:00"], ["recorded_at", "2025-07-16 23:59:59.999999"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:23:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.8ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 3], ["recorded_at", "2025-06-29 00:00:00"], ["recorded_at", "2025-08-02 23:59:59.999999"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 17.6ms | GC: 0.0ms)
+  Rendered body_records/_calendar.html.erb (Duration: 25.0ms | GC: 0.0ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 27.0ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 3.8ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 1.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 79.6ms | GC: 24.9ms)
+Completed 200 OK in 99ms (Views: 80.3ms | ActiveRecord: 2.9ms (3 queries, 0 cached) | GC: 24.9ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-07-16 11:07:17 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.6ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-07-16 11:07:17 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-08dd675eb42b4917014c8f315c275aa23adb69b720babae47645c5e51068318d.map"):
+  
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (3.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+Started GET "/recommended_videos" for 172.25.0.1 at 2025-07-16 15:15:56 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (3.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by RecommendedVideosController#index as HTML
+  [1m[36mUser Load (4.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfile Load (1.6ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles" WHERE "profiles"."user_id" = $1 LIMIT $2[0m  [["user_id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:42:in `set_profile_and_condition_key'
+User 3 has no profile.
+  Rendering layout layouts/application.html.erb
+  Rendering recommended_videos/index.html.erb within layouts/application
+  Rendered recommended_videos/index.html.erb within layouts/application (Duration: 7.6ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 7.5ms | GC: 6.6ms)
+  Rendered shared/_flash.html.erb (Duration: 7.5ms | GC: 7.1ms)
+  Rendered shared/_footer.html.erb (Duration: 53.7ms | GC: 19.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 605.8ms | GC: 284.8ms)
+Completed 200 OK in 786ms (Views: 612.6ms | ActiveRecord: 81.6ms (2 queries, 0 cached) | GC: 284.8ms)
+
+
+Started GET "/profile" for 172.25.0.1 at 2025-07-16 15:16:00 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ProfilesController#show as HTML
+  [1m[36mUser Load (7.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfile Load (0.5ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles" WHERE "profiles"."user_id" = $1 LIMIT $2[0m  [["user_id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/profiles_controller.rb:30:in `set_profile'
+  Rendering layout layouts/application.html.erb
+  Rendering profiles/show.html.erb within layouts/application
+  Rendered profiles/show.html.erb within layouts/application (Duration: 42.2ms | GC: 1.3ms)
+  Rendered shared/_header.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 0.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 60.7ms | GC: 3.3ms)
+Completed 200 OK in 209ms (Views: 61.6ms | ActiveRecord: 7.8ms (2 queries, 0 cached) | GC: 111.7ms)
+
+
+Started GET "/profile/edit" for 172.25.0.1 at 2025-07-16 15:16:02 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ProfilesController#edit as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfile Load (0.4ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles" WHERE "profiles"."user_id" = $1 LIMIT $2[0m  [["user_id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/profiles_controller.rb:30:in `set_profile'
+  Rendering layout layouts/application.html.erb
+  Rendering profiles/edit.html.erb within layouts/application
+  Rendered devise/shared/_error_messages.html.erb (Duration: 3.3ms | GC: 0.0ms)
+  Rendered devise/shared/_error_messages.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered profiles/edit.html.erb within layouts/application (Duration: 44.1ms | GC: 0.2ms)
+  Rendered shared/_header.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 1.9ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 60.6ms | GC: 1.1ms)
+Completed 200 OK in 73ms (Views: 61.3ms | ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 1.1ms)
+
+
+Started PATCH "/profile" for 172.25.0.1 at 2025-07-16 15:16:04 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ProfilesController#update as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"name"=>"aaa", "email"=>"[FILTERED]"}, "profile"=>{"height"=>"", "target_weight"=>"", "gender"=>"man", "training_intensity"=>"low"}, "commit"=>"登録"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfile Load (0.5ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles" WHERE "profiles"."user_id" = $1 LIMIT $2[0m  [["user_id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/profiles_controller.rb:30:in `set_profile'
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/profiles_controller.rb:14:in `update'
+  [1m[36mProfile Create (45.5ms)[0m  [1m[32mINSERT INTO "profiles" ("user_id", "height", "gender", "training_intensity", "target_weight", "start_date", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["user_id", 3], ["height", nil], ["gender", 0], ["training_intensity", 0], ["target_weight", nil], ["start_date", nil], ["created_at", "2025-07-16 15:16:04.504461"], ["updated_at", "2025-07-16 15:16:04.504461"]]
+  ↳ app/controllers/profiles_controller.rb:14:in `update'
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/profiles_controller.rb:14:in `update'
+Redirected to http://localhost:3000/profile
+Completed 302 Found in 80ms (ActiveRecord: 51.0ms (3 queries, 0 cached) | GC: 1.1ms)
+
+
+Started GET "/profile" for 172.25.0.1 at 2025-07-16 15:16:04 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by ProfilesController#show as TURBO_STREAM
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfile Load (0.4ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles" WHERE "profiles"."user_id" = $1 LIMIT $2[0m  [["user_id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/profiles_controller.rb:30:in `set_profile'
+  Rendering layout layouts/application.html.erb
+  Rendering profiles/show.html.erb within layouts/application
+  Rendered profiles/show.html.erb within layouts/application (Duration: 2.7ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 0.4ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 1.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.8ms | GC: 0.0ms)
+Completed 200 OK in 27ms (Views: 15.2ms | ActiveRecord: 1.3ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/recommended_videos" for 172.25.0.1 at 2025-07-16 15:16:06 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by RecommendedVideosController#index as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mProfile Load (0.4ms)[0m  [1m[34mSELECT "profiles".* FROM "profiles" WHERE "profiles"."user_id" = $1 LIMIT $2[0m  [["user_id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:42:in `set_profile_and_condition_key'
+  [1m[36mRecommendedVideo Count (63.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1[0m  [["condition_key", "[FILTERED]"]]
+  ↳ app/controllers/recommended_videos_controller.rb:13:in `index'
+RecommendedVideosController#index: Found 0 videos for key: man_low
+  [1m[36mRecommendedVideo Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1 LIMIT $2[0m  [["condition_key", "[FILTERED]"], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:16:in `index'
+RecommendedVideosController#index: No videos found, fetching from API for key: man_low
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mRecommendedVideo Exists? (1.8ms)[0m  [1m[34mSELECT 1 AS one FROM "recommended_videos" WHERE "recommended_videos"."video_id" = $1 AND "recommended_videos"."condition_key" = $2 LIMIT $3[0m  [["video_id", "1baQOx4pFXc"], ["condition_key", "[FILTERED]"], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mRecommendedVideo Create (16.3ms)[0m  [1m[32mINSERT INTO "recommended_videos" ("video_id", "title", "thumbnail_url", "channel_title", "view_count", "fetched_at", "created_at", "updated_at", "condition_key") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["video_id", "1baQOx4pFXc"], ["title", "【初心者向け10分】バービーさんと有酸素ダンス!!自分の好きな体型で生きていこう〜!!!"], ["thumbnail_url", "https://i.ytimg.com/vi/1baQOx4pFXc/mqdefault.jpg"], ["channel_title", "Marina Takewaki"], ["view_count", 0], ["fetched_at", "2025-07-16 15:16:07.169790"], ["created_at", "2025-07-16 15:16:07.188653"], ["updated_at", "2025-07-16 15:16:07.188653"], ["condition_key", "[FILTERED]"]]
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mRecommendedVideo Exists? (2.1ms)[0m  [1m[34mSELECT 1 AS one FROM "recommended_videos" WHERE "recommended_videos"."video_id" = $1 AND "recommended_videos"."condition_key" = $2 LIMIT $3[0m  [["video_id", "KxzZJwmB8qc"], ["condition_key", "[FILTERED]"], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mRecommendedVideo Create (0.4ms)[0m  [1m[32mINSERT INTO "recommended_videos" ("video_id", "title", "thumbnail_url", "channel_title", "view_count", "fetched_at", "created_at", "updated_at", "condition_key") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["video_id", "KxzZJwmB8qc"], ["title", "【地獄の11分】マンションOK！飛ばない脂肪燃焼ダンスで全身の脂肪をみるみる燃やす！"], ["thumbnail_url", "https://i.ytimg.com/vi/KxzZJwmB8qc/mqdefault.jpg"], ["channel_title", "Marina Takewaki"], ["view_count", 0], ["fetched_at", "2025-07-16 15:16:07.220749"], ["created_at", "2025-07-16 15:16:07.225037"], ["updated_at", "2025-07-16 15:16:07.225037"], ["condition_key", "[FILTERED]"]]
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mRecommendedVideo Exists? (1.7ms)[0m  [1m[34mSELECT 1 AS one FROM "recommended_videos" WHERE "recommended_videos"."video_id" = $1 AND "recommended_videos"."condition_key" = $2 LIMIT $3[0m  [["video_id", "e1VC2lgTWes"], ["condition_key", "[FILTERED]"], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mRecommendedVideo Create (0.6ms)[0m  [1m[32mINSERT INTO "recommended_videos" ("video_id", "title", "thumbnail_url", "channel_title", "view_count", "fetched_at", "created_at", "updated_at", "condition_key") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["video_id", "e1VC2lgTWes"], ["title", "ダイエットダンス！「YOASOBI - 夜に駆ける」ダンス初心者でも楽しく4分で痩せる！"], ["thumbnail_url", "https://i.ytimg.com/vi/e1VC2lgTWes/mqdefault.jpg"], ["channel_title", "RIZAP（ライザップ）公式チャンネル"], ["view_count", 0], ["fetched_at", "2025-07-16 15:16:07.230333"], ["created_at", "2025-07-16 15:16:07.234006"], ["updated_at", "2025-07-16 15:16:07.234006"], ["condition_key", "[FILTERED]"]]
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mTRANSACTION (2.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mRecommendedVideo Exists? (2.7ms)[0m  [1m[34mSELECT 1 AS one FROM "recommended_videos" WHERE "recommended_videos"."video_id" = $1 AND "recommended_videos"."condition_key" = $2 LIMIT $3[0m  [["video_id", "ZPAVv2oA9dU"], ["condition_key", "[FILTERED]"], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mRecommendedVideo Create (0.4ms)[0m  [1m[32mINSERT INTO "recommended_videos" ("video_id", "title", "thumbnail_url", "channel_title", "view_count", "fetched_at", "created_at", "updated_at", "condition_key") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["video_id", "ZPAVv2oA9dU"], ["title", "【5分HIIT】難しい動きなし！初心者はこれからやってみよう!!短時間で体脂肪を燃やす時短トレーニング"], ["thumbnail_url", "https://i.ytimg.com/vi/ZPAVv2oA9dU/mqdefault.jpg"], ["channel_title", "Marina Takewaki"], ["view_count", 0], ["fetched_at", "2025-07-16 15:16:07.242026"], ["created_at", "2025-07-16 15:16:07.247084"], ["updated_at", "2025-07-16 15:16:07.247084"], ["condition_key", "[FILTERED]"]]
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mRecommendedVideo Exists? (2.0ms)[0m  [1m[34mSELECT 1 AS one FROM "recommended_videos" WHERE "recommended_videos"."video_id" = $1 AND "recommended_videos"."condition_key" = $2 LIMIT $3[0m  [["video_id", "iQcQPs8vMb8"], ["condition_key", "[FILTERED]"], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mRecommendedVideo Create (0.8ms)[0m  [1m[32mINSERT INTO "recommended_videos" ("video_id", "title", "thumbnail_url", "channel_title", "view_count", "fetched_at", "created_at", "updated_at", "condition_key") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["video_id", "iQcQPs8vMb8"], ["title", "【17分室内散歩】歩いて全身引き締める！有酸素×筋トレで外に出るより効率的な運動！【室内ウォーキング】"], ["thumbnail_url", "https://i.ytimg.com/vi/iQcQPs8vMb8/mqdefault.jpg"], ["channel_title", "Marina Takewaki"], ["view_count", 0], ["fetched_at", "2025-07-16 15:16:07.252348"], ["created_at", "2025-07-16 15:16:07.256137"], ["updated_at", "2025-07-16 15:16:07.256137"], ["condition_key", "[FILTERED]"]]
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+  [1m[36mTRANSACTION (2.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/recommended_videos_controller.rb:87:in `create_video_from_data'
+Saved 5 new videos for key: man_low
+  [1m[36mRecommendedVideo Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1 LIMIT $2[0m  [["condition_key", "[FILTERED]"], ["LIMIT", 1]]
+  ↳ app/controllers/recommended_videos_controller.rb:78:in `fetch_and_cache_videos'
+  Rendering layout layouts/application.html.erb
+  Rendering recommended_videos/index.html.erb within layouts/application
+  [1m[36mRecommendedVideo Load (0.8ms)[0m  [1m[34mSELECT "recommended_videos".* FROM "recommended_videos" WHERE "recommended_videos"."condition_key" = $1 LIMIT $2[0m  [["condition_key", "[FILTERED]"], ["LIMIT", 5]]
+  ↳ app/views/recommended_videos/index.html.erb:23
+  [1m[36mFavoriteVideo Load (6.3ms)[0m  [1m[34mSELECT "favorite_videos".* FROM "favorite_videos" WHERE "favorite_videos"."user_id" = $1 ORDER BY "favorite_videos"."created_at" DESC[0m  [["user_id", 3]]
+  ↳ app/views/recommended_videos/index.html.erb:89
+  Rendered recommended_videos/index.html.erb within layouts/application (Duration: 15.2ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 0.5ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 0.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 34.0ms | GC: 0.0ms)
+Completed 200 OK in 894ms (Views: 28.1ms | ActiveRecord: 124.4ms (17 queries, 0 cached) | GC: 0.0ms)
+
+
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+Started OPTIONS "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:28:36 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:28:36 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (6.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/opengraph-image"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
+Started OPTIONS "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:29:49 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/opengraph-image"):
+  
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:29:49 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
+Started OPTIONS "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:29:56 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/opengraph-image"):
+  
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:29:56 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
