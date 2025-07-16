@@ -16,7 +16,7 @@ Rails.application.configure do
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
-  config.action_controller.asset_host = ENV.fetch("ASSET_HOST", "https://fitgraph-app.onrender.com")
+  config.action_controller.asset_host = ENV.fetch("ASSET_HOST", "https://www.fitgraph.jp")
 
   # Ensures that a master key has been made available in ENV["RAILS_MASTER_KEY"], config/master.key, or an environment
   # key such as config/credentials/production.key. This key is used to decrypt credentials (and other encrypted files).
@@ -113,12 +113,17 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
-  config.action_mailer.default_url_options = { host: "https://fitgraph-app.onrender.com/" } # 本番環境のURLを入れてください。
-  config.action_mailer.delivery_method = :smtp
+  # 独自ドメインを許可
+  config.hosts << "www.fitgraph.jp"
+
+  # メールやURL生成時のホスト名
+  config.action_mailer.default_url_options = { host: "www.fitgraph.jp", protocol: "https" }
+
+  # SMTPのdomainも独自ドメインに
   config.action_mailer.smtp_settings = {
     address:              "smtp.gmail.com",
     port:                 587,
-    domain:               "fitgraph-app.onrender.com", # 自分のアプリのドメイン
+    domain:               "www.fitgraph.jp", # 独自ドメインに修正
     user_name:            ENV["MAILER_SENDER"],
     password:             ENV["MAILER_PASSWORD"],
     authentication:       "plain",
@@ -127,6 +132,4 @@ Rails.application.configure do
 
     # Only use :id for inspections in production.
     config.active_record.attributes_for_inspect = [ :id ]
-
-     config.hosts << "fitgraph-app.onrender.com"
 end

@@ -89,4 +89,4 @@ RSpec.describe 'マイページ設定', type: :system do
       expect(page).to have_field('user[email]', with: other_user.email)
     end
   end
-end 
+end

@@ -32,4 +32,4 @@ RSpec.describe 'ユーザーログイン', type: :system do
 
     expect(page).to have_content('メールアドレスまたはパスワードが正しくありません。')
   end
-end 
+end

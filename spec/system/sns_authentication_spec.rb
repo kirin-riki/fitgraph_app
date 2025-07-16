@@ -82,4 +82,4 @@ RSpec.describe 'SNS認証', type: :system do
     expect(page).to have_content('認証に失敗しました')
     expect(current_path).to eq unauthenticated_root_path
   end
-end 
+end

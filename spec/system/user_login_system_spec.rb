@@ -16,4 +16,4 @@ RSpec.describe 'ユーザーログイン', type: :system do
   it '未入力の場合はバリデーションエラーが表示される', skip: '一時的にskip' do
     # ...
   end
-end 
+end

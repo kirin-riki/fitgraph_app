@@ -31,4 +31,4 @@ RSpec.describe '未ログイン状態でのアクセス', type: :system do
   it 'ログインページにアクセスできる', skip: '一時的にskip' do
     # ...
   end
-end 
+end

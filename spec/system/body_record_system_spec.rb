@@ -99,4 +99,4 @@ RSpec.describe '身体情報入力・編集', type: :system do
     click_button '登録する'
     expect(page).to have_content('体重は数値で入力してください').or have_content('体脂肪率は数値で入力してください')
   end
-end 
+end

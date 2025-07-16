@@ -108,4 +108,4 @@ RSpec.describe '記録（Progress/グラフ）画面', type: :system do
     visit progress_path
     expect(page).to have_content('目標達成')
   end
-end 
+end

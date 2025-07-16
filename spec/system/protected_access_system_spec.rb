@@ -29,4 +29,4 @@ RSpec.describe '未ログイン状態での認証必須ページアクセス', t
     expect(current_path).to eq new_user_session_path
     expect(page).to have_content('ログイン')
   end
-end 
+end

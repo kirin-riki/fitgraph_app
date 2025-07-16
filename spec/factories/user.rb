@@ -7,4 +7,4 @@ FactoryBot.define do
     uid { SecureRandom.hex(8) }
     provider { "google" }
   end
-end 
+end
