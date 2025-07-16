@@ -12,7 +12,7 @@ class YoutubeService
   def fetch_videos(gender:, intensity:, target_count: 5, max_results: 40)
     all_items = []
     page_token = nil
-    max_attempts = 5  # 最大5回まで試行
+    max_attempts = 5  # 最大5回まで
 
     max_attempts.times do |attempt|
       # APIリクエスト
