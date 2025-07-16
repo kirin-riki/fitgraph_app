@@ -439,3 +439,33 @@ Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.2
   
 ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
   
+Started OPTIONS "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 17:11:57 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/opengraph-image"):
+  
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 17:11:57 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
+Started OPTIONS "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 17:12:01 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/opengraph-image"):
+  
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 17:12:01 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
+Started OPTIONS "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 17:13:16 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/opengraph-image"):
+  
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 17:13:16 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
