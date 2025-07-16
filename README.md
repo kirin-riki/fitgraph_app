@@ -1,3 +1,5 @@
+![FitGraphアイコン](public/icon.png)
+
 # フィットグラフ
 ## サービス概要
 「フィットグラフ」は、ダイエット時におけるモチベーション維持と、運動の習慣化を支援するサービスです。
@@ -29,14 +31,20 @@
 
 ## 使用技術一覧
 
-| 分類           | 技術・サービス名           | バージョン/備考                |
-|----------------|----------------------------|-------------------------------|
-| バックエンド   | Ruby on Rails              | 7.2.1                        |
-| データベース   | PostgreSQL                 |                               |
-| フロントエンド | Hotwire (Turbo/Stimulus), Chart.js, Tailwind CSS, DaisyUI | グラフ描画、UI、SPA対応         |
-| 認証           | Devise, 2FA, OmniAuth      | Google, LINE対応              |
-| ストレージ     | Active Storage             | 画像アップロード               |
-| テスト         | RSpec, FactoryBot          | モデル・システムスペック       |
-| インフラ       | Docker, Render             | 本番環境: fitgraph-app.onrender.com |
-| CI/CD          | GitHub Actions             |                               |
-| その他         | LINE Messaging API         | Bot通知                       |
+| カテゴリ             | 技術内容                                                                 |
+|----------------------|--------------------------------------------------------------------------|
+| サーバーサイド       | Ruby on Rails 7.2.1・Ruby 3.3.6                                          |
+| フロントエンド       | Hotwire (Turbo/Stimulus), JavaScript, Chart.js, DaisyUI                  |
+| CSSフレームワーク    | Tailwind CSS                                                             |
+| Web API              | Google API (OAuth 2.0, YouTube Data API), LINE Messaging API             |
+| ストレージ           | Active Storage (画像アップロード)                                         |
+| データベースサーバー | PostgreSQL                                                               |
+| デプロイ             | Render, Docker                                                           |
+| バージョン管理ツール | GitHub, Git Flow                                                        |
+| CI/CD                | GitHub Actions                                                           |
+
+---
+
+## ER図
+
+![ER図](public/ER図.png)
