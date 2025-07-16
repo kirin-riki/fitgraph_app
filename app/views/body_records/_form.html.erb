@@ -106,7 +106,5 @@
   </div>
 
   <!-- ===== 送信ボタン ===== -->
-  <%= f.submit @body_record.persisted? ? "更新する" : "登録する",
-        class: "w-full bg-violet-600 hover:bg-violet-700 text-white font-semibold
-                py-2 rounded-full transition-colors text-base" %>
+  <%= render "shared/button", text: (@body_record.persisted? ? "更新する" : "登録する"), type: "submit", extra_class: "bg-violet-600 hover:bg-violet-700 text-white font-semibold py-2 rounded-full transition-colors text-base" %>
 <% end %>

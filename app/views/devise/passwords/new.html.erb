@@ -15,8 +15,7 @@
       </div>
 
       <div class="pt-4">
-        <%= f.submit "送信",
-            class: "w-full bg-violet-600 text-white font-semibold py-3 rounded-full hover:bg-violet-700 transition-colors" %>
+        <%= render "shared/button", text: "送信", type: "submit", extra_class: "bg-violet-600 text-white font-semibold py-3 rounded-full hover:bg-violet-700 transition-colors" %>
       </div>
     <% end %>
 

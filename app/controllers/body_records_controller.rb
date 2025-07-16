@@ -55,7 +55,7 @@ class BodyRecordsController < ApplicationController
     @body_record.recorded_at = recorded_at # 念のため再代入
 
     if params[:body_record][:photo].present?
-      attach_processed_photo(params[:body_record][:photo])
+      BodyRecordPhotoService.new(@body_record).attach_processed_photo(params[:body_record][:photo])
     end
 
     if @body_record.save
@@ -77,7 +77,7 @@ class BodyRecordsController < ApplicationController
       if params[:remove_photo] == "1"
         @body_record.photo.purge if @body_record.photo.attached?
       elsif params[:body_record][:photo].present?
-        attach_processed_photo(params[:body_record][:photo])
+        BodyRecordPhotoService.new(@body_record).attach_processed_photo(params[:body_record][:photo])
       end
       redirect_to top_body_records_path(selected_date: @body_record.recorded_at),
                   success: "身体情報を更新しました"
@@ -88,34 +88,6 @@ class BodyRecordsController < ApplicationController
   end
 
   private
-
-  def attach_processed_photo(photo_param)
-    begin
-      # 画像を圧縮してから添付（1MB以下を目標）
-      processed = ImageProcessing::MiniMagick
-                    .source(photo_param.tempfile)
-                    .resize_to_limit(600, 600)
-                    .quality(60)
-                    .call
-
-      # 1MBを超える場合はさらに圧縮
-      if processed.size > 1024 * 1024
-        processed = ImageProcessing::MiniMagick
-                      .source(processed)
-                      .quality(50)
-                      .call
-      end
-
-      @body_record.photo.attach(
-        io: processed,
-        filename: photo_param.original_filename,
-        content_type: photo_param.content_type
-      )
-    rescue => e
-      # 画像処理に失敗した場合は、元の画像をそのまま添付
-      @body_record.photo.attach(photo_param)
-    end
-  end
 
   # id 付きアクション用
   def set_record

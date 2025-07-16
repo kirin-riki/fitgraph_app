@@ -62,7 +62,7 @@ Rails.application.configure do
   config.logger = ActiveSupport::Logger.new(STDOUT)
                     .tap  { |l| l.formatter = ::Logger::Formatter.new }
                     .then { |l| ActiveSupport::TaggedLogging.new(l) }
-  config.log_tags = [:request_id]
+  config.log_tags = [ :request_id ]
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
   # ----------------------------------------
