@@ -11,4 +11,4 @@ RSpec.describe 'ユーザー登録', type: :system do
   it 'バリデーションエラーが表示される', skip: '一時的にskip' do
     # ...
   end
-end 
+end

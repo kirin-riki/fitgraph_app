@@ -7,4 +7,4 @@ FactoryBot.define do
     target_weight { 60 }
     start_date { Date.today }
   end
-end 
+end

@@ -39,4 +39,4 @@ RSpec.describe '未ログイン状態でのアクセス', type: :system do
     visit new_user_session_path
     expect(page).to have_content('ログイン')
   end
-end 
+end

@@ -42,4 +42,4 @@ RSpec.describe 'パスワードリセット', type: :system do
     click_button '送信'
     expect(page).to have_content('パスワード再設定について数分以内にメールでご連絡いたします').or have_content('メールを送信しました').or have_content('パスワード再設定用のメールを送信しました。')
   end
-end 
+end

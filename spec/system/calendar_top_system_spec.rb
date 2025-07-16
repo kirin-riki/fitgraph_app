@@ -77,4 +77,4 @@ RSpec.describe 'カレンダートップページ', type: :system do
     expect(page).to have_field('body_record[weight]')
     expect(find_field('body_record[weight]').value).to be_blank
   end
-end 
+end

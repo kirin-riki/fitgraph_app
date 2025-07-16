@@ -5,4 +5,4 @@ FactoryBot.define do
     body_fat { 20.0 }
     recorded_at { Time.current }
   end
-end 
+end

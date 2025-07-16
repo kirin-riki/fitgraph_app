@@ -6,4 +6,4 @@ FactoryBot.define do
     thumbnail_url { "https://img.youtube.com/vi/#{SecureRandom.hex(4)}/default.jpg" }
     channel_title { "テストチャンネル" }
   end
-end 
+end

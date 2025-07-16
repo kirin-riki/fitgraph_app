@@ -29,4 +29,4 @@ RSpec.describe 'ユーザー登録', type: :system do
     expect(page).to have_content('パスワードは6文字以上で入力してください')
     expect(page).to have_content('パスワード確認とパスワードの入力が一致しません')
   end
-end 
+end

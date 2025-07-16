@@ -55,4 +55,4 @@ RSpec.describe '動画（おすすめ・お気に入り）画面', type: :system
       expect(page).to have_content('プロフィール設定')
     end
   end
-end 
+end
