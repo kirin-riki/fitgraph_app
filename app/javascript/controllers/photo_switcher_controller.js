@@ -31,27 +31,33 @@ export default class extends Controller {
       }
     })
     // 期間ごとの日付範囲を計算
-    const now = new Date()
-    let start = new Date(now)
+    // JSTの「今日」を取得
+    const now = new Date();
+    // JSTの現在日付（YYYY-MM-DD）をRailsから受け取る（なければ従来通り）
+    const jstToday = this.element.dataset.jstToday || (() => {
+      // UTC→JST変換
+      const jst = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+      return jst.toISOString().slice(0, 10);
+    })();
+    let start = new Date(now);
     switch (period) {
       case "1w":
-        start = new Date(now.getTime() - 7 * 86400000)
-        break
+        start = new Date(now.getTime() - 7 * 86400000);
+        break;
       case "3w":
-        start = new Date(now.getTime() - 21 * 86400000)
-        break
+        start = new Date(now.getTime() - 21 * 86400000);
+        break;
       case "1m":
-        start.setMonth(now.getMonth() - 1)
-        break
+        start.setMonth(now.getMonth() - 1);
+        break;
       case "3m":
       default:
-        start.setMonth(now.getMonth() - 3)
-        break
+        start.setMonth(now.getMonth() - 3);
+        break;
     }
-    // フィルタリング
-    const startStr = start.toISOString().slice(0, 10)
-    const nowStr = now.toISOString().slice(0, 10)
-    this.photos = this.allPhotos.filter(p => p.date >= startStr && p.date <= nowStr)
+    const startStr = start.toISOString().slice(0, 10);
+    // フィルタリング（JSTの今日まで）
+    this.photos = this.allPhotos.filter(p => p.date >= startStr && p.date <= jstToday);
     // 画像・スライダー更新
     this.updateImage(0)
     // スライダーの取得を都度行う
