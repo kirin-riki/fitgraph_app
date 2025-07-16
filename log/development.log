@@ -408,3 +408,34 @@ Completed 200 OK in 894ms (Views: 28.1ms | ActiveRecord: 124.4ms (17 queries, 0 
   [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
 [dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
 [dotenv] Loaded [33m.env[0m
+Started OPTIONS "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:28:36 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:28:36 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (6.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/opengraph-image"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
+Started OPTIONS "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:29:49 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/opengraph-image"):
+  
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:29:49 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
+Started OPTIONS "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:29:56 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [OPTIONS] "/opengraph-image"):
+  
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-07-16 16:29:56 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
