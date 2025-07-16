@@ -26,3 +26,17 @@
 - 体重管理に加え、アプリ内からトレーニングの動画を再生することができる。
 - ニーズに合わせたトレーニング動画を見つけられる。
 - 継続して身体情報を入力できるよう、LINEのbot機能によるリマインドを設定できる。
+
+## 使用技術一覧
+
+| 分類           | 技術・サービス名           | バージョン/備考                |
+|----------------|----------------------------|-------------------------------|
+| バックエンド   | Ruby on Rails              | 7.2.1                        |
+| データベース   | PostgreSQL                 |                               |
+| フロントエンド | Hotwire (Turbo/Stimulus), Chart.js, Tailwind CSS, DaisyUI | グラフ描画、UI、SPA対応         |
+| 認証           | Devise, 2FA, OmniAuth      | Google, LINE対応              |
+| ストレージ     | Active Storage             | 画像アップロード               |
+| テスト         | RSpec, FactoryBot          | モデル・システムスペック       |
+| インフラ       | Docker, Render             | 本番環境: fitgraph-app.onrender.com |
+| CI/CD          | GitHub Actions             |                               |
+| その他         | LINE Messaging API         | Bot通知                       |
