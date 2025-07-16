@@ -98,6 +98,7 @@
           <div data-controller="photo-switcher"
                data-photos='<%= raw (@all_photos.present? ? @all_photos.map { |r| { url: (r.photo.variable? ? url_for(r.photo.variant(resize_to_limit: [400, 600], quality: 70, format: :jpeg).processed) : url_for(r.photo)), date: r.recorded_at.strftime("%Y-%m-%d") } } : [{ url: asset_path("avatar_placeholder.png"), date: Date.current.strftime("%Y-%m-%d") }]).to_json %>'
                data-placeholder="<%= asset_path('avatar_placeholder.png') %>"
+               data-jst-today="<%= Time.zone.today.strftime('%Y-%m-%d') %>"
                class="h-full flex flex-col items-center px-4 pt-5 pb-1">
             <div class="relative mx-auto bg-gray-100 rounded overflow-hidden border border-gray-300 w-[240px] h-[600px] sm:w-[500px] sm:h-[600px]">
               <% if @photos.present? %>

@@ -69,20 +69,20 @@
     </div>
 
     <!-- プレビューエリア -->
-    <div class="relative w-1/2 h-48 border-2 border-dashed border-violet-400 rounded
+    <div class="relative w-[240px] h-[600px] sm:w-[500px] sm:h-[600px] border-2 border-dashed border-violet-400 rounded
                 flex items-center justify-center overflow-hidden bg-gray-50"
          data-camera-target="previewContainer">
       <% if @body_record.photo.attached? %>
         <% if @body_record.photo.variable? %>
-          <%= image_tag @body_record.photo.variant(resize_to_limit: [400, 600], quality: 70, format: :jpeg).processed,
+          <%= image_tag @body_record.photo.variant(resize_to_limit: [300, 450], quality: 70, format: :jpeg).processed,
                         data: { camera_target: "placeholder" },
-                        class: "w-full h-full object-cover rounded",
+                        class: "w-full h-full object-contain rounded",
                         alt: "身体写真",
                         id: "existing-photo" %>
         <% else %>
           <%= image_tag @body_record.photo,
                         data: { camera_target: "placeholder" },
-                        class: "w-full h-full object-cover rounded",
+                        class: "w-full h-full object-contain rounded",
                         alt: "身体写真",
                         id: "existing-photo" %>
         <% end %>
@@ -97,7 +97,7 @@
       <% else %>
         <div class="text-center text-gray-400" data-camera-target="placeholder">
           <img src="<%= asset_path 'avatar_placeholder.png' %>"
-               class="w-10 h-16 opacity-50 mx-auto mb-1"
+               class="w-full h-full object-contain opacity-50 mx-auto mb-1"
                alt="プレースホルダー" />
           <p class="text-xs">カメラで撮影するか、ファイルを選択してください</p>
         </div>
