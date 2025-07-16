@@ -16,7 +16,7 @@ RSpec.describe 'カレンダートップページ', type: :system do
     visit authenticated_root_path
   end
 
-  it 'カレンダーに今月の日付が正しく表示されている', skip: '一時的にskip' do
+  it 'カレンダーに今月の日付が正しく表示されている' do
     # 1日と15日がリンクとして存在
     expect(page).to have_link('1')
     expect(page).to have_link('15')
@@ -26,7 +26,7 @@ RSpec.describe 'カレンダートップページ', type: :system do
     expect(page).to have_content(Date.current.year.to_s)
   end
 
-  it '記録がある日は色や枠線がついている', skip: '一時的にskip' do
+  it '記録がある日は色や枠線がついている' do
     # 1日と15日のセルに特定のクラスが付与されているか
     expect(page).to have_selector("a.border-purple-500.text-purple-700", text: '1')
     expect(page).to have_selector("a.border-purple-500.text-purple-700", text: '15')

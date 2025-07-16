@@ -21,18 +21,18 @@ RSpec.describe '記録（Progress/グラフ）画面', type: :system do
     visit progress_path
   end
 
-  it 'グラフが表示される', skip: '一時的にskip' do
+  it 'グラフが表示される' do
     expect(page).to have_selector('canvas#weightChart')
   end
 
-  it '記録データがグラフに反映されている', skip: '一時的にskip' do
+  it '記録データがグラフに反映されている' do
     expect(page).to have_selector('#first-weight', text: '60.00')
     expect(page).to have_selector('#last-weight', text: '63.00')
     expect(page).to have_selector('#first-fat', text: '20.00')
     expect(page).to have_selector('#last-fat', text: '17.00')
   end
 
-  it '期間タブを切り替えるとグラフの表示範囲が変わる', skip: '一時的にskip' do
+  it '期間タブを切り替えるとグラフの表示範囲が変わる' do
     within('#graph-view') do
       all('button', text: '1ヶ月').first.click
       expect(page).to have_selector('canvas#weightChart')
@@ -43,11 +43,11 @@ RSpec.describe '記録（Progress/グラフ）画面', type: :system do
     end
   end
 
-  it '目標体重がグラフ上に表示される', skip: '一時的にskip' do
+  it '目標体重がグラフ上に表示される' do
     expect(page).to have_content('目標まであと').or have_content('目標体重').or have_content('59')
   end
 
-  it '統計情報が表示される', skip: '一時的にskip' do
+  it '統計情報が表示される' do
     expect(page).to have_selector('#stats-table')
     expect(page).to have_selector('#first-weight')
     expect(page).to have_selector('#last-weight')
@@ -55,13 +55,13 @@ RSpec.describe '記録（Progress/グラフ）画面', type: :system do
     expect(page).to have_selector('#last-fat')
   end
 
-  it '写真タブをクリックすると写真ビューが表示される', skip: '一時的にskip' do
+  it '写真タブをクリックすると写真ビューが表示される' do
     click_button '写真'
     expect(page).to have_selector('[data-controller="photo-switcher"]')
     expect(page).to have_selector('img')
   end
 
-  it '写真の期間タブをクリックして画像が切り替わる', skip: '一時的にskip' do
+  it '写真の期間タブをクリックして画像が切り替わる' do
     click_button '写真'
     within('#photo-view') do
       all('button', text: '1ヶ月').first.click
@@ -71,7 +71,7 @@ RSpec.describe '記録（Progress/グラフ）画面', type: :system do
     end
   end
 
-  it '写真ビューでレイヤー/比較タブの切り替えができる', skip: '一時的にskip' do
+  it '写真ビューでレイヤー/比較タブの切り替えができる' do
     click_button '写真'
     click_button '比較'
     expect(page).to have_selector('#compare-view', visible: true)
@@ -79,7 +79,7 @@ RSpec.describe '記録（Progress/グラフ）画面', type: :system do
     expect(page).to have_selector('#layer-view', visible: true)
   end
 
-  it '写真ビューでスライダーをスライドすると画像が切り替わる', skip: '一時的にskip' do
+  it '写真ビューでスライダーをスライドすると画像が切り替わる' do
     click_button '写真'
     if page.has_selector?('input[type="range"]', visible: true)
       slider = find('input[type="range"]', visible: true)
@@ -88,7 +88,7 @@ RSpec.describe '記録（Progress/グラフ）画面', type: :system do
     end
   end
 
-  it '記録が1件もない場合はグラフや統計が「データなし」や0.00kgになる', skip: '一時的にskip' do
+  it '記録が1件もない場合はグラフや統計が「データなし」や0.00kgになる' do
     user.body_records.destroy_all
     visit progress_path
     expect(page).to have_content('データなし').or have_content('記録がありません').or have_content('0.00 kg')

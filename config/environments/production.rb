@@ -115,6 +115,7 @@ Rails.application.configure do
 
   # 独自ドメインを許可
   config.hosts << "www.fitgraph.jp"
+  config.hosts << "fitgraph.jp"
 
   # メールやURL生成時のホスト名
   config.action_mailer.default_url_options = { host: "www.fitgraph.jp", protocol: "https" }

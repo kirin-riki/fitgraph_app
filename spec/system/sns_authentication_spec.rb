@@ -33,7 +33,7 @@ RSpec.describe 'SNS認証', type: :system do
     )
   end
 
-  it 'Google認証で新規登録できる', skip: '一時的にskip' do
+  it 'Google認証で新規登録できる' do
     mock_google_auth
     visit new_user_session_path
     click_button 'Googleでログイン'
@@ -41,7 +41,7 @@ RSpec.describe 'SNS認証', type: :system do
     expect(User.find_by(email: 'sns_google_test@example.com')).to be_present
   end
 
-  it 'Google認証で既存ユーザーにログインできる', skip: '一時的にskip' do
+  it 'Google認証で既存ユーザーにログインできる' do
     user = User.create!(name: '既存Googleユーザー', email: 'sns_google_test@example.com', password: 'password123', password_confirmation: 'password123')
     mock_google_auth(email: user.email, uid: 'google-uid-123')
     visit new_user_session_path
@@ -50,7 +50,7 @@ RSpec.describe 'SNS認証', type: :system do
     # ユーザー名の検証は削除
   end
 
-  it 'Google認証が失敗した場合はエラーになる', skip: '一時的にskip' do
+  it 'Google認証が失敗した場合はエラーになる' do
     OmniAuth.config.mock_auth[:google_oauth2] = :invalid_credentials
     visit new_user_session_path
     click_button 'Googleでログイン'
