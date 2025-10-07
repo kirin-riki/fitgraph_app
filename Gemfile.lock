@@ -576,7 +576,6 @@ DEPENDENCIES
   simple_calendar (~> 2.0)
   sprockets-rails
   stimulus-rails
-  tailwindcss-rails
   tailwindcss-ruby (= 4.1.11)
   turbo-rails
   tzinfo-data
