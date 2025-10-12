@@ -1,58 +1,61 @@
 <% content_for :no_main_padding, true %>
 <div class="w-full mx-auto min-h-screen bg-gradient-to-b from-indigo-400 via-violet-500 to-purple-700 px-4 pt-24 pb-12">
   <div class="max-w-3xl mx-auto">
+
     <!-- ヘッダー -->
     <div class="text-center mb-12">
       <%= image_tag 'logo_camera.png', class: 'w-32 h-24 mx-auto mb-4' %>
-      <h1 class="text-3xl font-extrabold text-white mb-2">Fitgraphの使い方</h1>
-      <p class="text-white/80 text-base">あなたのフィットネス習慣をサポートします</p>
+      <h1 class="text-3xl font-extrabold text-white mb-3">Fitgraph</h1>
+      <p class="text-white/90 text-lg font-semibold mb-2">続けられるダイエットを、Fitgraphで。</p>
+      <p class="text-white/80 text-base">記録とトレーニングで、あなたの努力を“見える化”します！</p>
     </div>
 
     <!-- メインコンテンツ -->
     <div class="bg-white/10 backdrop-blur-sm rounded-xl shadow-xl p-8 mb-8">
-      <!-- fitgraphとは -->
+
+      <!-- Fitgraphとは -->
       <section class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-3">
-          Fitgraphとは
-        </h2>
+        <h2 class="text-xl font-bold text-white mb-3">Fitgraph（フィットグラフ）とは？</h2>
         <div class="bg-white/5 rounded-lg p-6 border-2 border-white/20">
           <p class="text-white/90 text-base leading-relaxed">
-            「フィットグラフ」は、ダイエット時におけるモチベーション維持と、運動の習慣化を支援するサービスです。
-            体重や写真を記録し身体の変化を可視化することで、モチベーションが維持できるようサポートします。
-            また、ユーザーのニーズに合ったトレーニング動画を提案し、トレーニングの実行まで一貫してサポートします。
+            Fitgraphは、<strong class="text-yellow-300">「続けられるダイエット」</strong>を支えるアプリです。<br>
+            体重や写真を記録して自分の変化を可視化することでモチベーションを維持します。<br>
+            また、あなたに合ったトレーニング動画を提案し、行動までサポートします！
           </p>
         </div>
       </section>
 
-      <!-- 誰に向けているか -->
+      <!-- こんな方におすすめ -->
       <section class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-3">
-          こんな方におすすめ
-        </h2>
+        <h2 class="text-xl font-bold text-white mb-3">こんなあなたにおすすめ</h2>
         <div class="bg-white/5 rounded-lg p-6 border-2 border-white/20">
           <div class="grid md:grid-cols-2 gap-6">
+
             <div class="bg-white/10 rounded-lg p-4 border border-white/20">
-              <h3 class=" font-semibold text-white mb-3">🏃‍♀️ フィットネス初心者</h3>
+              <h3 class="font-semibold text-white mb-3">🏃‍♀️ これから運動を始めたい</h3>
               <p class="text-white/80 text-sm">
-                初心者の方でも続けやすいトレーニング動画を提案し、習慣化をサポートします！
+                初心者でも続けやすいトレーニング動画を提案し、習慣化をサポートします。
               </p>
             </div>
+
             <div class="bg-white/10 rounded-lg p-4 border border-white/20">
-              <h3 class=" font-semibold text-white mb-3">📈 進捗を記録したい方</h3>
+              <h3 class="font-semibold text-white mb-3">📸 変化を“見える化”したい</h3>
               <p class="text-white/80 text-sm">
-                身体の写真を記録し、簡単に身体の変化を可視化することができます！
+                体重や写真を記録して、成長をグラフや画像で確認できます。
               </p>
             </div>
+
             <div class="bg-white/10 rounded-lg p-4 border border-white/20">
-              <h3 class=" font-semibold text-white mb-3">🎯 目標達成したい方</h3>
+              <h3 class="font-semibold text-white mb-3">🎯 結果を出したい</h3>
               <p class="text-white/80 text-sm">
-                体重変化のグラフが直感的に分かりやすいので目標達成までサポートします！
+                体重の変化をグラフで確認し、目標達成までの道のりを一目で把握できます。
               </p>
             </div>
+
             <div class="bg-white/10 rounded-lg p-4 border border-white/20">
-              <h3 class=" font-semibold text-white mb-3">💪 効率的に鍛えたい方</h3>
+              <h3 class="font-semibold text-white mb-3">💪 効率よく鍛えたい</h3>
               <p class="text-white/80 text-sm">
-                おすすめの動画を活用して全身をばっちり鍛える事ができます！
+                Fitgraphおすすめの動画で、全身をバランスよく鍛えられます。
               </p>
             </div>
           </div>
@@ -61,73 +64,40 @@
 
       <!-- 使い方の流れ -->
       <section class="mb-12">
-        <h2 class="text-xl font-bold text-white mb-3">
-          使い方の流れ
-        </h2>
-        <div class="bg-white/5 rounded-lg p-6 border-2 border-white/20">
-          <div class="space-y-4">
-            <div class="bg-white/10 rounded-lg p-4 border border-white/20">
-              <div class="flex items-start">
-                <div class="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-4 mt-1 text-white font-bold">1</div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-white mb-2">新規登録・ログイン</h3>
-                  <p class="text-white/80 text-sm">本アプリはアカウントを作成しなければ始めることができません。フォームを入力してアカウントを作成します。</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="bg-white/10 rounded-lg p-4 border border-white/20">
-              <div class="flex items-start">
-                <div class="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-4 mt-1 text-white font-bold">2</div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-white mb-2">プロフィール設定</h3>
-                  <p class="text-white/80 text-sm">あなたの基本情報とトレーニングの強度を設定してください。あなたに合った動画を提案することができます。また、目標体重を設定する事で記録機能を活用することができます。
-                  LINEと連携し、Fitgraphを友達追加することで、通知設定をすることができ、運動習慣をサポートします</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="bg-white/10 rounded-lg p-4 border border-white/20">
-              <div class="flex items-start">
-                <div class="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-4 mt-1 text-white font-bold">3</div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-white mb-2">身体情報の入力</h3>
-                  <p class="text-white/80 text-sm">カレンダーの日付を選択して入力ボタンを選択し、体重、体脂肪率(任意)、身体の写真を登録してください。写真はスマホから使用するとカメラ機能を使うことができます。</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="bg-white/10 rounded-lg p-4 border border-white/20">
-              <div class="flex items-start">
-                <div class="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-4 mt-1 text-white font-bold">4</div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-white mb-2">記録の確認</h3>
-                  <p class="text-white/80 text-sm">あなたが入力した身体情報をもとにグラフを作成し、体重の変化を簡単に確認することができます。グラフは短期から長期まで幅広く見ることができます。
-                  また、記録した写真の経過も見ることができ、写真を通じて頑張ったあなたの身体の変化を簡単に見ることができます。</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="bg-white/10 rounded-lg p-4 border border-white/20">
-              <div class="flex items-start">
-                <div class="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-4 mt-1 text-white font-bold">5</div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-white mb-2">トレーニング実施</h3>
-                  <p class="text-white/80 text-sm">あなたに合ったトレーニング動画を選んで再生するだけ！お気に入りのトレーニング動画があれば登録でき再生することもできます！</p>
-                </div>
-              </div>
-            </div>
+        <h2 class="text-xl font-bold text-white mb-3">使い方の流れ</h2>
+        <div class="bg-white/5 rounded-lg p-6 border-2 border-white/20 space-y-4">
 
-            <div class="bg-white/10 rounded-lg p-4 border border-white/20">
-              <div class="flex items-start">
-                <div class="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center mr-4 mt-1 text-white font-bold">6</div>
-                <div class="flex-1">
-                  <h3 class="font-semibold text-white mb-2">サイクル続ける</h3>
-                  <p class="text-white/80 text-sm">これを続けたら運動が習慣化されて運動不足の解消間違いありません！ 週1回の運動からハードルを低く始めてみましょう！</p>
+          <% steps = [
+            { num: 1, title: "登録してスタート", text: "フォーム入力で簡単にアカウント作成！まずはFitgraphを始めましょう。", images: ["ps-registration.jpg"] },
+            { num: 2, title: "ログイン", text: "GoogleやLINEでログインできます。", images: ["ps-login.jpg","ps-home.jpg"] },
+            { num: 3, title: "マイページ", text: "プロフィールや目標設定を管理。", images: ["ps-mypage-edit.jpg"] },
+            { num: 4, title: "入力画面", text: "カレンダーから体重や写真を登録。", images: ["ps-home-2.jpg","ps-bodyrecord-new.jpg","ps-home-3.jpg"] },
+            { num: 5, title: "経過画面", text: "グラフで変化をチェック！", images: ["ps-graph.jpg"] },
+            { num: 6, title: "動画提案", text: "あなたに合ったトレーニング動画を提案。", images: ["ps-youtube.jpg"] }
+          ] %>
+
+          <% steps.each do |step| %>
+            <div class="bg-white/10 rounded-lg p-4 border border-white/20" data-accordion-target="item">
+              <div class="flex justify-between items-center cursor-pointer" data-action="click->accordion#toggle">
+                <div class="flex items-center space-x-3">
+                  <div class="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center text-white font-bold">
+                    <%= step[:num] %>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-white"><%= step[:title] %></h3>
+                    <p class="text-white/80 text-sm"><%= step[:text] %></p>
+                  </div>
                 </div>
+                <div class="text-white text-xl" data-accordion-target="icon">＋</div>
+              </div>
+
+              <div class="mt-3 hidden space-y-2" data-accordion-target="content">
+                <% step[:images].each do |img| %>
+                  <%= image_tag img, class: "rounded-lg border border-violet-400 w-full" %>
+                <% end %>
               </div>
             </div>
-          </div>
+          <% end %>
         </div>
       </section>
     </div>
@@ -135,7 +105,8 @@
     <!-- アクションボタン -->
     <div class="text-center">
       <div class="bg-white/10 backdrop-blur-sm rounded-xl shadow-xl p-8">
-        <h2 class="text-xl font-bold text-white mb-6">今すぐ無料で始めましょう！</h2>
+        <h2 class="text-xl font-bold text-white mb-2">今すぐ無料で始めましょう！</h2>
+        <p class="text-white/80 mb-6 text-sm">あなたの努力を“見える化”して、続ける力に変えましょう。</p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <%= link_to new_user_registration_path, class: "bg-white text-violet-600 font-semibold rounded-full py-2 px-8 hover:bg-gray-100 transition duration-300 transform hover:scale-105" do %>
             <span class="text-base">新規登録</span>
@@ -146,5 +117,6 @@
         </div>
       </div>
     </div>
+
   </div>
-</div> 
+</div>
