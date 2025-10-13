@@ -2987,3 +2987,221 @@ ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
   [1m[36mActiveRecord::SchemaMigration Load (35.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
 [dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
 [dotenv] Loaded [33m.env[0m
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-10-12 22:05:35 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (6.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-10-12 22:05:42 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-10-12 22:06:59 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
+Started GET "/opengraph-image?c3b15956044d07fd" for 172.25.0.1 at 2025-10-12 22:16:01 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/opengraph-image"):
+  
+Started GET "/how_to" for 172.25.0.1 at 2025-10-13 22:20:12 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by StaticPagesController#how_to as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/how_to.html.erb within layouts/application
+  Rendered static_pages/how_to.html.erb within layouts/application (Duration: 1771.4ms | GC: 126.6ms)
+  [1m[36mUser Load (4.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:60:in `current_user'
+  Rendered shared/_header.html.erb (Duration: 196.5ms | GC: 5.2ms)
+  Rendered shared/_flash.html.erb (Duration: 0.9ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 2.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2065.2ms | GC: 152.7ms)
+Completed 200 OK in 2114ms (Views: 1937.3ms | ActiveRecord: 139.5ms (1 query, 0 cached) | GC: 152.7ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-10-13 22:20:15 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 5.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/how_to" for 172.25.0.1 at 2025-10-13 22:23:52 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by StaticPagesController#how_to as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/how_to.html.erb within layouts/application
+  Rendered static_pages/how_to.html.erb within layouts/application (Duration: 43.7ms | GC: 32.8ms)
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:60:in `current_user'
+  Rendered shared/_header.html.erb (Duration: 27.3ms | GC: 3.8ms)
+  Rendered shared/_flash.html.erb (Duration: 1.4ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 1.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 176.3ms | GC: 116.5ms)
+Completed 200 OK in 196ms (Views: 181.2ms | ActiveRecord: 3.8ms (1 query, 0 cached) | GC: 128.6ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-10-13 22:23:52 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 1.7ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 4.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/how_to" for 172.25.0.1 at 2025-10-13 22:25:53 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by StaticPagesController#how_to as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/how_to.html.erb within layouts/application
+  Rendered static_pages/how_to.html.erb within layouts/application (Duration: 14.6ms | GC: 0.6ms)
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:60:in `current_user'
+  Rendered shared/_header.html.erb (Duration: 3.8ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 2.7ms | GC: 1.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 36.4ms | GC: 3.9ms)
+Completed 200 OK in 38ms (Views: 36.5ms | ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 3.9ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-10-13 22:25:53 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.5ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-10-13 22:27:17 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-10-13 22:27:17 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.6ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 1.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-d1855a5275a8738a549664922022bd5a11ee16b09595443766472646dacc008e.map"):
+  
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (1.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+Started GET "/how_to" for 172.25.0.1 at 2025-10-13 22:42:39 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by StaticPagesController#how_to as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/how_to.html.erb within layouts/application
+  Rendered static_pages/how_to.html.erb within layouts/application (Duration: 1560.2ms | GC: 39.2ms)
+  [1m[36mUser Load (3.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:60:in `current_user'
+  Rendered shared/_header.html.erb (Duration: 85.6ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.7ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 2.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1722.6ms | GC: 39.2ms)
+Completed 200 OK in 1740ms (Views: 1673.6ms | ActiveRecord: 56.4ms (1 query, 0 cached) | GC: 39.2ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 172.25.0.1 at 2025-10-13 22:42:41 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js-7e153a86e2e0abe7af2a6cd74d263c0f5ef251dc7098a1350f86e4a5df483053.map"):
+  
+Started GET "/manifest.json" for 172.25.0.1 at 2025-10-13 22:42:42 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 1.9ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 5.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/how_to" for 172.25.0.1 at 2025-10-13 22:47:52 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by StaticPagesController#how_to as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/how_to.html.erb within layouts/application
+  Rendered static_pages/how_to.html.erb within layouts/application (Duration: 9.2ms | GC: 0.0ms)
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:60:in `current_user'
+  Rendered shared/_header.html.erb (Duration: 53.5ms | GC: 6.4ms)
+  Rendered shared/_flash.html.erb (Duration: 0.8ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 1.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 98.5ms | GC: 22.9ms)
+Completed 200 OK in 104ms (Views: 92.7ms | ActiveRecord: 8.4ms (1 query, 0 cached) | GC: 22.9ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-10-13 22:47:52 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.5ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-10-13 22:51:49 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+Processing by BodyRecordsController#top as HTML
+  [1m[36mBodyRecord Pluck (5.0ms)[0m  [1m[34mSELECT "body_records"."recorded_at" FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 3], ["recorded_at", "2025-09-28 00:00:00"], ["recorded_at", "2025-11-01 23:59:59.999999"]]
+  ↳ app/controllers/body_records_controller.rb:19:in `top'
+  [1m[36mBodyRecord Load (1.6ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3 ORDER BY "body_records"."id" ASC LIMIT $4[0m  [["user_id", 3], ["recorded_at", "2025-10-13 00:00:00"], ["recorded_at", "2025-10-13 23:59:59.999999"], ["LIMIT", 1]]
+  ↳ app/controllers/body_records_controller.rb:23:in `top'
+  Rendering layout layouts/application.html.erb
+  Rendering body_records/top.html.erb within layouts/application
+  [1m[36mBodyRecord Load (0.5ms)[0m  [1m[34mSELECT "body_records".* FROM "body_records" WHERE "body_records"."user_id" = $1 AND "body_records"."recorded_at" BETWEEN $2 AND $3[0m  [["user_id", 3], ["recorded_at", "2025-09-28 00:00:00"], ["recorded_at", "2025-11-01 23:59:59.999999"]]
+  ↳ app/views/body_records/_calendar.html.erb:1
+  Rendered simple_calendar/_month_calendar.html.erb (Duration: 17.8ms | GC: 0.6ms)
+  Rendered body_records/_calendar.html.erb (Duration: 25.8ms | GC: 0.6ms)
+  Rendered body_records/top.html.erb within layouts/application (Duration: 31.4ms | GC: 0.6ms)
+  Rendered shared/_header.html.erb (Duration: 2.3ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.7ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 5.0ms | GC: 0.6ms)
+  Rendered layout layouts/application.html.erb (Duration: 70.0ms | GC: 2.2ms)
+Completed 200 OK in 203ms (Views: 72.0ms | ActiveRecord: 14.6ms (3 queries, 0 cached) | GC: 3.8ms)
+
+
+Started GET "/how_to" for 172.25.0.1 at 2025-10-13 22:51:50 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by StaticPagesController#how_to as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/how_to.html.erb within layouts/application
+  Rendered static_pages/how_to.html.erb within layouts/application (Duration: 16.7ms | GC: 0.0ms)
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:60:in `current_user'
+  Rendered shared/_header.html.erb (Duration: 7.2ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered shared/_footer.html.erb (Duration: 1.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 45.2ms | GC: 0.0ms)
+Completed 200 OK in 51ms (Views: 47.9ms | ActiveRecord: 0.9ms (1 query, 0 cached) | GC: 1.3ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-10-13 22:51:50 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 1.3ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+

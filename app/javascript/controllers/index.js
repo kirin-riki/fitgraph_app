@@ -9,6 +9,7 @@ import PhotoSwitcherController from "./photo_switcher_controller"
 import DropdownController from "./dropdown_controller"
 import LoadingController from "./loading_controller"
 import ProgressController from "./progress_controller"
+import AccordionController from "./accordion_controller"
 
 window.Stimulus = Application.start()
 Stimulus.register("hello", HelloController)
@@ -17,3 +18,4 @@ Stimulus.register("photo-switcher", PhotoSwitcherController)
 Stimulus.register("dropdown", DropdownController)
 Stimulus.register("loading", LoadingController)
 Stimulus.register("progress", ProgressController)
+Stimulus.register("accordion", AccordionController)
