@@ -68,24 +68,27 @@
         <div class="bg-white/5 rounded-lg p-6 border-2 border-white/20 space-y-4">
 
           <% steps = [
-            { num: 1, title: "登録してスタート", text: "フォーム入力で簡単にアカウント作成！まずはFitgraphを始めましょう。", images: ["ps-registration.jpg"] },
-            { num: 2, title: "ログイン", text: "GoogleやLINEでログインできます。", images: ["ps-login.jpg","ps-home.jpg"] },
+            { num: 1, title: "登録してスタート", text: "フォーム入力でアカウント作成！", images: ["ps-registration.jpg"] },
+            { num: 2, title: "ログイン", text: "GoogleやLINEでもログインできます。", images: ["ps-login.jpg","ps-home.jpg"] },
             { num: 3, title: "マイページ", text: "プロフィールや目標設定を管理。", images: ["ps-mypage-edit.jpg"] },
             { num: 4, title: "入力画面", text: "カレンダーから体重や写真を登録。", images: ["ps-home-2.jpg","ps-bodyrecord-new.jpg","ps-home-3.jpg"] },
             { num: 5, title: "経過画面", text: "グラフで変化をチェック！", images: ["ps-graph.jpg"] },
-            { num: 6, title: "動画提案", text: "あなたに合ったトレーニング動画を提案。", images: ["ps-youtube.jpg"] }
+            { num: 6, title: "動画提案", text: "あなたに合うトレーニング動画を！", images: ["ps-youtube.jpg"] }
           ] %>
 
           <% steps.each do |step| %>
             <div class="bg-white/10 rounded-lg p-4 border border-white/20" data-accordion-target="item">
               <div class="flex justify-between items-center cursor-pointer" data-action="click->accordion#toggle">
                 <div class="flex items-center space-x-3">
-                  <div class="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center text-white font-bold">
+                  <div class="bg-white/20 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-white font-bold text-sm sm:text-base">
                     <%= step[:num] %>
                   </div>
                   <div>
-                    <h3 class="font-semibold text-white"><%= step[:title] %></h3>
-                    <p class="text-white/80 text-sm"><%= step[:text] %></p>
+                    <div>
+                      <h3 class="font-semibold text-white text-base sm:text-lg"><%= step[:title] %></h3>
+                      <p class="text-white/80 text-[10px] sm:text-sm leading-snug"><%= step[:text] %></p>
+
+                    </div>
                   </div>
                 </div>
                 <div class="text-white text-xl" data-accordion-target="icon">＋</div>
