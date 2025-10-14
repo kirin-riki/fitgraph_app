@@ -1,5 +1,4 @@
-@import "material-icons/iconfont/material-icons.css";
-@import "tailwindcss";
+@import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
 
 @layer base {

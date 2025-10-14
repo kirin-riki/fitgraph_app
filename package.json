@@ -3,20 +3,23 @@
   "private": true,
   "devDependencies": {
     "esbuild": "^0.25.5",
-    "postcss-import": "^16.1.1"
+    "postcss": "^8.5.6",
+    "postcss-import": "^16.1.1",
+    "postcss-cli": "^11.0.0"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css"
+    "build:css": "postcss ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
+    "build:css:watch": "postcss ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --watch"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.13",
+    "@tailwindcss/postcss": "^4.1.14",
     "autoprefixer": "^10.4.21",
     "chart.js": "^4.4.9",
     "daisyui": "^5.0.46",
     "material-icons": "^1.13.14",
-    "postcss": "^8.5.6",
     "tailwindcss": "^4.1.14"
   }
 }
