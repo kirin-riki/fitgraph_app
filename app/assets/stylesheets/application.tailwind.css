@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "material-icons/iconfont/material-icons.css";
+@import "tailwindcss";
+@import "tailwindcss/utilities";
 
 @layer base {
   html {
@@ -12,15 +12,16 @@
 }
 
 /*
-
 @layer components {
   .btn-primary {
     @apply py-2 px-4 bg-blue-200;
   }
 }
-
 */
 
+/* =======================================================
+   ▼ Simple Calendar カスタマイズ
+======================================================= */
 .simple-calendar .day {
   border: 1px solid #ddd;
   min-height: 80px;
@@ -31,3 +32,47 @@
 .simple-calendar .wday-0 { background-color: #fdd; } /* 日曜日 */
 .simple-calendar .wday-6 { background-color: #ddf; } /* 土曜日 */
 .simple-calendar .today { background-color: #ffc; } /* 今日 */
+
+/* =======================================================
+   ▼ Loading Animation（旧 application.css より移植）
+======================================================= */
+#container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -50px;
+  margin-top: -10px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+#container span {
+  display: block;
+  background: #000;
+  width: 100px;
+  height: 5px;
+  margin-top: 5px;
+  animation: load 2s infinite;
+  border-radius: 5px;
+}
+#container span:nth-child(2) { animation-delay: 100ms; }
+#container span:nth-child(3) { animation-delay: 200ms; }
+
+@keyframes load {
+  50% {
+    width: 5px;
+    margin-right: 95px;
+    opacity: .1;
+  }
+}
+
+/* =======================================================
+   ▼ スライダーの見た目復活
+======================================================= */
+input[type="range"] {
+  appearance: auto !important;
+  -webkit-appearance: auto !important;
+  background: #eee !important;
+  height: 8px !important;
+}
