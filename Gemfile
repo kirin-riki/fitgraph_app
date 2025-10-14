@@ -60,7 +60,8 @@ group :test do
   gem "shoulda-matchers"
 end
 
-gem "tailwindcss-ruby", "4.1.11"
+#gem "tailwindcss-ruby", "3.4.17"
+
 
 gem "material_icons"
 

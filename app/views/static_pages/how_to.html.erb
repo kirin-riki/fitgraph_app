@@ -92,11 +92,13 @@
                 <div class="text-white text-xl" data-accordion-target="icon">＋</div>
               </div>
 
-              <div class="mt-3 hidden space-y-2" data-accordion-target="content">
+              <div class="mt-3 hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-items-center" data-accordion-target="content">
                 <% step[:images].each do |img| %>
-                  <%= image_tag img, class: "rounded-lg border border-violet-400 w-1/5 sm:w-1/6 md:w-1/5 lg:w-1/6 h-auto" %>
+                  <%= image_tag img,
+                    class: "rounded-lg border border-violet-400 w-1/5 md:w-1/4 lg:w-1/5 h-auto object-contain" %>
                 <% end %>
               </div>
+
             </div>
           <% end %>
         </div>
