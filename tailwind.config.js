@@ -9,5 +9,10 @@ module.exports = {
   theme: {
     extend: {},
   },
+  safelist: [
+    // 本番で削除されないように保護するクラス
+    'w-10', 'h-10', 'rounded-full',
+    'text-[10px]', 'text-[11px]', 'text-base', 'text-sm', 'text-lg',
+  ],
   plugins: [],
 }
