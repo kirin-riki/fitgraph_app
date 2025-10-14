@@ -62,6 +62,7 @@ end
 
 #gem "tailwindcss-ruby", "3.4.17"
 
+
 gem "material_icons"
 
 gem "image_processing", "~> 1.12"
