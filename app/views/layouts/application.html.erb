@@ -10,7 +10,6 @@
       gtag('config', 'G-2TXMXFBQQH');
     </script>
 
-
     <title><%= content_for(:title) || "FitGraph" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="standalone">
@@ -35,7 +34,6 @@
 
     <!-- スタイルシート -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
 
     <!-- JavaScript -->
@@ -58,6 +56,7 @@
         <%= render "shared/flash" %>
         <%= yield %>
       </main>
+
       <% if user_signed_in? %>
         <%= render "shared/footer" %>
       <% end %>

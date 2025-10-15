@@ -7314,3 +7314,83 @@ Completed 200 OK in 3ms (Views: 1.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached
   [1m[36mActiveRecord::SchemaMigration Load (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
 [dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
 [dotenv] Loaded [33m.env[0m
+Started GET "/how_to" for 172.25.0.1 at 2025-10-15 03:32:33 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (6.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by StaticPagesController#how_to as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/how_to.html.erb within layouts/application
+  Rendered static_pages/how_to.html.erb within layouts/application (Duration: 658.4ms | GC: 110.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 717.4ms | GC: 143.6ms)
+Completed 500 Internal Server Error in 756ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 155.2ms)
+
+
+  
+ActionView::Template::Error (The asset "tailwind.css" is not present in the asset pipeline.
+):
+
+Causes:
+Sprockets::Rails::Helper::AssetNotFound (The asset "tailwind.css" is not present in the asset pipeline.
+)
+    35: 
+    36:     <!-- スタイルシート -->
+    37:     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    38:     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    39:     <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
+    40: 
+    41:     <!-- JavaScript -->
+  
+app/views/layouts/application.html.erb:38
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+  [1m[36mActiveRecord::SchemaMigration Load (4.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Load (33.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+[dotenv] Set [36mAWS_ACCESS_KEY_ID[0m, [36mAWS_SECRET_ACCESS_KEY[0m, [36mAWS_REGION[0m, [36mAWS_S3_BUCKET[0m, [36mYOUTUBE_API_KEY[0m, [36mMAILER_SENDER[0m, [36mMAILER_PASSWORD[0m, [36mGOOGLE_CLIENT_ID[0m, [36mGOOGLE_CLIENT_SECRET[0m, [36mLINE_KEY[0m, [36mLINE_SECRET[0m, [36mLINE_CHANNEL_TOKEN[0m, [36mLINE_CHANNEL_SECRET[0m, and [36mLINE_BOT_INVITE_URL[0m
+[dotenv] Loaded [33m.env[0m
+Started GET "/how_to" for 172.25.0.1 at 2025-10-15 11:47:12 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (2.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by StaticPagesController#how_to as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/how_to.html.erb within layouts/application
+  Rendered static_pages/how_to.html.erb within layouts/application (Duration: 367.0ms | GC: 52.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 389.9ms | GC: 52.2ms)
+Completed 500 Internal Server Error in 412ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 53.5ms)
+
+
+  
+ActionView::Template::Error (The asset "tailwind.css" is not present in the asset pipeline.
+):
+
+Causes:
+Sprockets::Rails::Helper::AssetNotFound (The asset "tailwind.css" is not present in the asset pipeline.
+)
+    35: 
+    36:     <!-- スタイルシート -->
+    37:     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    38:     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    39:     <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
+    40: 
+    41:     <!-- JavaScript -->
+  
+app/views/layouts/application.html.erb:38
+Started GET "/how_to" for 172.25.0.1 at 2025-10-15 11:51:34 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by StaticPagesController#how_to as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/how_to.html.erb within layouts/application
+  Rendered static_pages/how_to.html.erb within layouts/application (Duration: 16.2ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 2.3ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 147.4ms | GC: 16.1ms)
+Completed 200 OK in 154ms (Views: 150.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 16.1ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-10-15 11:51:35 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 5.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
