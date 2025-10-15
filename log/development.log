@@ -7394,3 +7394,35 @@ Processing by Rails::PwaController#manifest as JSON
 Completed 200 OK in 6ms (Views: 5.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/how_to" for 172.25.0.1 at 2025-10-15 11:58:53 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by StaticPagesController#how_to as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/how_to.html.erb within layouts/application
+  Rendered static_pages/how_to.html.erb within layouts/application (Duration: 17.5ms | GC: 3.4ms)
+  Rendered shared/_header.html.erb (Duration: 3.0ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 49.7ms | GC: 5.4ms)
+Completed 200 OK in 52ms (Views: 50.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 5.4ms)
+
+
+Started GET "/manifest.json" for 172.25.0.1 at 2025-10-15 11:58:53 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::PwaController#manifest as JSON
+  Rendering pwa/manifest.json.erb
+  Rendered pwa/manifest.json.erb (Duration: 0.4ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 1.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.25.0.1 at 2025-10-15 11:58:55 +0900
+Cannot render console from 172.25.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by StaticPagesController#top as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering static_pages/top.html.erb within layouts/application
+  Rendered static_pages/top.html.erb within layouts/application (Duration: 3.8ms | GC: 0.0ms)
+  Rendered shared/_header.html.erb (Duration: 1.5ms | GC: 0.0ms)
+  Rendered shared/_flash.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 26.5ms | GC: 0.9ms)
+Completed 200 OK in 29ms (Views: 27.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.9ms)
+
+
