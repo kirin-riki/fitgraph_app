@@ -4,11 +4,15 @@
 namespace :assets do
   desc "Build CSS and JS before precompiling assets"
   task :build do
-    puts "Building CSS with PostCSS..."
-    sh "yarn build:css"
+    # 重要: JSを先にビルドし、その後CSSをビルドする
+    # esbuildがMaterial Icons CSSをapplication.cssとして出力するが、
+    # 後からPostCSSでTailwind CSSを上書きすることで正しいCSSを確保する
 
     puts "Building JS with esbuild..."
     sh "yarn build"
+
+    puts "Building CSS with PostCSS..."
+    sh "yarn build:css"
   end
 end
 
