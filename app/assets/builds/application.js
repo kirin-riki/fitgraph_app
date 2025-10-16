@@ -9099,6 +9099,501 @@ Stimulus.register("dropdown", dropdown_controller_default);
 Stimulus.register("loading", loading_controller_default);
 Stimulus.register("progress", progress_controller_default);
 Stimulus.register("accordion", accordion_controller_default);
+
+// app/javascript/progress_chart.js
+function generateDateRange(start2, end) {
+  const arr = [];
+  const cur = new Date(start2);
+  while (cur <= end) {
+    const y = cur.getFullYear();
+    const m = String(cur.getMonth() + 1).padStart(2, "0");
+    const d = String(cur.getDate()).padStart(2, "0");
+    arr.push(`${y}-${m}-${d}`);
+    cur.setDate(cur.getDate() + 1);
+  }
+  return arr;
+}
+function setChartLabel(dataLength, chartInstance, period) {
+  let maxDisplay;
+  let minDisplay;
+  switch (period) {
+    case "1w":
+      maxDisplay = Math.min(dataLength, 7);
+      minDisplay = Math.max(0, dataLength - 7);
+      break;
+    case "3w":
+      maxDisplay = Math.min(dataLength, 21);
+      minDisplay = Math.max(0, dataLength - 21);
+      break;
+    case "1m":
+      maxDisplay = Math.min(dataLength, 30);
+      minDisplay = Math.max(0, dataLength - 30);
+      break;
+    case "3m":
+    default:
+      maxDisplay = Math.min(dataLength, 90);
+      minDisplay = Math.max(0, dataLength - 90);
+      break;
+  }
+  if (dataLength <= maxDisplay) {
+    chartInstance.options.scales.x.ticks = {
+      min: 0,
+      max: dataLength - 1
+    };
+  } else {
+    chartInstance.options.scales.x.ticks = {
+      min: minDisplay,
+      max: maxDisplay - 1
+    };
+  }
+  chartInstance.update();
+}
+function buildData(period, graphView) {
+  const now2 = /* @__PURE__ */ new Date();
+  let start2 = new Date(now2);
+  switch (period) {
+    case "1w":
+      start2 = new Date(now2.getTime() - 7 * 864e5);
+      break;
+    case "3w":
+      start2 = new Date(now2.getTime() - 21 * 864e5);
+      break;
+    case "1m":
+      start2.setMonth(now2.getMonth() - 1);
+      break;
+    case "3m":
+    default:
+      start2.setMonth(now2.getMonth() - 3);
+      break;
+  }
+  const range = generateDateRange(start2, now2);
+  const map = {};
+  const labels = JSON.parse(graphView.dataset.progressLabelsValue);
+  const weights = JSON.parse(graphView.dataset.progressWeightsValue);
+  const fats = JSON.parse(graphView.dataset.progressFatRatesValue);
+  labels.forEach((d, i) => {
+    map[d] = { w: +weights[i], f: +fats[i] };
+  });
+  return range.map((d) => ({
+    label: d,
+    weight: map[d]?.w ?? null,
+    fat: map[d]?.f ?? null
+  }));
+}
+function renderChart(period = "3m") {
+  const graphView = document.getElementById("graph-view");
+  if (!graphView) return;
+  if (window.chart) {
+    window.chart.destroy();
+    window.chart = null;
+  }
+  if (typeof Chart !== "undefined" && Chart.helpers) {
+    Chart.helpers.each(Chart.instances, (instance) => {
+      instance.destroy();
+    });
+  }
+  const canvas = document.getElementById("weightChart");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const rows = buildData(period, graphView);
+  const labels = rows.map((r) => {
+    const t = new Date(r.label);
+    const isMobile2 = window.innerWidth < 768;
+    return isMobile2 ? `${t.getMonth() + 1}/${t.getDate()}` : `${t.getMonth() + 1}/${t.getDate()}`;
+  });
+  const weights = rows.map((r) => r.weight);
+  const fats = rows.map((r) => r.fat);
+  const vw = weights.filter((v) => v !== null);
+  const vf = fats.filter((v) => v !== null);
+  const fMin = vf.length ? Math.floor(Math.min(...vf)) - 5 : void 0;
+  const fMax = vf.length ? Math.ceil(Math.max(...vf)) + 5 : void 0;
+  let wMin = vw.length ? Math.floor(Math.min(...vw)) - 5 : void 0;
+  let wMax = vw.length ? Math.ceil(Math.max(...vw)) + 5 : void 0;
+  const targetWeight = JSON.parse(graphView.dataset.progressTargetWeightValue);
+  if (targetWeight && vw.length > 0) {
+    const currentMin = Math.min(...vw);
+    const currentMax = Math.max(...vw);
+    if (targetWeight < currentMin) {
+      wMin = Math.floor(targetWeight) - 5;
+      wMax = Math.ceil(currentMax) + 5;
+    } else if (targetWeight > currentMax) {
+      wMin = Math.floor(currentMin) - 5;
+      wMax = Math.ceil(targetWeight) + 5;
+    }
+  }
+  const isMobile = window.innerWidth < 768;
+  window.chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        {
+          label: "\u4F53\u91CD(kg)",
+          data: weights,
+          borderColor: "rgba(255,99,132,0.9)",
+          backgroundColor: "rgba(255,99,132,0.2)",
+          spanGaps: true,
+          yAxisID: "y1",
+          borderWidth: isMobile ? 2 : 3,
+          pointRadius: isMobile ? 3 : 4,
+          pointHoverRadius: isMobile ? 5 : 6
+        },
+        {
+          label: "\u4F53\u8102\u80AA\u7387(%)",
+          data: fats,
+          borderColor: "rgba(75,192,192,0.7)",
+          backgroundColor: "rgba(75,192,192,0.2)",
+          spanGaps: true,
+          yAxisID: "y2",
+          borderWidth: isMobile ? 2 : 3,
+          pointRadius: isMobile ? 3 : 4,
+          pointHoverRadius: isMobile ? 5 : 6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: {
+            font: {
+              size: isMobile ? 12 : 14
+            }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            afterBody(context) {
+              const targetWeight2 = JSON.parse(graphView.dataset.progressTargetWeightValue);
+              if (targetWeight2) {
+                return `\u76EE\u6A19\u4F53\u91CD: ${targetWeight2}kg`;
+              }
+              return "";
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+            text: "\u65E5\u4ED8",
+            font: {
+              size: isMobile ? 12 : 14
+            }
+          },
+          ticks: {
+            font: {
+              size: isMobile ? 10 : 12
+            },
+            maxTicksLimit: isMobile ? 7 : 10
+          }
+        },
+        y1: {
+          type: "linear",
+          position: "left",
+          min: wMin,
+          max: wMax,
+          title: {
+            display: true,
+            text: "\u4F53\u91CD",
+            font: {
+              size: isMobile ? 12 : 14
+            }
+          },
+          ticks: {
+            font: {
+              size: isMobile ? 10 : 12
+            }
+          }
+        },
+        y2: {
+          type: "linear",
+          position: "right",
+          min: fMin,
+          max: fMax,
+          title: {
+            display: true,
+            text: "\u4F53\u8102\u80AA\u7387",
+            font: {
+              size: isMobile ? 12 : 14
+            }
+          },
+          grid: { drawOnChartArea: false },
+          ticks: {
+            font: {
+              size: isMobile ? 10 : 12
+            }
+          }
+        }
+      }
+    }
+  });
+  setChartLabel(labels.length, window.chart, period);
+  Chart.register({
+    id: "customTargetWeight",
+    afterDraw(chart, args, options) {
+      const targetWeight2 = JSON.parse(graphView.dataset.progressTargetWeightValue);
+      if (!targetWeight2) return;
+      const yScale = chart.scales.y1;
+      const xScale = chart.scales.x;
+      if (!yScale || !xScale) return;
+      const weightData = chart.data.datasets.find((d) => d.label === "\u4F53\u91CD(kg)");
+      if (!weightData || !weightData.data.some((d) => d !== null)) return;
+      const y = yScale.getPixelForValue(targetWeight2);
+      const radius = window.innerWidth < 768 ? 10 : 12;
+      const x = xScale.left - radius - 6;
+      const ctx2 = chart.ctx;
+      ctx2.save();
+      ctx2.beginPath();
+      ctx2.arc(x, y, radius, 0, 2 * Math.PI, false);
+      ctx2.fillStyle = "rgba(139, 92, 246, 0.7)";
+      ctx2.shadowColor = "rgba(139, 92, 246, 0.2)";
+      ctx2.shadowBlur = 2;
+      ctx2.fill();
+      ctx2.shadowBlur = 0;
+      ctx2.font = window.innerWidth < 768 ? "bold 10px sans-serif" : "bold 12px sans-serif";
+      ctx2.fillStyle = "#fff";
+      ctx2.textAlign = "center";
+      ctx2.textBaseline = "middle";
+      ctx2.fillText(String(targetWeight2), x, y);
+      ctx2.beginPath();
+      ctx2.setLineDash([5, 5]);
+      ctx2.strokeStyle = "rgba(139, 92, 246, 0.8)";
+      ctx2.lineWidth = 2;
+      ctx2.moveTo(x + radius, y);
+      ctx2.lineTo(chart.chartArea.right, y);
+      ctx2.stroke();
+      ctx2.setLineDash([]);
+      ctx2.restore();
+    }
+  });
+}
+window.renderChart = renderChart;
+
+// app/javascript/progress_stats.js
+function updateStatsTable(period) {
+  const now2 = /* @__PURE__ */ new Date();
+  let start2 = new Date(now2);
+  switch (period) {
+    case "1w":
+      start2 = new Date(now2.getTime() - 7 * 864e5);
+      break;
+    case "3w":
+      start2 = new Date(now2.getTime() - 21 * 864e5);
+      break;
+    case "1m":
+      start2.setMonth(now2.getMonth() - 1);
+      break;
+    case "3m":
+    default:
+      start2.setMonth(now2.getMonth() - 3);
+      break;
+  }
+  const graphView = document.getElementById("graph-view");
+  if (!graphView) return;
+  const records = (JSON.parse(graphView.dataset.progressAllRecordsValue) || []).filter((r) => {
+    const d = new Date(r[0]);
+    return d >= start2 && d <= now2 && r[1] != null && r[2] != null;
+  });
+  const first = records[0];
+  const last = records[records.length - 1];
+  const firstWeight = first ? Number(first[1]) : 0;
+  const lastWeight = last ? Number(last[1]) : 0;
+  const firstFat = first ? Number(first[2]) : 0;
+  const lastFat = last ? Number(last[2]) : 0;
+  const firstFatMass = first ? +(firstWeight * firstFat / 100).toFixed(2) : 0;
+  const lastFatMass = last ? +(lastWeight * lastFat / 100).toFixed(2) : 0;
+  let weightToGoal = 0;
+  let goalAchieved = false;
+  const targetWeight = JSON.parse(graphView.dataset.progressTargetWeightValue);
+  if (targetWeight && lastWeight > 0) {
+    if (lastWeight <= targetWeight) {
+      weightToGoal = 0;
+      goalAchieved = true;
+    } else {
+      weightToGoal = +(lastWeight - targetWeight).toFixed(2);
+      goalAchieved = false;
+    }
+  }
+  const firstWeightEl = document.getElementById("first-weight");
+  const lastWeightEl = document.getElementById("last-weight");
+  const firstFatEl = document.getElementById("first-fat");
+  const lastFatEl = document.getElementById("last-fat");
+  const firstFatMassEl = document.getElementById("first-fat-mass");
+  const lastFatMassEl = document.getElementById("last-fat-mass");
+  const block = document.getElementById("goal-countdown-block");
+  if (firstWeightEl) firstWeightEl.textContent = firstWeight.toFixed(2);
+  if (lastWeightEl) lastWeightEl.textContent = lastWeight.toFixed(2);
+  if (firstFatEl) firstFatEl.textContent = firstFat.toFixed(2);
+  if (lastFatEl) lastFatEl.textContent = lastFat.toFixed(2);
+  if (firstFatMassEl) firstFatMassEl.textContent = firstFatMass.toFixed(2);
+  if (lastFatMassEl) lastFatMassEl.textContent = lastFatMass.toFixed(2);
+  if (block) {
+    if (targetWeight && lastWeight > 0) {
+      if (goalAchieved) {
+        block.innerHTML = '<span id="goal-achieved-label" class="text-xl font-bold text-violet-600">\u76EE\u6A19\u9054\u6210\uFF01\uFF01\uFF01</span>';
+      } else {
+        block.innerHTML = '<span id="goal-countdown-label">\u76EE\u6A19\u307E\u3067\u3042\u3068</span><span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">' + weightToGoal.toFixed(2) + '</span><span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>';
+      }
+    } else {
+      block.innerHTML = "";
+    }
+  }
+}
+function patchPeriodTabEvents() {
+  document.querySelectorAll(".period-tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      updateStatsTable(btn.dataset.period);
+    });
+  });
+}
+window.updateStatsTable = updateStatsTable;
+window.patchPeriodTabEvents = patchPeriodTabEvents;
+
+// app/javascript/progress_page.js
+function initGraphPage() {
+  const graphView = document.getElementById("graph-view");
+  const photoView = document.getElementById("photo-view");
+  const tabGraph = document.getElementById("tab-graph");
+  const tabPhoto = document.getElementById("tab-photo");
+  const weightChart = document.getElementById("weightChart");
+  if (!graphView || !photoView || !tabGraph || !tabPhoto || !weightChart) {
+    return;
+  }
+  const initialTab = window.activeTab === "photo" ? "photo" : "graph";
+  if (initialTab === "photo") {
+    graphView.classList.add("hidden");
+    photoView.classList.remove("hidden");
+    setMainTab("photo");
+    document.getElementById("stats-table").classList.add("hidden");
+  } else {
+    graphView.classList.remove("hidden");
+    photoView.classList.add("hidden");
+    setMainTab("graph");
+    document.getElementById("stats-table").classList.remove("hidden");
+    document.getElementById("stats-content").classList.remove("hidden");
+  }
+  document.querySelectorAll("#graph-view .period-tab").forEach((btn) => {
+    if (btn.dataset.period === "3m") {
+      btn.classList.add("bg-violet-500", "text-white");
+      btn.classList.remove("bg-violet-100", "text-violet-600");
+    } else {
+      btn.classList.remove("bg-violet-500", "text-white");
+      btn.classList.add("bg-violet-100", "text-violet-600");
+    }
+  });
+  document.querySelectorAll("#photo-view .period-tab").forEach((btn) => {
+    btn.classList.remove("bg-violet-500", "text-white");
+    btn.classList.add("bg-violet-100", "text-violet-600");
+  });
+  const photo3m = document.querySelector('#photo-view .period-tab[data-period="3m"]');
+  if (photo3m) {
+    photo3m.classList.remove("bg-violet-100", "text-violet-600");
+    photo3m.classList.add("bg-violet-500", "text-white");
+  }
+  if (typeof Chart !== "undefined" && Chart.helpers) {
+    Chart.helpers.each(Chart.instances, (instance) => {
+      instance.destroy();
+    });
+  }
+  if (window.chart) {
+    window.chart.destroy();
+    window.chart = null;
+  }
+  function setMainTab(active) {
+    const on = "w-full bg-violet-500 text-white py-2 rounded text-xs sm:text-sm";
+    const off = "w-full bg-violet-100 text-violet-500 py-2 rounded text-xs sm:text-sm";
+    tabGraph.className = active === "graph" ? on : off;
+    tabPhoto.className = active === "photo" ? on : off;
+  }
+  tabGraph.onclick = () => {
+    graphView.classList.remove("hidden");
+    photoView.classList.add("hidden");
+    setMainTab("graph");
+    document.getElementById("stats-table").classList.remove("hidden");
+    document.getElementById("stats-content").classList.remove("hidden");
+    document.querySelectorAll("#graph-view .period-tab").forEach((btn) => {
+      if (btn.dataset.period === "3m") {
+        btn.classList.add("bg-violet-500", "text-white");
+        btn.classList.remove("bg-violet-100", "text-violet-600");
+      } else {
+        btn.classList.remove("bg-violet-500", "text-white");
+        btn.classList.add("bg-violet-100", "text-violet-600");
+      }
+    });
+    if (window.renderChart) {
+      window.renderChart("3m");
+    }
+  };
+  tabPhoto.onclick = () => {
+    graphView.classList.add("hidden");
+    photoView.classList.remove("hidden");
+    setMainTab("photo");
+    document.getElementById("stats-table").classList.add("hidden");
+    document.querySelectorAll("#photo-view .period-tab").forEach((btn) => {
+      if (btn.dataset.period === "3m") {
+        btn.classList.add("bg-violet-500", "text-white");
+        btn.classList.remove("bg-violet-100", "text-violet-600");
+      } else {
+        btn.classList.remove("bg-violet-500", "text-white");
+        btn.classList.add("bg-violet-100", "text-violet-600");
+      }
+    });
+    const photoSwitcher = document.querySelector('[data-controller="photo-switcher"]');
+    if (photoSwitcher?.controller) {
+      if (typeof photoSwitcher.controller.setPeriod === "function") {
+        photoSwitcher.controller.setPeriod("3m");
+      }
+    } else if (window.application && window.application.getControllerForElementAndIdentifier) {
+      const controller = window.application.getControllerForElementAndIdentifier(photoSwitcher, "photo-switcher");
+      if (controller && typeof controller.setPeriod === "function") {
+        controller.setPeriod("3m");
+      }
+    }
+  };
+  document.querySelectorAll(".period-tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".period-tab").forEach((b) => {
+        b.classList.remove("bg-violet-500", "text-white");
+        b.classList.add("bg-violet-100", "text-violet-600");
+      });
+      btn.classList.remove("bg-violet-100", "text-violet-600");
+      btn.classList.add("bg-violet-500", "text-white");
+      if (window.renderChart) {
+        window.renderChart(btn.dataset.period);
+      }
+    });
+  });
+  if (window.renderChart) {
+    window.renderChart("3m");
+  }
+  window.addEventListener("resize", () => {
+    if (window.chart && window.renderChart) {
+      window.renderChart(document.querySelector(".period-tab.bg-violet-500")?.dataset.period || "3m");
+    }
+  });
+}
+document.addEventListener("turbo:load", initGraphPage);
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.updateStatsTable) {
+    window.updateStatsTable("3m");
+  }
+  if (window.patchPeriodTabEvents) {
+    window.patchPeriodTabEvents();
+  }
+});
+document.addEventListener("turbo:load", () => {
+  if (window.updateStatsTable) {
+    window.updateStatsTable("3m");
+  }
+  if (window.patchPeriodTabEvents) {
+    window.patchPeriodTabEvents();
+  }
+});
 /*! Bundled license information:
 
 @hotwired/turbo/dist/turbo.es2017-esm.js:
