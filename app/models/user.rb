@@ -17,33 +17,7 @@ class User < ApplicationRecord
   validates :uid, presence: true, uniqueness: { scope: :provider }, if: -> { uid.present? }
 
   def self.from_omniauth(auth)
-    email = auth.info.email.presence || "#{auth.uid}-#{auth.provider}@example.com"
-    name = auth.info.name.presence || "#{auth.provider.capitalize}ユーザー"
-
-    # Google認証の場合、同じメールアドレスのユーザーがいれば紐付ける
-    if auth.provider.to_s == "google_oauth2"
-      user = find_by(email: email)
-      if user
-        user.update(provider: auth.provider, uid: auth.uid)
-        return user
-      end
-    end
-
-    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.name = name
-      user.email = email
-      pw = Devise.friendly_token[0, 20]
-      user.password = pw
-      user.password_confirmation = pw
-    end
-
-    if user.save
-      Rails.logger.debug "User saved: \\#{user.inspect}"
-    else
-      Rails.logger.debug "User save failed: \\#{user.errors.full_messages}"
-    end
-
-    user
+    OmniauthAuthenticationService.new(auth).call
   end
 
   def self.create_unique_string
@@ -51,7 +25,7 @@ class User < ApplicationRecord
   end
 
   # QR 用 URI を組み立てるヘルパ（任意）
-  def provisioning_uri(issuer: "MyApp")
-    otp_provisioning_uri(email, issuer: issuer)
+  def provisioning_uri(issuer: "Fitgraph")
+    TwoFactorAuthService.new(self, issuer: issuer).provisioning_uri
   end
 end
