@@ -1,0 +1,30 @@
+# YouTube動画検索キーワード設定
+# 性別(gender)と強度(intensity)の組み合わせごとに検索キーワードを定義
+
+# 使用可能な組み合わせ:
+#   gender: man, woman, other
+#   intensity: low, medium, high
+
+default: &default
+  gender_intensity:
+    man_low: "初心者 有酸素 トレーニング ダンス 家"
+    man_medium: "自重トレーニング 家"
+    man_high: "HIIT トレーニング 家"
+    woman_low: "初心者 有酸素 トレーニング ダンス 家 簡単"
+    woman_medium: "有酸素 トレーニング ダンス 家 ハード"
+    woman_high: "有酸素 自重トレーニング 家"
+    other_low: "初心者 有酸素 トレーニング 家"
+    other_medium: "有酸素 トレーニング 家"
+    other_high: "HIIT トレーニング 家"
+
+  # フォールバックキーワード (APIエラー時やキーワードが見つからない場合)
+  fallback: "workout training"
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

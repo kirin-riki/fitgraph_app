@@ -32,3 +32,22 @@ plugin :tmp_restart
 # Specify the PID file. Defaults to tmp/pids/server.pid in development.
 # In other environments, only set the PID file if requested.
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
+
+# メモリ使用量制限とワーカー管理の設定
+if ENV["RAILS_ENV"] == "production"
+  # ワーカー数の設定
+  workers ENV.fetch("WEB_CONCURRENCY", 2)
+  
+  # メモリ使用量の監視と制限
+  before_fork do
+    # メモリ使用量が500MBを超えた場合にワーカーを再起動
+    if defined?(Puma::WorkerKiller)
+      Puma::WorkerKiller.enable_rolling_restart(500 * 1024 * 1024, 600 * 1024 * 1024)
+    end
+  end
+  
+  # ワーカーの再起動設定
+  worker_timeout 60
+  worker_boot_timeout 60
+  worker_shutdown_timeout 8
+end
