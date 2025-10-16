@@ -9100,349 +9100,647 @@ Stimulus.register("loading", loading_controller_default);
 Stimulus.register("progress", progress_controller_default);
 Stimulus.register("accordion", accordion_controller_default);
 
-// app/javascript/progress_chart.js
-function generateDateRange(start2, end) {
-  const arr = [];
-  const cur = new Date(start2);
-  while (cur <= end) {
-    const y = cur.getFullYear();
-    const m = String(cur.getMonth() + 1).padStart(2, "0");
-    const d = String(cur.getDate()).padStart(2, "0");
-    arr.push(`${y}-${m}-${d}`);
-    cur.setDate(cur.getDate() + 1);
+// app/javascript/classes/chart_config.js
+var ChartConfig = class {
+  constructor(isMobile = false) {
+    this.isMobile = isMobile;
   }
-  return arr;
-}
-function setChartLabel(dataLength, chartInstance, period) {
-  let maxDisplay;
-  let minDisplay;
-  switch (period) {
-    case "1w":
-      maxDisplay = Math.min(dataLength, 7);
-      minDisplay = Math.max(0, dataLength - 7);
-      break;
-    case "3w":
-      maxDisplay = Math.min(dataLength, 21);
-      minDisplay = Math.max(0, dataLength - 21);
-      break;
-    case "1m":
-      maxDisplay = Math.min(dataLength, 30);
-      minDisplay = Math.max(0, dataLength - 30);
-      break;
-    case "3m":
-    default:
-      maxDisplay = Math.min(dataLength, 90);
-      minDisplay = Math.max(0, dataLength - 90);
-      break;
-  }
-  if (dataLength <= maxDisplay) {
-    chartInstance.options.scales.x.ticks = {
-      min: 0,
-      max: dataLength - 1
-    };
-  } else {
-    chartInstance.options.scales.x.ticks = {
-      min: minDisplay,
-      max: maxDisplay - 1
+  /**
+   * Chart.jsの基本設定を返す
+   * @param {Array} labels - X軸ラベル
+   * @param {Array} weights - 体重データ
+   * @param {Array} fats - 体脂肪率データ
+   * @param {number} wMin - 体重Y軸最小値
+   * @param {number} wMax - 体重Y軸最大値
+   * @param {number} fMin - 体脂肪率Y軸最小値
+   * @param {number} fMax - 体脂肪率Y軸最大値
+   * @param {number|null} targetWeight - 目標体重
+   * @returns {Object} Chart.js設定オブジェクト
+   */
+  getChartConfig(labels, weights, fats, wMin, wMax, fMin, fMax, targetWeight) {
+    return {
+      type: "line",
+      data: {
+        labels,
+        datasets: this.#buildDatasets(weights, fats)
+      },
+      options: this.#buildOptions(wMin, wMax, fMin, fMax, targetWeight)
     };
   }
-  chartInstance.update();
-}
-function buildData(period, graphView) {
-  const now2 = /* @__PURE__ */ new Date();
-  let start2 = new Date(now2);
-  switch (period) {
-    case "1w":
-      start2 = new Date(now2.getTime() - 7 * 864e5);
-      break;
-    case "3w":
-      start2 = new Date(now2.getTime() - 21 * 864e5);
-      break;
-    case "1m":
-      start2.setMonth(now2.getMonth() - 1);
-      break;
-    case "3m":
-    default:
-      start2.setMonth(now2.getMonth() - 3);
-      break;
+  /**
+   * データセット設定を構築
+   * @private
+   */
+  #buildDatasets(weights, fats) {
+    return [
+      {
+        label: "\u4F53\u91CD(kg)",
+        data: weights,
+        borderColor: "rgba(255,99,132,0.9)",
+        backgroundColor: "rgba(255,99,132,0.2)",
+        spanGaps: true,
+        yAxisID: "y1",
+        borderWidth: this.isMobile ? 2 : 3,
+        pointRadius: this.isMobile ? 3 : 4,
+        pointHoverRadius: this.isMobile ? 5 : 6
+      },
+      {
+        label: "\u4F53\u8102\u80AA\u7387(%)",
+        data: fats,
+        borderColor: "rgba(75,192,192,0.7)",
+        backgroundColor: "rgba(75,192,192,0.2)",
+        spanGaps: true,
+        yAxisID: "y2",
+        borderWidth: this.isMobile ? 2 : 3,
+        pointRadius: this.isMobile ? 3 : 4,
+        pointHoverRadius: this.isMobile ? 5 : 6
+      }
+    ];
   }
-  const range = generateDateRange(start2, now2);
-  const map = {};
-  const labels = JSON.parse(graphView.dataset.progressLabelsValue);
-  const weights = JSON.parse(graphView.dataset.progressWeightsValue);
-  const fats = JSON.parse(graphView.dataset.progressFatRatesValue);
-  labels.forEach((d, i) => {
-    map[d] = { w: +weights[i], f: +fats[i] };
-  });
-  return range.map((d) => ({
-    label: d,
-    weight: map[d]?.w ?? null,
-    fat: map[d]?.f ?? null
-  }));
-}
-function renderChart(period = "3m") {
-  const graphView = document.getElementById("graph-view");
-  if (!graphView) return;
-  if (window.chart) {
-    window.chart.destroy();
-    window.chart = null;
-  }
-  if (typeof Chart !== "undefined" && Chart.helpers) {
-    Chart.helpers.each(Chart.instances, (instance) => {
-      instance.destroy();
-    });
-  }
-  const canvas = document.getElementById("weightChart");
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const rows = buildData(period, graphView);
-  const labels = rows.map((r) => {
-    const t = new Date(r.label);
-    const isMobile2 = window.innerWidth < 768;
-    return isMobile2 ? `${t.getMonth() + 1}/${t.getDate()}` : `${t.getMonth() + 1}/${t.getDate()}`;
-  });
-  const weights = rows.map((r) => r.weight);
-  const fats = rows.map((r) => r.fat);
-  const vw = weights.filter((v) => v !== null);
-  const vf = fats.filter((v) => v !== null);
-  const fMin = vf.length ? Math.floor(Math.min(...vf)) - 5 : void 0;
-  const fMax = vf.length ? Math.ceil(Math.max(...vf)) + 5 : void 0;
-  let wMin = vw.length ? Math.floor(Math.min(...vw)) - 5 : void 0;
-  let wMax = vw.length ? Math.ceil(Math.max(...vw)) + 5 : void 0;
-  const targetWeight = JSON.parse(graphView.dataset.progressTargetWeightValue);
-  if (targetWeight && vw.length > 0) {
-    const currentMin = Math.min(...vw);
-    const currentMax = Math.max(...vw);
-    if (targetWeight < currentMin) {
-      wMin = Math.floor(targetWeight) - 5;
-      wMax = Math.ceil(currentMax) + 5;
-    } else if (targetWeight > currentMax) {
-      wMin = Math.floor(currentMin) - 5;
-      wMax = Math.ceil(targetWeight) + 5;
-    }
-  }
-  const isMobile = window.innerWidth < 768;
-  window.chart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels,
-      datasets: [
-        {
-          label: "\u4F53\u91CD(kg)",
-          data: weights,
-          borderColor: "rgba(255,99,132,0.9)",
-          backgroundColor: "rgba(255,99,132,0.2)",
-          spanGaps: true,
-          yAxisID: "y1",
-          borderWidth: isMobile ? 2 : 3,
-          pointRadius: isMobile ? 3 : 4,
-          pointHoverRadius: isMobile ? 5 : 6
-        },
-        {
-          label: "\u4F53\u8102\u80AA\u7387(%)",
-          data: fats,
-          borderColor: "rgba(75,192,192,0.7)",
-          backgroundColor: "rgba(75,192,192,0.2)",
-          spanGaps: true,
-          yAxisID: "y2",
-          borderWidth: isMobile ? 2 : 3,
-          pointRadius: isMobile ? 3 : 4,
-          pointHoverRadius: isMobile ? 5 : 6
-        }
-      ]
-    },
-    options: {
+  /**
+   * オプション設定を構築
+   * @private
+   */
+  #buildOptions(wMin, wMax, fMin, fMax, targetWeight) {
+    return {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          labels: {
-            font: {
-              size: isMobile ? 12 : 14
-            }
-          }
-        },
-        tooltip: {
-          callbacks: {
-            afterBody(context) {
-              const targetWeight2 = JSON.parse(graphView.dataset.progressTargetWeightValue);
-              if (targetWeight2) {
-                return `\u76EE\u6A19\u4F53\u91CD: ${targetWeight2}kg`;
-              }
-              return "";
-            }
+      plugins: this.#buildPlugins(targetWeight),
+      scales: this.#buildScales(wMin, wMax, fMin, fMax)
+    };
+  }
+  /**
+   * プラグイン設定を構築
+   * @private
+   */
+  #buildPlugins(targetWeight) {
+    return {
+      legend: {
+        labels: {
+          font: {
+            size: this.isMobile ? 12 : 14
           }
         }
       },
-      scales: {
-        x: {
-          display: true,
-          title: {
-            display: true,
-            text: "\u65E5\u4ED8",
-            font: {
-              size: isMobile ? 12 : 14
+      tooltip: {
+        callbacks: {
+          afterBody(context) {
+            if (targetWeight) {
+              return `\u76EE\u6A19\u4F53\u91CD: ${targetWeight}kg`;
             }
-          },
-          ticks: {
-            font: {
-              size: isMobile ? 10 : 12
-            },
-            maxTicksLimit: isMobile ? 7 : 10
-          }
-        },
-        y1: {
-          type: "linear",
-          position: "left",
-          min: wMin,
-          max: wMax,
-          title: {
-            display: true,
-            text: "\u4F53\u91CD",
-            font: {
-              size: isMobile ? 12 : 14
-            }
-          },
-          ticks: {
-            font: {
-              size: isMobile ? 10 : 12
-            }
-          }
-        },
-        y2: {
-          type: "linear",
-          position: "right",
-          min: fMin,
-          max: fMax,
-          title: {
-            display: true,
-            text: "\u4F53\u8102\u80AA\u7387",
-            font: {
-              size: isMobile ? 12 : 14
-            }
-          },
-          grid: { drawOnChartArea: false },
-          ticks: {
-            font: {
-              size: isMobile ? 10 : 12
-            }
+            return "";
           }
         }
       }
+    };
+  }
+  /**
+   * スケール設定を構築
+   * @private
+   */
+  #buildScales(wMin, wMax, fMin, fMax) {
+    return {
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: "\u65E5\u4ED8",
+          font: {
+            size: this.isMobile ? 12 : 14
+          }
+        },
+        ticks: {
+          font: {
+            size: this.isMobile ? 10 : 12
+          },
+          maxTicksLimit: this.isMobile ? 7 : 10
+        }
+      },
+      y1: {
+        type: "linear",
+        position: "left",
+        min: wMin,
+        max: wMax,
+        title: {
+          display: true,
+          text: "\u4F53\u91CD",
+          font: {
+            size: this.isMobile ? 12 : 14
+          }
+        },
+        ticks: {
+          font: {
+            size: this.isMobile ? 10 : 12
+          }
+        }
+      },
+      y2: {
+        type: "linear",
+        position: "right",
+        min: fMin,
+        max: fMax,
+        title: {
+          display: true,
+          text: "\u4F53\u8102\u80AA\u7387",
+          font: {
+            size: this.isMobile ? 12 : 14
+          }
+        },
+        grid: { drawOnChartArea: false },
+        ticks: {
+          font: {
+            size: this.isMobile ? 10 : 12
+          }
+        }
+      }
+    };
+  }
+  /**
+   * 目標体重表示プラグインを作成
+   * @param {HTMLElement} graphView - グラフビュー要素
+   * @returns {Object} Chart.jsプラグイン
+   */
+  static createTargetWeightPlugin(graphView) {
+    return {
+      id: "customTargetWeight",
+      afterDraw(chart, args, options) {
+        const targetWeight = JSON.parse(graphView.dataset.progressTargetWeightValue);
+        if (!targetWeight) return;
+        const yScale = chart.scales.y1;
+        const xScale = chart.scales.x;
+        if (!yScale || !xScale) return;
+        const weightData = chart.data.datasets.find((d) => d.label === "\u4F53\u91CD(kg)");
+        if (!weightData || !weightData.data.some((d) => d !== null)) return;
+        const y = yScale.getPixelForValue(targetWeight);
+        const radius = window.innerWidth < 768 ? 10 : 12;
+        const x = xScale.left - radius - 6;
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = "rgba(139, 92, 246, 0.7)";
+        ctx.shadowColor = "rgba(139, 92, 246, 0.2)";
+        ctx.shadowBlur = 2;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.font = window.innerWidth < 768 ? "bold 10px sans-serif" : "bold 12px sans-serif";
+        ctx.fillStyle = "#fff";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(String(targetWeight), x, y);
+        ctx.beginPath();
+        ctx.setLineDash([5, 5]);
+        ctx.strokeStyle = "rgba(139, 92, 246, 0.8)";
+        ctx.lineWidth = 2;
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(chart.chartArea.right, y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+      }
+    };
+  }
+};
+
+// app/javascript/classes/progress_graph.js
+var ProgressGraph = class {
+  constructor(graphViewElement) {
+    this.graphView = graphViewElement;
+    this.chart = null;
+  }
+  /**
+   * グラフを描画
+   * @param {string} period - 期間 ("1w", "3w", "1m", "3m")
+   */
+  render(period = "3m") {
+    if (!this.graphView) return;
+    this.#destroyExistingChart();
+    this.#clearCanvas();
+    const canvas = document.getElementById("weightChart");
+    if (!canvas) return;
+    const data = this.#buildData(period);
+    const labels = this.#formatLabels(data);
+    const weights = data.map((r) => r.weight);
+    const fats = data.map((r) => r.fat);
+    const { wMin, wMax, fMin, fMax } = this.#calculateScales(weights, fats);
+    const targetWeight = this.#getTargetWeight();
+    const isMobile = window.innerWidth < 768;
+    const chartConfig = new ChartConfig(isMobile);
+    const config2 = chartConfig.getChartConfig(
+      labels,
+      weights,
+      fats,
+      wMin,
+      wMax,
+      fMin,
+      fMax,
+      targetWeight
+    );
+    const ctx = canvas.getContext("2d");
+    this.chart = new Chart(ctx, config2);
+    this.#setChartLabelRange(labels.length, period);
+    this.#registerTargetWeightPlugin();
+  }
+  /**
+   * グラフを破棄
+   */
+  destroy() {
+    this.#destroyExistingChart();
+  }
+  /**
+   * 既存チャートを破棄
+   * @private
+   */
+  #destroyExistingChart() {
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = null;
     }
-  });
-  setChartLabel(labels.length, window.chart, period);
-  Chart.register({
-    id: "customTargetWeight",
-    afterDraw(chart, args, options) {
-      const targetWeight2 = JSON.parse(graphView.dataset.progressTargetWeightValue);
-      if (!targetWeight2) return;
-      const yScale = chart.scales.y1;
-      const xScale = chart.scales.x;
-      if (!yScale || !xScale) return;
-      const weightData = chart.data.datasets.find((d) => d.label === "\u4F53\u91CD(kg)");
-      if (!weightData || !weightData.data.some((d) => d !== null)) return;
-      const y = yScale.getPixelForValue(targetWeight2);
-      const radius = window.innerWidth < 768 ? 10 : 12;
-      const x = xScale.left - radius - 6;
-      const ctx2 = chart.ctx;
-      ctx2.save();
-      ctx2.beginPath();
-      ctx2.arc(x, y, radius, 0, 2 * Math.PI, false);
-      ctx2.fillStyle = "rgba(139, 92, 246, 0.7)";
-      ctx2.shadowColor = "rgba(139, 92, 246, 0.2)";
-      ctx2.shadowBlur = 2;
-      ctx2.fill();
-      ctx2.shadowBlur = 0;
-      ctx2.font = window.innerWidth < 768 ? "bold 10px sans-serif" : "bold 12px sans-serif";
-      ctx2.fillStyle = "#fff";
-      ctx2.textAlign = "center";
-      ctx2.textBaseline = "middle";
-      ctx2.fillText(String(targetWeight2), x, y);
-      ctx2.beginPath();
-      ctx2.setLineDash([5, 5]);
-      ctx2.strokeStyle = "rgba(139, 92, 246, 0.8)";
-      ctx2.lineWidth = 2;
-      ctx2.moveTo(x + radius, y);
-      ctx2.lineTo(chart.chartArea.right, y);
-      ctx2.stroke();
-      ctx2.setLineDash([]);
-      ctx2.restore();
+    if (typeof Chart !== "undefined" && Chart.helpers) {
+      Chart.helpers.each(Chart.instances, (instance) => {
+        instance.destroy();
+      });
     }
-  });
+  }
+  /**
+   * キャンバスをクリア
+   * @private
+   */
+  #clearCanvas() {
+    const canvas = document.getElementById("weightChart");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  /**
+   * 期間に応じたデータを構築
+   * @private
+   */
+  #buildData(period) {
+    const now2 = /* @__PURE__ */ new Date();
+    const start2 = this.#calculateStartDate(now2, period);
+    const range = this.#generateDateRange(start2, now2);
+    const map = this.#createDataMap();
+    return range.map((d) => ({
+      label: d,
+      weight: map[d]?.w ?? null,
+      fat: map[d]?.f ?? null
+    }));
+  }
+  /**
+   * 開始日を計算
+   * @private
+   */
+  #calculateStartDate(now2, period) {
+    const start2 = new Date(now2);
+    switch (period) {
+      case "1w":
+        return new Date(now2.getTime() - 7 * 864e5);
+      case "3w":
+        return new Date(now2.getTime() - 21 * 864e5);
+      case "1m":
+        start2.setMonth(now2.getMonth() - 1);
+        return start2;
+      case "3m":
+      default:
+        start2.setMonth(now2.getMonth() - 3);
+        return start2;
+    }
+  }
+  /**
+   * 日付範囲を生成
+   * @private
+   */
+  #generateDateRange(start2, end) {
+    const arr = [];
+    const cur = new Date(start2);
+    while (cur <= end) {
+      const y = cur.getFullYear();
+      const m = String(cur.getMonth() + 1).padStart(2, "0");
+      const d = String(cur.getDate()).padStart(2, "0");
+      arr.push(`${y}-${m}-${d}`);
+      cur.setDate(cur.getDate() + 1);
+    }
+    return arr;
+  }
+  /**
+   * データマップを作成
+   * @private
+   */
+  #createDataMap() {
+    const labels = JSON.parse(this.graphView.dataset.progressLabelsValue);
+    const weights = JSON.parse(this.graphView.dataset.progressWeightsValue);
+    const fats = JSON.parse(this.graphView.dataset.progressFatRatesValue);
+    const map = {};
+    labels.forEach((d, i) => {
+      map[d] = { w: +weights[i], f: +fats[i] };
+    });
+    return map;
+  }
+  /**
+   * ラベルをフォーマット
+   * @private
+   */
+  #formatLabels(data) {
+    const isMobile = window.innerWidth < 768;
+    return data.map((r) => {
+      const t = new Date(r.label);
+      return isMobile ? `${t.getMonth() + 1}/${t.getDate()}` : `${t.getMonth() + 1}/${t.getDate()}`;
+    });
+  }
+  /**
+   * スケール範囲を計算
+   * @private
+   */
+  #calculateScales(weights, fats) {
+    const vw = weights.filter((v) => v !== null);
+    const vf = fats.filter((v) => v !== null);
+    const fMin = vf.length ? Math.floor(Math.min(...vf)) - 5 : void 0;
+    const fMax = vf.length ? Math.ceil(Math.max(...vf)) + 5 : void 0;
+    let wMin = vw.length ? Math.floor(Math.min(...vw)) - 5 : void 0;
+    let wMax = vw.length ? Math.ceil(Math.max(...vw)) + 5 : void 0;
+    const targetWeight = this.#getTargetWeight();
+    if (targetWeight && vw.length > 0) {
+      const currentMin = Math.min(...vw);
+      const currentMax = Math.max(...vw);
+      if (targetWeight < currentMin) {
+        wMin = Math.floor(targetWeight) - 5;
+        wMax = Math.ceil(currentMax) + 5;
+      } else if (targetWeight > currentMax) {
+        wMin = Math.floor(currentMin) - 5;
+        wMax = Math.ceil(targetWeight) + 5;
+      }
+    }
+    return { wMin, wMax, fMin, fMax };
+  }
+  /**
+   * 目標体重を取得
+   * @private
+   */
+  #getTargetWeight() {
+    return JSON.parse(this.graphView.dataset.progressTargetWeightValue);
+  }
+  /**
+   * チャートラベル範囲を設定
+   * @private
+   */
+  #setChartLabelRange(dataLength, period) {
+    if (!this.chart) return;
+    const { maxDisplay, minDisplay } = this.#calculateDisplayRange(dataLength, period);
+    if (dataLength <= maxDisplay) {
+      this.chart.options.scales.x.ticks = {
+        min: 0,
+        max: dataLength - 1
+      };
+    } else {
+      this.chart.options.scales.x.ticks = {
+        min: minDisplay,
+        max: maxDisplay - 1
+      };
+    }
+    this.chart.update();
+  }
+  /**
+   * 表示範囲を計算
+   * @private
+   */
+  #calculateDisplayRange(dataLength, period) {
+    let maxDisplay, minDisplay;
+    switch (period) {
+      case "1w":
+        maxDisplay = Math.min(dataLength, 7);
+        minDisplay = Math.max(0, dataLength - 7);
+        break;
+      case "3w":
+        maxDisplay = Math.min(dataLength, 21);
+        minDisplay = Math.max(0, dataLength - 21);
+        break;
+      case "1m":
+        maxDisplay = Math.min(dataLength, 30);
+        minDisplay = Math.max(0, dataLength - 30);
+        break;
+      case "3m":
+      default:
+        maxDisplay = Math.min(dataLength, 90);
+        minDisplay = Math.max(0, dataLength - 90);
+        break;
+    }
+    return { maxDisplay, minDisplay };
+  }
+  /**
+   * 目標体重プラグインを登録
+   * @private
+   */
+  #registerTargetWeightPlugin() {
+    const plugin = ChartConfig.createTargetWeightPlugin(this.graphView);
+    Chart.register(plugin);
+  }
+};
+
+// app/javascript/progress_chart.js
+var progressGraphInstance = null;
+function renderChart(period = "3m") {
+  const graphView = document.getElementById("graph-view");
+  if (!graphView) return;
+  if (progressGraphInstance) {
+    progressGraphInstance.destroy();
+  }
+  progressGraphInstance = new ProgressGraph(graphView);
+  progressGraphInstance.render(period);
+  window.chart = progressGraphInstance.chart;
 }
 window.renderChart = renderChart;
 
-// app/javascript/progress_stats.js
-function updateStatsTable(period) {
-  const now2 = /* @__PURE__ */ new Date();
-  let start2 = new Date(now2);
-  switch (period) {
-    case "1w":
-      start2 = new Date(now2.getTime() - 7 * 864e5);
-      break;
-    case "3w":
-      start2 = new Date(now2.getTime() - 21 * 864e5);
-      break;
-    case "1m":
-      start2.setMonth(now2.getMonth() - 1);
-      break;
-    case "3m":
-    default:
-      start2.setMonth(now2.getMonth() - 3);
-      break;
+// app/javascript/classes/progress_stats.js
+var ProgressStats = class {
+  constructor(graphViewElement) {
+    this.graphView = graphViewElement;
   }
+  /**
+   * 統計表を更新
+   * @param {string} period - 期間 ("1w", "3w", "1m", "3m")
+   */
+  update(period) {
+    if (!this.graphView) return;
+    const { start: start2, end } = this.#calculatePeriodRange(period);
+    const records = this.#filterRecordsByPeriod(start2, end);
+    if (records.length === 0) {
+      this.#updateEmptyStats();
+      return;
+    }
+    const stats = this.#calculateStats(records);
+    this.#updateDisplay(stats);
+  }
+  /**
+   * 期間範囲を計算
+   * @private
+   */
+  #calculatePeriodRange(period) {
+    const now2 = /* @__PURE__ */ new Date();
+    const start2 = new Date(now2);
+    switch (period) {
+      case "1w":
+        start2.setTime(now2.getTime() - 7 * 864e5);
+        break;
+      case "3w":
+        start2.setTime(now2.getTime() - 21 * 864e5);
+        break;
+      case "1m":
+        start2.setMonth(now2.getMonth() - 1);
+        break;
+      case "3m":
+      default:
+        start2.setMonth(now2.getMonth() - 3);
+        break;
+    }
+    return { start: start2, end: now2 };
+  }
+  /**
+   * 期間内のレコードをフィルタ
+   * @private
+   */
+  #filterRecordsByPeriod(start2, end) {
+    const allRecords = JSON.parse(this.graphView.dataset.progressAllRecordsValue) || [];
+    return allRecords.filter((r) => {
+      const d = new Date(r[0]);
+      return d >= start2 && d <= end && r[1] != null && r[2] != null;
+    });
+  }
+  /**
+   * 統計を計算
+   * @private
+   */
+  #calculateStats(records) {
+    const first = records[0];
+    const last = records[records.length - 1];
+    const firstWeight = first ? Number(first[1]) : 0;
+    const lastWeight = last ? Number(last[1]) : 0;
+    const firstFat = first ? Number(first[2]) : 0;
+    const lastFat = last ? Number(last[2]) : 0;
+    const firstFatMass = first ? +(firstWeight * firstFat / 100).toFixed(2) : 0;
+    const lastFatMass = last ? +(lastWeight * lastFat / 100).toFixed(2) : 0;
+    const { weightToGoal, goalAchieved } = this.#calculateGoalProgress(lastWeight);
+    return {
+      firstWeight,
+      lastWeight,
+      firstFat,
+      lastFat,
+      firstFatMass,
+      lastFatMass,
+      weightToGoal,
+      goalAchieved
+    };
+  }
+  /**
+   * 目標までの進捗を計算
+   * @private
+   */
+  #calculateGoalProgress(lastWeight) {
+    const targetWeight = JSON.parse(this.graphView.dataset.progressTargetWeightValue);
+    if (!targetWeight || lastWeight === 0) {
+      return { weightToGoal: 0, goalAchieved: false };
+    }
+    if (lastWeight <= targetWeight) {
+      return { weightToGoal: 0, goalAchieved: true };
+    }
+    return {
+      weightToGoal: +(lastWeight - targetWeight).toFixed(2),
+      goalAchieved: false
+    };
+  }
+  /**
+   * 表示を更新
+   * @private
+   */
+  #updateDisplay(stats) {
+    this.#updateWeights(stats.firstWeight, stats.lastWeight);
+    this.#updateFats(stats.firstFat, stats.lastFat);
+    this.#updateFatMasses(stats.firstFatMass, stats.lastFatMass);
+    this.#updateGoalCountdown(stats.weightToGoal, stats.goalAchieved);
+  }
+  /**
+   * 体重表示を更新
+   * @private
+   */
+  #updateWeights(first, last) {
+    this.#updateElement("first-weight", first.toFixed(2));
+    this.#updateElement("last-weight", last.toFixed(2));
+  }
+  /**
+   * 体脂肪率表示を更新
+   * @private
+   */
+  #updateFats(first, last) {
+    this.#updateElement("first-fat", first.toFixed(2));
+    this.#updateElement("last-fat", last.toFixed(2));
+  }
+  /**
+   * 脂肪量表示を更新
+   * @private
+   */
+  #updateFatMasses(first, last) {
+    this.#updateElement("first-fat-mass", first.toFixed(2));
+    this.#updateElement("last-fat-mass", last.toFixed(2));
+  }
+  /**
+   * 目標カウントダウン表示を更新
+   * @private
+   */
+  #updateGoalCountdown(weightToGoal, goalAchieved) {
+    const block = document.getElementById("goal-countdown-block");
+    if (!block) return;
+    const targetWeight = JSON.parse(this.graphView.dataset.progressTargetWeightValue);
+    if (!targetWeight || weightToGoal === 0 && !goalAchieved) {
+      block.innerHTML = "";
+      return;
+    }
+    if (goalAchieved) {
+      block.innerHTML = '<span id="goal-achieved-label" class="text-xl font-bold text-violet-600">\u76EE\u6A19\u9054\u6210\uFF01\uFF01\uFF01</span>';
+    } else {
+      block.innerHTML = `
+        <span id="goal-countdown-label">\u76EE\u6A19\u307E\u3067\u3042\u3068</span>
+        <span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">
+          ${weightToGoal.toFixed(2)}
+        </span>
+        <span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>
+      `;
+    }
+  }
+  /**
+   * 要素のテキストを更新
+   * @private
+   */
+  #updateElement(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+  /**
+   * 空の統計を表示
+   * @private
+   */
+  #updateEmptyStats() {
+    this.#updateDisplay({
+      firstWeight: 0,
+      lastWeight: 0,
+      firstFat: 0,
+      lastFat: 0,
+      firstFatMass: 0,
+      lastFatMass: 0,
+      weightToGoal: 0,
+      goalAchieved: false
+    });
+  }
+};
+
+// app/javascript/progress_stats.js
+var progressStatsInstance = null;
+function updateStatsTable(period) {
   const graphView = document.getElementById("graph-view");
   if (!graphView) return;
-  const records = (JSON.parse(graphView.dataset.progressAllRecordsValue) || []).filter((r) => {
-    const d = new Date(r[0]);
-    return d >= start2 && d <= now2 && r[1] != null && r[2] != null;
-  });
-  const first = records[0];
-  const last = records[records.length - 1];
-  const firstWeight = first ? Number(first[1]) : 0;
-  const lastWeight = last ? Number(last[1]) : 0;
-  const firstFat = first ? Number(first[2]) : 0;
-  const lastFat = last ? Number(last[2]) : 0;
-  const firstFatMass = first ? +(firstWeight * firstFat / 100).toFixed(2) : 0;
-  const lastFatMass = last ? +(lastWeight * lastFat / 100).toFixed(2) : 0;
-  let weightToGoal = 0;
-  let goalAchieved = false;
-  const targetWeight = JSON.parse(graphView.dataset.progressTargetWeightValue);
-  if (targetWeight && lastWeight > 0) {
-    if (lastWeight <= targetWeight) {
-      weightToGoal = 0;
-      goalAchieved = true;
-    } else {
-      weightToGoal = +(lastWeight - targetWeight).toFixed(2);
-      goalAchieved = false;
-    }
+  if (!progressStatsInstance) {
+    progressStatsInstance = new ProgressStats(graphView);
   }
-  const firstWeightEl = document.getElementById("first-weight");
-  const lastWeightEl = document.getElementById("last-weight");
-  const firstFatEl = document.getElementById("first-fat");
-  const lastFatEl = document.getElementById("last-fat");
-  const firstFatMassEl = document.getElementById("first-fat-mass");
-  const lastFatMassEl = document.getElementById("last-fat-mass");
-  const block = document.getElementById("goal-countdown-block");
-  if (firstWeightEl) firstWeightEl.textContent = firstWeight.toFixed(2);
-  if (lastWeightEl) lastWeightEl.textContent = lastWeight.toFixed(2);
-  if (firstFatEl) firstFatEl.textContent = firstFat.toFixed(2);
-  if (lastFatEl) lastFatEl.textContent = lastFat.toFixed(2);
-  if (firstFatMassEl) firstFatMassEl.textContent = firstFatMass.toFixed(2);
-  if (lastFatMassEl) lastFatMassEl.textContent = lastFatMass.toFixed(2);
-  if (block) {
-    if (targetWeight && lastWeight > 0) {
-      if (goalAchieved) {
-        block.innerHTML = '<span id="goal-achieved-label" class="text-xl font-bold text-violet-600">\u76EE\u6A19\u9054\u6210\uFF01\uFF01\uFF01</span>';
-      } else {
-        block.innerHTML = '<span id="goal-countdown-label">\u76EE\u6A19\u307E\u3067\u3042\u3068</span><span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">' + weightToGoal.toFixed(2) + '</span><span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>';
-      }
-    } else {
-      block.innerHTML = "";
-    }
-  }
+  progressStatsInstance.update(period);
 }
 function patchPeriodTabEvents() {
   document.querySelectorAll(".period-tab").forEach((btn) => {
