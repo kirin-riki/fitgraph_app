@@ -1,0 +1,19 @@
+<!-- グラフビュー -->
+<div id="graph-view"
+     data-progress-target="graphView"
+     data-progress-labels-value='<%= @dates.to_json %>'
+     data-progress-weights-value='<%= @weight_values.to_json %>'
+     data-progress-fat-rates-value='<%= @fat_values.to_json %>'
+     data-progress-target-weight-value='<%= @target_weight&.to_f || "null" %>'
+     data-progress-all-records-value='<%= @all_graph_records.to_json %>'
+     class="w-full max-w-screen-md mx-auto">
+  <div class="w-full flex border rounded overflow-hidden mb-2">
+    <button class="w-full period-tab bg-violet-500 text-white py-2 rounded text-xs sm:text-sm" data-progress-target="periodTab" data-period="3m">3ヶ月</button>
+    <button class="w-full period-tab bg-violet-100 text-violet-600 py-2 rounded text-xs sm:text-sm" data-progress-target="periodTab" data-period="1m">1ヶ月</button>
+    <button class="w-full period-tab bg-violet-100 text-violet-600 py-2 rounded text-xs sm:text-sm" data-progress-target="periodTab" data-period="3w">3週間</button>
+    <button class="w-full period-tab bg-violet-100 text-violet-600 py-2 rounded text-xs sm:text-sm" data-progress-target="periodTab" data-period="1w">1週間</button>
+  </div>
+  <div class="relative w-full h-[40vh] sm:h-[50vh] max-h-[400px] sm:max-h-[560px] min-h-[250px] sm:min-h-[300px]">
+    <canvas id="weightChart" data-progress-target="weightChart" class="w-full h-full"></canvas>
+  </div>
+</div>

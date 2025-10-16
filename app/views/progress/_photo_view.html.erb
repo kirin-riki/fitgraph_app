@@ -1,0 +1,57 @@
+<!-- 写真ビュー -->
+<div id="photo-view" data-progress-target="photoView" class="w-full max-w-screen-md mx-auto hidden">
+  <div class="w-full flex border rounded overflow-hidden mb-2">
+    <button class="w-full period-tab bg-violet-500 text-white py-1 rounded text-xs sm:text-sm" data-progress-target="photoPeriodTab" data-period="3m">3ヶ月</button>
+    <button class="w-full period-tab bg-violet-100 text-violet-600 py-2 rounded text-xs sm:text-sm" data-progress-target="photoPeriodTab" data-period="1m">1ヶ月</button>
+    <button class="w-full period-tab bg-violet-100 text-violet-600 py-2 rounded text-xs sm:text-sm" data-progress-target="photoPeriodTab" data-period="3w">3週間</button>
+    <button class="w-full period-tab bg-violet-100 text-violet-600 py-2 rounded text-xs sm:text-sm" data-progress-target="photoPeriodTab" data-period="1w">1週間</button>
+  </div>
+  <!-- レイヤー/比較タブ -->
+  <div class="w-full flex border rounded overflow-hidden mb-2">
+    <button id="layer-tab" data-progress-target="layerTab" data-action="click->progress#setPhotoSubTab" data-tab="layer" class="w-full bg-violet-500 text-white py-2 rounded text-xs sm:text-sm">レイヤー</button>
+    <button id="compare-tab" data-progress-target="compareTab" data-action="click->progress#setPhotoSubTab" data-tab="compare" class="w-full bg-violet-100 text-violet-500 py-2 rounded text-xs sm:text-sm">比較</button>
+  </div>
+  <!-- レイヤービュー（既存のスライダー機能） -->
+  <div id="layer-view" data-progress-target="layerView" class="relative w-full h-[70vh] sm:h-[70vh] max-h-[700px] sm:max-h-[800px] min-h-[400px] sm:min-h-[800px]">
+    <div data-controller="photo-switcher"
+         data-photos='<%= raw (@all_photos.present? ? @all_photos.map { |r| { url: (r.photo.variable? ? url_for(r.photo.variant(resize_to_limit: [400, 600], quality: 70, format: :jpeg).processed) : url_for(r.photo)), date: r.recorded_at.strftime("%Y-%m-%d") } } : [{ url: asset_path("avatar_placeholder.png"), date: Date.current.strftime("%Y-%m-%d") }]).to_json %>'
+         data-placeholder="<%= asset_path('avatar_placeholder.png') %>"
+         data-jst-today="<%= Time.zone.today.strftime('%Y-%m-%d') %>"
+         class="h-full flex flex-col items-center px-4 pt-5 pb-1">
+      <div class="relative mx-auto bg-gray-100 rounded overflow-hidden border border-gray-300 w-[240px] h-[600px] sm:w-[500px] sm:h-[600px]">
+        <% if @photos.present? %>
+          <% photo = @photos.first %>
+          <% if photo.variable? %>
+            <%= image_tag photo.variant(resize_to_limit: [400, 600], quality: 70, format: :jpeg).processed, id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
+          <% else %>
+            <%= image_tag photo, id: "switch-photo", class: "w-full h-full object-contain", alt: "身体写真", data: { photo_switcher_target: "image" } %>
+          <% end %>
+        <% else %>
+          <img id="switch-photo" class="w-full h-full object-contain rounded" alt="サンプル画像" data-photo-switcher-target="image" src="<%= asset_path('avatar_placeholder.png') %>">
+        <% end %>
+      </div>
+      <% if @photos.size > 1 %>
+        <div class="w-full max-w-xs mx-auto mt-3 sm:mt-4">
+          <input type="range" min="1" max="<%= @photos.size %>" value="1"
+            data-action="input->photo-switcher#slide"
+            class="w-full h-3 slider-large"
+            style="accent-color: #8b5cf6;"
+            data-photo-switcher-target="slider">
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <!-- 比較ビュー（before/after） -->
+  <div id="compare-view" data-progress-target="compareView" class="relative w-full h-auto pb-24 hidden">
+    <div class="flex flex-col items-center px-4 pt-5 pb-1 h-full">
+      <div class="mb-2 w-[240px] sm:w-[400px]">
+        <span class="inline-block bg-violet-400 text-white text-xs px-3 py-1 rounded-t">BEFORE</span>
+        <img id="compare-before" class="w-full h-[350px] sm:h-[500px] object-contain bg-gray-100 rounded border" src="<%= asset_path('avatar_placeholder.png') %>" alt="Before">
+      </div>
+      <div class="mt-2 w-[240px] sm:w-[400px]">
+        <span class="inline-block bg-violet-400 text-white text-xs px-3 py-1 rounded-t">AFTER</span>
+        <img id="compare-after" class="w-full h-[350px] sm:h-[500px] object-contain bg-gray-100 rounded border" src="<%= asset_path('avatar_placeholder.png') %>" alt="After">
+      </div>
+    </div>
+  </div>
+</div>
