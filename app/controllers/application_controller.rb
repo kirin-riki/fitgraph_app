@@ -64,9 +64,4 @@ class ApplicationController < ActionController::Base
     nil
   end
 
-  # Deviseのリダイレクト先もrootに
-  # 2FAフローを優先するため、一時的にコメントアウト
-  # def after_sign_in_path_for(resource)
-  #   authenticated_root_path
-  # end
 end

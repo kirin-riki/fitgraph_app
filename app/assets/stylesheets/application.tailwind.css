@@ -35,7 +35,7 @@
 .simple-calendar .today { background-color: #ffc; } /* 今日 */
 
 /* =======================================================
-   ▼ Loading Animation（旧 application.css より移植）
+   ▼ Loading Animation
 ======================================================= */
 #container {
   position: absolute;
