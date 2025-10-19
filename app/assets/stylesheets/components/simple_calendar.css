@@ -1,0 +1,20 @@
+.simple-calendar {
+  --day-height: 80px;
+  --border-color: #ddd;
+  --sunday-bg: #fdd;
+  --saturday-bg: #ddf;
+  --today-bg: #ffc;
+}
+
+.simple-calendar .day {
+  border: 1px solid var(--border-color);  /* 変数使用 */
+  min-height: var(--day-height);          /* 変数使用 */
+}
+
+.simple-calendar .day a {
+  display: block;                          
+}
+
+.simple-calendar .wday-0 { background-color: var(--sunday-bg); }
+.simple-calendar .wday-6 { background-color: var(--saturday-bg); }
+.simple-calendar .today { background-color: var(--today-bg); }
