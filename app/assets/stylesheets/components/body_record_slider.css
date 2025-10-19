@@ -1,0 +1,41 @@
+.body-record-slider {
+  /* 基本設定 */
+  --range-height: 8px;
+  --range-bg-color: #eee;
+  --range-border-radius: 4px;
+  
+  /* つまみ（thumb）の設定 */
+  --range-thumb-size: 20px;
+  --range-thumb-color: #4c00ff;
+  --range-thumb-border: 2px solid white;
+  
+  /* トラックの設定 */
+  --range-track-color: #ddd;
+  --range-track-height: 6px;
+  
+  /* アクティブ時の色 */
+  --range-active-color: #0056b3;
+}
+
+/* メインのスライダースタイル */
+.body-record-slider input[type="range"] {
+  /* 基本設定 */
+  width: 100%;
+  appearance: auto !important;
+  -webkit-appearance: auto !important;
+  background: var(--range-bg-color) !important;
+  height: var(--range-height) !important;
+  border-radius: var(--range-border-radius);
+  outline: none;
+  cursor: pointer;
+}
+
+/* ホバー時のスタイル */
+.body-record-slider input[type="range"]:hover {
+  background: color-mix(in srgb, var(--range-bg-color) 80%, #000 20%) !important;
+}
+
+/* フォーカス時のスタイル */
+.body-record-slider input[type="range"]:focus {
+  box-shadow: 0 0 0 2px var(--range-active-color);
+}
