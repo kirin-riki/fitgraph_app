@@ -17,4 +17,4 @@ namespace :assets do
 end
 
 # assets:precompile の前に assets:build を実行
-Rake::Task["assets:precompile"].enhance(["assets:build"])
+Rake::Task["assets:precompile"].enhance([ "assets:build" ])

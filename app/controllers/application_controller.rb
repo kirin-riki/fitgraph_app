@@ -63,5 +63,4 @@ class ApplicationController < ActionController::Base
     return user if user && session[:just_enabled_2fa]
     nil
   end
-
 end
