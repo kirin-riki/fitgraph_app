@@ -23,6 +23,11 @@ export default class extends Controller {
 
     this.initTabs()
     this.initPeriodTabs()
+    
+    // 初期化時に統計テーブルを表示
+    this.statsTableTarget.classList.remove("hidden")
+    this.statsContentTarget.classList.remove("hidden")
+    
     this.renderChart("3m")
     this.updateStatsTable("3m")
 
@@ -218,10 +223,16 @@ export default class extends Controller {
 
     const first = records[0]
     const last = records[records.length - 1]
-    const firstWeight = +first[1]
-    const lastWeight = +last[1]
-    const firstFat = +first[2]
-    const lastFat = +last[2]
+    
+    // 有効な体重値を取得（0やnullでない値）
+    const validWeights = records.map(r => +r[1]).filter(w => w > 0)
+    const validFats = records.map(r => +r[2]).filter(f => f > 0)
+    
+    const firstWeight = validWeights.length > 0 ? validWeights[0] : 0
+    const lastWeight = validWeights.length > 0 ? validWeights[validWeights.length - 1] : 0
+    
+    const firstFat = validFats.length > 0 ? validFats[0] : 0
+    const lastFat = validFats.length > 0 ? validFats[validFats.length - 1] : 0
     const firstFatMass = +(firstWeight * firstFat / 100).toFixed(2)
     const lastFatMass = +(lastWeight * lastFat / 100).toFixed(2)
     const goal = this.targetWeightValue
@@ -239,16 +250,25 @@ export default class extends Controller {
     document.getElementById("first-fat-mass").textContent = firstFatMass.toFixed(2)
     document.getElementById("last-fat-mass").textContent = lastFatMass.toFixed(2)
 
-    block.innerHTML = goal && lastWeight > 0
+    const goalHtml = goal && lastWeight > 0
       ? (goalAchieved
-        ? `<span class="text-xl font-bold text-violet-600">目標達成！！！</span>`
-        : `<span>目標まであと</span>
-           <span class="text-2xl font-bold text-gray-900 align-middle"
+        ? `<span id="goal-achieved-label" class="text-xl font-bold text-violet-600">目標達成！！！</span>`
+        : `<span id="goal-countdown-label">目標まであと</span>
+           <span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle"
                  style="background: linear-gradient(transparent 60%, #fef08a 60%);">
              ${weightToGoal.toFixed(2)}
            </span>
-           <span class="text-base font-bold text-gray-500">kg</span>`)
-      : ""
+           <span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>`)
+      : goal
+        ? `<span id="goal-countdown-label">目標まであと</span>
+           <span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle"
+                 style="background: linear-gradient(transparent 60%, #fef08a 60%);">
+             ${weightToGoal.toFixed(2)}
+           </span>
+           <span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>`
+        : ""
+    
+    block.innerHTML = goalHtml
   }
 
   /* ---------- タブ切り替え ---------- */
