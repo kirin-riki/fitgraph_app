@@ -1,0 +1,58 @@
+<!-- メインタブ（グラフ／写真） -->
+<div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-2">
+  <button
+    id="tab-graph"
+    data-progress-target="tabGraph"
+    class="w-full bg-violet-500 text-white py-2 rounded text-xs sm:text-sm">
+    グラフ
+  </button>
+  <button
+    id="tab-photo"
+    data-progress-target="tabPhoto"
+    class="w-full bg-violet-100 text-violet-500 py-2 rounded text-xs sm:text-sm">
+    写真
+  </button>
+</div>
+
+<!-- 期間タブ（グラフ・写真共通） -->
+<div class="w-full max-w-screen-md mx-auto flex border rounded overflow-hidden mb-2">
+  <button
+    class="w-full period-tab bg-violet-500 text-white py-2 rounded text-xs sm:text-sm"
+    data-progress-target="periodTab"
+    data-period="3m">3ヶ月</button>
+  <button
+    class="w-full period-tab bg-violet-100 text-violet-600 py-2 rounded text-xs sm:text-sm"
+    data-progress-target="periodTab"
+    data-period="1m">1ヶ月</button>
+  <button
+    class="w-full period-tab bg-violet-100 text-violet-600 py-2 rounded text-xs sm:text-sm"
+    data-progress-target="periodTab"
+    data-period="3w">3週間</button>
+  <button
+    class="w-full period-tab bg-violet-100 text-violet-600 py-2 rounded text-xs sm:text-sm"
+    data-progress-target="periodTab"
+    data-period="1w">1週間</button>
+</div>
+
+<!-- レイヤー／比較タブ（写真タブの時のみ表示） -->
+<div class="w-full max-w-screen-md mx-auto mb-2 hidden" data-progress-target="photoSubTabs">
+  <div class="w-full flex border rounded overflow-hidden">
+    <button
+      id="layer-tab"
+      data-progress-target="layerTab"
+      data-action="click->progress#setPhotoSubTab"
+      data-tab="layer"
+      class="w-full bg-violet-500 text-white py-2 rounded text-xs sm:text-sm">
+      レイヤー
+    </button>
+    <button
+      id="compare-tab"
+      data-progress-target="compareTab"
+      data-action="click->progress#setPhotoSubTab"
+      data-tab="compare"
+      class="w-full bg-violet-100 text-violet-500 py-2 rounded text-xs sm:text-sm">
+      比較
+    </button>
+  </div>
+  
+</div>

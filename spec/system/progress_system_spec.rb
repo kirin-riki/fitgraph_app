@@ -33,14 +33,13 @@ RSpec.describe '記録（Progress/グラフ）画面', type: :system do
   end
 
   it '期間タブを切り替えるとグラフの表示範囲が変わる' do
-    within('#graph-view') do
-      all('button', text: '1ヶ月').first.click
-      expect(page).to have_selector('canvas#weightChart')
-      all('button', text: '1週間').first.click
-      expect(page).to have_selector('canvas#weightChart')
-      all('button', text: '3ヶ月').first.click
-      expect(page).to have_selector('canvas#weightChart')
-    end
+    # 期間タブは#graph-viewの外側にある
+    all('button', text: '1ヶ月').first.click
+    expect(page).to have_selector('canvas#weightChart')
+    all('button', text: '1週間').first.click
+    expect(page).to have_selector('canvas#weightChart')
+    all('button', text: '3ヶ月').first.click
+    expect(page).to have_selector('canvas#weightChart')
   end
 
   it '目標体重がグラフ上に表示される' do
@@ -63,12 +62,11 @@ RSpec.describe '記録（Progress/グラフ）画面', type: :system do
 
   it '写真の期間タブをクリックして画像が切り替わる' do
     click_button '写真'
-    within('#photo-view') do
-      all('button', text: '1ヶ月').first.click
-      expect(page).to have_selector('img')
-      all('button', text: '3ヶ月').first.click
-      expect(page).to have_selector('img')
-    end
+    # 期間タブは#photo-viewの外側にある
+    all('button', text: '1ヶ月').first.click
+    expect(page).to have_selector('img')
+    all('button', text: '3ヶ月').first.click
+    expect(page).to have_selector('img')
   end
 
   it '写真ビューでレイヤー/比較タブの切り替えができる' do

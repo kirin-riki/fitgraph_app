@@ -1,0 +1,54 @@
+<div id="stats-table" data-progress-target="statsTable" class="w-full max-w-screen-md mx-auto bg-white rounded-lg shadow p-4 m-3 h-[200px] hidden">
+  <div id="stats-content" data-progress-target="statsContent" class="hidden h-full flex flex-col justify-center">
+    <div class="text-center text-gray-700 text-base mb-3" id="goal-countdown-block">
+      <% if @target_weight.present? && @last_weight > 0 %>
+        <% unless @goal_achieved %>
+          <span id="goal-countdown-label">目標まであと</span>
+          <span id="goal-countdown-value" class="text-2xl font-bold text-gray-900 align-middle" style="background: linear-gradient(transparent 60%, #fef08a 60%);">
+          <%= number_with_precision(@weight_to_goal, precision: 2) %></span>
+          <span id="goal-countdown-unit" class="text-base font-bold text-gray-500">kg</span>
+        <% else %>
+          <span id="goal-achieved-label" class="text-xl font-bold text-violet-600">目標達成！！！</span>
+        <% end %>
+      <% end %>
+    </div>
+    <table class="w-full text-center text-sm">
+      <tr class="border-b">
+        <th class="py-1 font-normal text-gray-500">体重</th>
+        <td class="py-1 text-xl font-bold text-gray-700">
+          <span id="first-weight"><%= number_with_precision(@first_weight, precision: 2) %></span>
+          <span class="text-xs font-normal text-gray-400">kg</span>
+        </td>
+        <td class="py-1 text-violet-500 text-lg">▶</td>
+        <td class="py-1 text-xl font-bold text-gray-700">
+          <span id="last-weight"><%= number_with_precision(@last_weight, precision: 2) %></span>
+          <span class="text-xs font-normal text-gray-400">kg</span>
+        </td>
+      </tr>
+      <tr class="border-b">
+        <th class="py-1 font-normal text-gray-500">体脂肪率</th>
+        <td class="py-1 text-xl font-bold text-gray-700">
+          <span id="first-fat"><%= number_with_precision(@first_fat, precision: 2) %></span>
+          <span class="text-xs font-normal text-gray-400">%</span>
+        </td>
+        <td class="py-1 text-violet-500 text-lg">▶</td>
+        <td class="py-1 text-xl font-bold text-gray-700">
+          <span id="last-fat"><%= number_with_precision(@last_fat, precision: 2) %></span>
+          <span class="text-xs font-normal text-gray-400">%</span>
+        </td>
+      </tr>
+      <tr>
+        <th class="py-1 font-normal text-gray-500">脂肪量</th>
+        <td class="py-1 text-xl font-bold text-gray-700">
+          <span id="first-fat-mass"><%= number_with_precision(@first_fat_mass, precision: 2) %></span>
+          <span class="text-xs font-normal text-gray-400">kg</span>
+        </td>
+        <td class="py-1 text-violet-500 text-lg">▶</td>
+        <td class="py-1 text-xl font-bold text-gray-700">
+          <span id="last-fat-mass"><%= number_with_precision(@last_fat_mass, precision: 2) %></span>
+          <span class="text-xs font-normal text-gray-400">kg</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
