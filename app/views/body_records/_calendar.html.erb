@@ -1,6 +1,0 @@
-<%= month_calendar(events: @body_records, attribute: :recorded_at) do |date, body_records| %>
-  <%= link_to date.day, top_body_records_path(start_date: date) %>
-  <% if body_records.any? { |r| r.photo.attached? } %>
-    <div class="text-xs text-center mt-1">📸</div>
-  <% end %>
-<% end %> 

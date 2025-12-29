@@ -64,8 +64,4 @@
   <% if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
     <%= link_to "パスワードをお忘れの方", new_password_path(resource_name), class: "block text-sm #{controller_name == 'sessions' ? 'text-white' : 'text-violet-600'} underline hover:text-violet-200" %>
   <% end %>
-
-  <% if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-    <%= link_to "ロック解除メールを送信", new_unlock_path(resource_name), class: "block text-sm text-white underline hover:text-violet-200" %>
-  <% end %>
 </div>
