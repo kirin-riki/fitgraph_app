@@ -10,7 +10,9 @@
     </h2>
 
     <%= turbo_frame_tag "calendar" do %>
-      <%= render "calendar" %>
+      <%= month_calendar(events: @body_records, attribute: :recorded_at) do |date, body_records| %>
+        <%= link_to date.day, top_body_records_path(start_date: date) %>
+      <% end %>
     <% end %>
   </section>
 </main>
