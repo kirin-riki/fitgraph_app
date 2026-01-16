@@ -3,7 +3,6 @@
 // ./bin/rails generate stimulus controllerName
 
 import { Application } from "@hotwired/stimulus"
-import HelloController from "./hello_controller"
 import CameraController from "./camera_controller"
 import PhotoSwitcherController from "./photo_switcher_controller"
 import DropdownController from "./dropdown_controller"
@@ -12,7 +11,6 @@ import ProgressController from "./progress_controller"
 import AccordionController from "./accordion_controller"
 
 window.Stimulus = Application.start()
-Stimulus.register("hello", HelloController)
 Stimulus.register("camera", CameraController)
 Stimulus.register("photo-switcher", PhotoSwitcherController)
 Stimulus.register("dropdown", DropdownController)
