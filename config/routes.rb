@@ -55,16 +55,16 @@ Rails.application.routes.draw do
   get "progress", to: "progress#index"
 
   # 動画関連
-  resources :recommended_videos, only: [:index] do
+  resources :recommended_videos, only: [ :index ] do
     collection do
       post :refresh
       get  :refresh
     end
   end
-  resources :favorite_videos, only: [:create, :destroy]
+  resources :favorite_videos, only: [ :create, :destroy ]
 
   namespace :users do
-    resource :two_factor_settings, only: [:show, :update, :destroy]
+    resource :two_factor_settings, only: [ :show, :update, :destroy ]
   end
 
   # ========================
