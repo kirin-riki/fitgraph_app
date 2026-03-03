@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <meta name="turbo-cache-control" content="no-store">
+<% end %>
+
 <main data-controller="progress"
       data-progress-labels-value='<%= @dates.to_json %>'
       data-progress-weights-value='<%= @weight_values.to_json %>'
