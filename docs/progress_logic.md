@@ -9,7 +9,6 @@
 
 
 
-
 ## モデル
 ### User
 - **ファイル**: `app/models/user.rb`
